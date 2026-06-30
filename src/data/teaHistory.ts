@@ -3,6 +3,10 @@ export type TeaHistoryItem = {
   title: string;
   chinese: string;
   copy: string;
+  character: string;
+  visualLabel: string;
+  image: string;
+  story: string;
 };
 
 export type KnowledgeCard = {
@@ -17,31 +21,51 @@ export const teaHistoryItems: TeaHistoryItem[] = [
     number: "01",
     title: "Mythic Origin",
     chinese: "神農傳說",
-    copy: "Tea began in legend as medicine and observation."
+    copy: "Tea began in legend as medicine and observation.",
+    character: "藥",
+    visualLabel: "Steam over mountain herb",
+    image: "chazen-shanshui-chapter-2.png",
+    story: "The myth of Shennong frames tea as a discovery of balance: leaf, body, heat, and attention. Before tea became taste, it was a way of reading nature."
   },
   {
     number: "02",
     title: "Tang Dynasty",
     chinese: "唐代",
-    copy: "Lu Yu and The Classic of Tea. Tea became written, studied, and systematised."
+    copy: "Lu Yu and The Classic of Tea. Tea became written, studied, and systematised.",
+    character: "經",
+    visualLabel: "Lu Yu and the written tea canon",
+    image: "chazen-arrival-room.avif",
+    story: "Lu Yu's Tea Classic gave tea a language of source, vessel, water, fire, and conduct. The cup entered scholarship, and scholarship entered the cup."
   },
   {
     number: "03",
     title: "Song Dynasty",
     chinese: "宋代",
-    copy: "Dian Cha, Jian ware, and scholar tea culture. Tea became visual, tactile, and aesthetic."
+    copy: "Dian Cha, Jian ware, and scholar tea culture. Tea became visual, tactile, and aesthetic.",
+    character: "點",
+    visualLabel: "Powdered tea, foam, Jian bowl",
+    image: "chazen-song-diancha-v1.png",
+    story: "Song dian cha turned powdered tea into a luminous surface. Whisk, bowl, foam, wrist, and silence became a visual art of discipline."
   },
   {
     number: "04",
     title: "Ming-Qing",
     chinese: "明清",
-    copy: "Loose-leaf brewing and gongfu practice. Tea entered refined daily life."
+    copy: "Loose-leaf brewing and gongfu practice. Tea entered refined daily life.",
+    character: "器",
+    visualLabel: "Gongfu vessels and loose leaf",
+    image: "chazen-tea-table-topdown-v3.png",
+    story: "Loose-leaf infusion changed the grammar of tea. Smaller vessels, faster pours, and repeated cups made technique intimate."
   },
   {
     number: "05",
     title: "Contemporary CHAZEN",
     chinese: "當代茶禪",
-    copy: "Tea returns as ritual, sound, meditation, and meaningful gifting."
+    copy: "Tea returns as ritual, sound, meditation, and meaningful gifting.",
+    character: "禪",
+    visualLabel: "Tea room, sound, return",
+    image: "chazen-hero-gongfu-room-v3.png",
+    story: "CHAZEN brings origin, teaware, breathing, sound, and cultural memory into one contemporary room for returning to the present."
   }
 ];
 

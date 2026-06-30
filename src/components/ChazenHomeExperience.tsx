@@ -1,12 +1,15 @@
 "use client";
 
 import Image from "next/image";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   BookOpen,
+  Compass,
   Globe2,
   Mail,
+  PlayCircle,
   Volume2,
   X
 } from "lucide-react";
@@ -205,42 +208,48 @@ const ritualSteps = [
     title: "Warm the vessel",
     chinese: "溫杯",
     copy: "Heat crosses porcelain first. The vessel wakes before the leaf, and the room learns the pace of the hand.",
-    image: "chazen-tea-table-topdown-v3.png"
+    image: "gaiwan-step-1-warm-bowl.jpg",
+    fallback: "chazen-tea-table-topdown-v3.png"
   },
   {
     number: "02",
     title: "Present the leaves",
     chinese: "賞茶",
     copy: "The dry leaf is offered to the eye: twist, roast, stem, fragrance, season, and mountain.",
-    image: "chazen-tea-collection-v1.png"
+    image: "gaiwan-step-2-add-leaves.jpg",
+    fallback: "chazen-tea-collection-v1.png"
   },
   {
     number: "03",
     title: "Awaken the tea",
     chinese: "醒茶",
     copy: "A brief rinse releases storage, dust, and sleep. What remains is the first clean breath of the tea.",
-    image: "chazen-hero-gongfu-room-v3.png"
+    image: "gaiwan-step-3-wake-tea.jpg",
+    fallback: "chazen-hero-gongfu-room-v3.png"
   },
   {
     number: "04",
     title: "Brew",
     chinese: "注水",
     copy: "Water falls with intention. Temperature, angle, seconds, and silence become architecture.",
-    image: "chazen-hero-gongfu-room-v3.png"
+    image: "gaiwan-step-4-brew.jpg",
+    fallback: "chazen-hero-gongfu-room-v3.png"
   },
   {
     number: "05",
     title: "Pour",
     chinese: "出湯",
     copy: "The liquor leaves before it becomes heavy. Timing is the elegance of restraint.",
-    image: "chazen-tea-table-topdown-v3.png"
+    image: "gaiwan-step-5-pour.jpg",
+    fallback: "chazen-tea-table-topdown-v3.png"
   },
   {
     number: "06",
     title: "Taste",
     chinese: "品茗",
     copy: "The first sip is received before it is judged: aroma, texture, warmth, return.",
-    image: "chazen-song-diancha-v1.png"
+    image: "gaiwan-step-6-taste.jpg",
+    fallback: "chazen-song-diancha-v1.png"
   }
 ];
 
@@ -364,14 +373,70 @@ const atlasRegions = [
 ];
 
 const wisdomCards = [
-  ["福", "Fu", "Blessing and harmony"],
-  ["祿", "Lu", "Focus and prosperity"],
-  ["壽", "Shou", "Longevity and time"],
-  ["劉備", "Liu Bei", "Benevolence"],
-  ["關羽", "Guan Yu", "Loyalty"],
-  ["張飛", "Zhang Fei", "Courage"],
-  ["陸羽", "Lu Yu", "Tea wisdom"],
-  ["蘇軾", "Su Shi", "Scholar elegance"]
+  {
+    character: "福",
+    name: "Fu",
+    chinese: "福德之福",
+    meaning: "Blessing and harmony",
+    design: "A clay-red seal character held inside warm ivory paper, designed for family blessing sets.",
+    story: "Fu is the wish that a home receives enough: enough peace, enough food, enough kindness, enough return."
+  },
+  {
+    character: "祿",
+    name: "Lu",
+    chinese: "祿位之祿",
+    meaning: "Focus and prosperity",
+    design: "A bronze vertical mark with ledger-like lines, designed for career, study, and client gifting.",
+    story: "Lu is prosperity with discipline. It is not noise or display, but the steady dignity of work becoming fruit."
+  },
+  {
+    character: "壽",
+    name: "Shou",
+    chinese: "長壽之壽",
+    meaning: "Longevity and time",
+    design: "A dark ink roundel with slow concentric breath lines, designed for elder respect and long memory.",
+    story: "Shou carries time as a blessing. A cup offered slowly says: may your days be long, clear, and gently held."
+  },
+  {
+    character: "劉",
+    name: "Liu Bei",
+    chinese: "劉備",
+    meaning: "Benevolence",
+    design: "A soft moss-green silhouette of a host figure, hands lowered, inviting without force.",
+    story: "Liu Bei represents humane leadership: the strength to gather people through trust rather than fear."
+  },
+  {
+    character: "關",
+    name: "Guan Yu",
+    chinese: "關羽",
+    meaning: "Loyalty",
+    design: "A tall ink shadow with a clay-red edge, composed like a guardian at the threshold.",
+    story: "Guan Yu turns loyalty into ceremony: a vow kept beyond convenience, a bond poured cup after cup."
+  },
+  {
+    character: "張",
+    name: "Zhang Fei",
+    chinese: "張飛",
+    meaning: "Courage",
+    design: "A heavier brush silhouette with angled bronze cuts, designed for protective, brotherhood gifts.",
+    story: "Zhang Fei is courage before hesitation. In CHAZEN, that force is softened by tea into protection, not aggression."
+  },
+  {
+    character: "羽",
+    name: "Lu Yu",
+    chinese: "陸羽",
+    meaning: "Tea wisdom",
+    design: "A scholar mark beside thin manuscript lines, referencing The Classic of Tea and Tang scholarship.",
+    story: "Lu Yu is the figure of tea becoming language. Water, fire, vessel, and conduct become a way of thinking."
+  },
+  {
+    character: "軾",
+    name: "Su Shi",
+    chinese: "蘇軾",
+    meaning: "Scholar elegance",
+    design: "A drifting ink figure with river-lines and open sky, designed for poetic gifts and reflective practice.",
+    story: "Su Shi brings humour, exile, poetry, and resilience. The cup becomes a companion to the mind that keeps moving."
+  }
 ];
 
 const teaProducts = [
@@ -460,6 +525,7 @@ const makeInfo = (content: InfoModalContent) => content;
 export function ChazenHomeExperience() {
   const [activeTool, setActiveTool] = useState<TeaObject>(teaObjects[0]);
   const [activeStep, setActiveStep] = useState(ritualSteps[0]);
+  const [stepImageFailed, setStepImageFailed] = useState<Record<string, boolean>>({});
   const [activeRegion, setActiveRegion] = useState<TeaOrigin>(teaOrigins[1]);
   const [videoModal, setVideoModal] = useState<{ title: string; src: string } | null>(null);
   const [infoModal, setInfoModal] = useState<InfoModalContent | null>(null);
@@ -470,9 +536,15 @@ export function ChazenHomeExperience() {
   const activeAudioRef = useRef<HTMLAudioElement | null>(null);
   const rainRef = useRef<HTMLAudioElement | null>(null);
   const soundTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const stepRailRef = useRef<HTMLDivElement>(null);
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
   const imageUrl = (name: string) => `${basePath}/images/${name}`;
   const mediaUrl = (path: string) => `${basePath}${path}`;
+  const teaCollectionUrl = `${basePath}/tea-collection/`;
+
+  const scrollToStepRail = () => {
+    stepRailRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+  };
 
   const openVideo = (title: string, path: string) => {
     setVideoModal({ title, src: mediaUrl(path) });
@@ -555,7 +627,16 @@ export function ChazenHomeExperience() {
     <>
       <section id="philosophy" className="museum-section philosophy-exhibit">
         <div className="museum-container philosophy-panel">
-          <div className="ink-circle" aria-hidden="true" />
+          <div className="philosophy-art-wall" aria-hidden="true">
+            <Image
+              src={imageUrl("chazen-shanshui-chapter-2.png")}
+              alt=""
+              fill
+              sizes="(max-width: 900px) 100vw, 34vw"
+              className="philosophy-art-image"
+            />
+            <span className="ink-circle" />
+          </div>
           <div className="philosophy-copy">
             <p className="museum-kicker">Chapter 02 / Philosophy</p>
             <h2>Tea is not just a drink. It is a way of returning.</h2>
@@ -601,10 +682,10 @@ export function ChazenHomeExperience() {
               </button>
             </div>
           </div>
-          <div className="ink-mountain" aria-hidden="true">
-            <span />
-            <span />
-            <span />
+          <div className="philosophy-caption-panel" aria-hidden="true">
+            <span>山水畫</span>
+            <strong>Landscape as Breath</strong>
+            <p>Mountain, water, mist, and cup steam share one field of attention.</p>
           </div>
         </div>
       </section>
@@ -657,37 +738,69 @@ export function ChazenHomeExperience() {
               fragrance, timing, and restraint.
             </p>
             <p lang="zh-Hant">蓋碗之法，不在繁複，而在水溫、香氣、時間與克制。</p>
+            <div className="ritual-intro-actions">
+              <button type="button" className="gold-cta compact" onClick={scrollToStepRail}>
+                Explore the Six Steps <Compass size={15} aria-hidden="true" />
+              </button>
+            </div>
           </div>
 
           <div className="ritual-cinema-stage">
-            <Image
-              src={imageUrl(activeStep.image)}
-              alt={`${activeStep.number} ${activeStep.title} ${activeStep.chinese}`}
-              fill
-              sizes="(max-width: 900px) 100vw, 58vw"
-              className="ritual-cinema-image"
-            />
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeStep.number}
+                className="ritual-cinema-image-wrap"
+                initial={{ opacity: 0, scale: 1.03 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.01 }}
+                transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <Image
+                  src={imageUrl(stepImageFailed[activeStep.number] ? activeStep.fallback : activeStep.image)}
+                  alt={`${activeStep.number} ${activeStep.title} ${activeStep.chinese}`}
+                  fill
+                  sizes="(max-width: 900px) 100vw, 58vw"
+                  className="ritual-cinema-image"
+                  onError={() =>
+                    setStepImageFailed((failed) => ({
+                      ...failed,
+                      [activeStep.number]: true
+                    }))
+                  }
+                />
+              </motion.div>
+            </AnimatePresence>
             <div className="ritual-cinema-shade" />
-            <article className="ritual-story">
-              <span>{activeStep.number}</span>
-              <h2>{activeStep.title}</h2>
-              <h3 lang="zh-Hant">{activeStep.chinese}</h3>
-              <p>{activeStep.copy}</p>
-              <blockquote>
-                Water, leaf, time. Nothing more.
-                <br />
-                <span lang="zh-Hant">水、葉、時。除此之外，皆是雜音。</span>
-              </blockquote>
-            </article>
+            <AnimatePresence mode="wait">
+              <motion.article
+                key={`${activeStep.number}-story`}
+                className="ritual-story"
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <span>{activeStep.number}</span>
+                <h2>{activeStep.title}</h2>
+                <h3 lang="zh-Hant">{activeStep.chinese}</h3>
+                <p>{activeStep.copy}</p>
+                <blockquote>
+                  Water, leaf, time. Nothing more.
+                  <br />
+                  <span lang="zh-Hant">水、葉、時。除此之外，皆是雜音。</span>
+                </blockquote>
+              </motion.article>
+            </AnimatePresence>
           </div>
 
-          <div className="ritual-step-rail" aria-label="Gaiwan ritual steps">
+          <div ref={stepRailRef} className="ritual-step-rail" aria-label="Gaiwan ritual steps">
             {ritualSteps.map((step) => (
               <button
                 type="button"
                 key={step.number}
                 className={activeStep.number === step.number ? "is-active" : ""}
                 onClick={() => setActiveStep(step)}
+                onMouseEnter={() => setActiveStep(step)}
                 aria-pressed={activeStep.number === step.number}
               >
                 <span>{step.number}</span>
@@ -698,11 +811,11 @@ export function ChazenHomeExperience() {
           </div>
 
           <div className="chapter-actions ritual-actions">
-            <button type="button" className="dark-cta compact" onClick={() => openVideo("Gaiwan Ritual", "/video/gaiwan-ritual.mp4")}>
-              Watch Gaiwan Ritual
+            <button type="button" className="gold-cta compact" onClick={() => openVideo("Gaiwan Ritual", "/video/gaiwan-ritual.mp4")}>
+              Watch the Gaiwan Ritual <PlayCircle size={15} aria-hidden="true" />
             </button>
             <button type="button" className="dark-cta compact" onClick={() => playSound("/audio/tea-pour.mp3", "Tea Pouring")}>
-              Hear the Pour
+              Play Tea Pour Sound <Volume2 size={15} aria-hidden="true" />
             </button>
             <button type="button" className="dark-cta compact" onClick={() => setActiveStep(ritualSteps[0])}>
               Restart Sequence
@@ -730,8 +843,9 @@ export function ChazenHomeExperience() {
                 在宋代，茶不只是入口之物，也是文人的修養、器物的審美，與心性的練習。
               </p>
               <div className="song-mini-grid">
-                {songCards.map(([title, chinese, copy]) => (
+                {songCards.map(([title, chinese, copy], index) => (
                   <div key={title}>
+                    <span className="song-mini-number">{String(index + 1).padStart(2, "0")}</span>
                     <strong>{title}</strong>
                     <span lang="zh-Hant">{chinese}</span>
                     <p>{copy}</p>
@@ -857,7 +971,7 @@ export function ChazenHomeExperience() {
                       makeInfo({
                         kicker: "Wisdom Figures / 東方智慧",
                         title: "Explore the Figures",
-                        body: wisdomCards.map(([character, name, meaning]) => `${character} ${name}: ${meaning}.`)
+                        body: wisdomCards.map((card) => `${card.character} ${card.name} / ${card.chinese}: ${card.meaning}. ${card.story}`)
                       })
                     )
                   }
@@ -890,24 +1004,32 @@ export function ChazenHomeExperience() {
               </div>
             </div>
             <div className="wisdom-grid">
-              {wisdomCards.map(([character, name, meaning]) => (
+              {wisdomCards.map((card) => (
                 <button
                   type="button"
-                  key={character}
+                  key={card.name}
                   onClick={() =>
                     setInfoModal(
                       makeInfo({
                         kicker: "Wisdom Archetype / 傳世典範",
-                        title: name,
-                        chinese: character,
-                        body: [meaning, "In CHAZEN, symbolic figures become a refined language for gifting, reflection, and ritual identity."]
+                        title: card.name,
+                        chinese: card.chinese,
+                        body: [card.story, card.design, "In CHAZEN, symbolic figures become a refined language for gifting, reflection, and ritual identity."],
+                        items: [
+                          { label: "Character", value: card.character },
+                          { label: "Meaning", value: card.meaning }
+                        ]
                       })
                     )
                   }
                 >
-                  <span lang="zh-Hant">{character}</span>
-                  <strong>{name}</strong>
-                  <p>{meaning}</p>
+                  <span className="wisdom-portrait" lang="zh-Hant" aria-hidden="true">
+                    {card.character}
+                  </span>
+                  <strong>{card.name}</strong>
+                  <em lang="zh-Hant">{card.chinese}</em>
+                  <p>{card.meaning}</p>
+                  <small>{card.design}</small>
                 </button>
               ))}
             </div>
@@ -925,24 +1047,18 @@ export function ChazenHomeExperience() {
             </div>
             <div className="collection-copy">
               <p className="museum-kicker">Chapter 10 / Tea Collection / 茶品收藏</p>
-              <h2>A catalogue of leaves with origin, process, taste, and mood.</h2>
+              <h2>A quiet doorway into leaves, origin, process, taste, and mood.</h2>
+              <p>
+                The full tea collection now lives as its own exhibit: each tea shown with
+                leaf appearance, origin, method, taste, and the ritual moment it belongs to.
+              </p>
               <div className="chapter-actions">
-                <button
-                  type="button"
+                <a
+                  href={teaCollectionUrl}
                   className="museum-link-button dark-on-light"
-                  onClick={() =>
-                    setInfoModal(
-                      makeInfo({
-                        kicker: "Tea Catalogue / 茶品目錄",
-                        title: "View Tea Catalogue",
-                        body: teaProducts.map((tea) => `${tea.name} ${tea.chinese}: ${tea.origin}. ${tea.taste}`),
-                        action: "Catalogue browsing remains cultural for now. Checkout is intentionally not enabled."
-                      })
-                    )
-                  }
                 >
-                  View Tea Catalogue
-                </button>
+                  Enter Tea Collection
+                </a>
                 <button
                   type="button"
                   className="museum-link-button dark-on-light"
@@ -965,35 +1081,15 @@ export function ChazenHomeExperience() {
                   Find Your Tea
                 </button>
               </div>
-              <div className="product-catalogue">
-                {teaProducts.map((tea) => (
-                  <div key={tea.name}>
-                    <span>{tea.type}</span>
+              <div className="product-catalogue product-catalogue-preview">
+                {teaProducts.slice(0, 3).map((tea, index) => (
+                  <a key={tea.name} href={`${teaCollectionUrl}#${tea.name.toLowerCase().replaceAll(" ", "-").replace("'", "")}`}>
+                    <span>{String(index + 1).padStart(2, "0")} / {tea.type}</span>
                     <h3>{tea.name}</h3>
                     <strong lang="zh-Hant">{tea.chinese}</strong>
                     <p>{tea.origin}</p>
                     <small>{tea.taste}</small>
-                    <button
-                      type="button"
-                      className="text-link-button"
-                      onClick={() =>
-                        setInfoModal(
-                          makeInfo({
-                            kicker: "Tea Story / 茶品故事",
-                            title: tea.name,
-                            chinese: tea.chinese,
-                            body: [tea.process, tea.taste, tea.ritual],
-                            items: [
-                              { label: "Origin", value: tea.origin },
-                              { label: "Best Moment", value: tea.moment }
-                            ]
-                          })
-                        )
-                      }
-                    >
-                      View Tea Story
-                    </button>
-                  </div>
+                  </a>
                 ))}
               </div>
             </div>

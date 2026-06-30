@@ -15,18 +15,30 @@ export function TeaAtlasMap({ origins, activeOrigin, onSelect, onExplore, onOpen
     <article className="atlas-panel">
       <p className="museum-kicker">Chapter 07 / Tea Atlas / 茶之地圖</p>
       <h2>Origin is not a coordinate. It is climate remembered by leaf.</h2>
-      <div className="atlas-map" aria-label="Highlighted tea regions">
-        {origins.map((origin) => (
-          <button
-            type="button"
-            key={origin.name}
-            className={activeOrigin.name === origin.name ? "is-active" : ""}
-            onClick={() => onSelect(origin)}
-            aria-pressed={activeOrigin.name === origin.name}
-          >
-            {origin.name}
-          </button>
-        ))}
+      <div className="atlas-visual-study">
+        <div className="atlas-map" aria-label="Highlighted tea regions">
+          <span className="atlas-paper-grain" aria-hidden="true" />
+          <span className="atlas-route atlas-route-one" aria-hidden="true" />
+          <span className="atlas-route atlas-route-two" aria-hidden="true" />
+          {origins.map((origin) => (
+            <button
+              type="button"
+              key={origin.name}
+              className={activeOrigin.name === origin.name ? "is-active" : ""}
+              onClick={() => onSelect(origin)}
+              aria-pressed={activeOrigin.name === origin.name}
+            >
+              {origin.name}
+            </button>
+          ))}
+        </div>
+        <div className="atlas-cup-study" aria-hidden="true">
+          <span className="atlas-cup-steam" />
+          <span className="atlas-cup-bowl" />
+          <span className="atlas-cup-tea" />
+          <span className="atlas-cup-saucer" />
+          <small>{activeOrigin.tea}</small>
+        </div>
       </div>
       <div className="atlas-feature">
         <span>Featured Origin</span>

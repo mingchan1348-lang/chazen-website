@@ -102,6 +102,12 @@ export function TeaTableInteractive({
             <span className="object-accession">{activeTool.number}</span>
             <h3 lang="zh-Hant">{activeTool.chinese}</h3>
             <h4>{activeTool.english}</h4>
+            <div className={`object-specimen specimen-${activeTool.number}`} aria-hidden="true">
+              <span className="specimen-shadow" />
+              <span className="specimen-form specimen-form-a" />
+              <span className="specimen-form specimen-form-b" />
+              <span className="specimen-form specimen-form-c" />
+            </div>
             <dl>
               <div>
                 <dt>Purpose</dt>
