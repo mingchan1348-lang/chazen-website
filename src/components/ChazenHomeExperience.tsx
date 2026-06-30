@@ -265,41 +265,11 @@ const knowledgeCards = [
 ];
 
 const songCards = [
-  {
-    title: "Dian Cha",
-    chinese: "點茶",
-    copy: "Powdered tea whisked into a fine foam, where hand, breath, and bowl meet.",
-    image: "chazen-song-diancha-v1.png",
-    details: ["Practice: powdered tea", "Focus: foam, rhythm, surface"]
-  },
-  {
-    title: "Jian Ware",
-    chinese: "建盞",
-    copy: "Black glaze made to hold tea foam, light, and mineral depth.",
-    image: "chazen-song-diancha-v1.png",
-    details: ["Material: iron-rich glaze", "Use: pale foam contrast"]
-  },
-  {
-    title: "Tea Whisk",
-    chinese: "茶筅",
-    copy: "Bamboo rhythm turns powdered tea into a luminous surface.",
-    image: "chazen-song-diancha-v1.png",
-    details: ["Tool: bamboo whisk", "Meaning: rhythm, breath, control"]
-  },
-  {
-    title: "Song Aesthetic",
-    chinese: "宋風美學",
-    copy: "Restraint as a form of abundance.",
-    image: "chazen-arrival-room.avif",
-    details: ["Value: quiet proportion", "Mood: scholar restraint"]
-  },
-  {
-    title: "Tea Texts",
-    chinese: "茶典",
-    copy: "Knowledge carried through ritual language and scholar practice.",
-    image: "chazen-tea-room-hero-v2.png",
-    details: ["Form: written method", "Role: cultural transmission"]
-  }
+  ["Dian Cha", "點茶", "Powdered tea whisked into a fine foam, where hand, breath, and bowl meet."],
+  ["Jian Ware", "建盞", "Black glaze made to hold tea foam, light, and mineral depth."],
+  ["Tea Whisk", "茶筅", "Bamboo rhythm, small circles, and a disciplined wrist."],
+  ["Song Aesthetic", "宋風美學", "Restraint as a form of abundance."],
+  ["Tea Texts", "茶典", "Knowledge carried through ritual language and scholar practice."]
 ];
 
 const atlasRegions = [
@@ -394,14 +364,14 @@ const atlasRegions = [
 ];
 
 const wisdomCards = [
-  { character: "福", name: "Fu", chinese: "福", meaning: "Blessing and harmony", detail: "Tea given in blessing carries family warmth and seasonal goodwill.", object: "Red seal / blessing card" },
-  { character: "祿", name: "Lu", chinese: "祿", meaning: "Focus and prosperity", detail: "A refined tea gift can mark ambition without noise, carrying dignity into work and partnership.", object: "Bronze seal / office tea" },
-  { character: "壽", name: "Shou", chinese: "壽", meaning: "Longevity and time", detail: "Aged tea and quiet cups make longevity feel like patience, not decoration.", object: "Aged tea / long cup" },
-  { character: "劉備", name: "Liu Bei", chinese: "劉備", meaning: "Benevolence", detail: "Tea becomes a gentle way to honour care, alliance, and responsibility.", object: "Shared cup / oath table" },
-  { character: "關羽", name: "Guan Yu", chinese: "關羽", meaning: "Loyalty", detail: "Tea becomes a symbol of constancy, honour, and remembered promise.", object: "Ink portrait / loyal seal" },
-  { character: "張飛", name: "Zhang Fei", chinese: "張飛", meaning: "Courage", detail: "Strong tea can carry boldness without aggression: heat, depth, and resolve.", object: "Dark roast / warrior seal" },
-  { character: "陸羽", name: "Lu Yu", chinese: "陸羽", meaning: "Tea wisdom", detail: "Lu Yu reminds the collection that knowledge is also a form of hospitality.", object: "Tea text / scholar desk" },
-  { character: "蘇軾", name: "Su Shi", chinese: "蘇軾", meaning: "Scholar elegance", detail: "Tea, poetry, and friendship meet in cultured ease: refined, human, and alive.", object: "Poem paper / tea bowl" }
+  ["福", "Fu", "Blessing and harmony"],
+  ["祿", "Lu", "Focus and prosperity"],
+  ["壽", "Shou", "Longevity and time"],
+  ["劉備", "Liu Bei", "Benevolence"],
+  ["關羽", "Guan Yu", "Loyalty"],
+  ["張飛", "Zhang Fei", "Courage"],
+  ["陸羽", "Lu Yu", "Tea wisdom"],
+  ["蘇軾", "Su Shi", "Scholar elegance"]
 ];
 
 const teaProducts = [
@@ -468,30 +438,12 @@ const teaProducts = [
 ];
 
 const giftTypes = [
-  {
-    title: "Real Estate Settlement Gifts",
-    copy: "A tea gift that turns handover into memory.",
-    for: "Buyers, sellers, agents, and settlement partners",
-    tone: "Warm, grounded, ceremonial"
-  },
-  {
-    title: "Corporate Gifts",
-    copy: "Quiet refinement for clients and partners.",
-    for: "Teams, directors, partners, and long-term clients",
-    tone: "Professional, calm, culturally aware"
-  },
-  {
-    title: "VIP Client Gifts",
-    copy: "Premium tea presentation with symbolic meaning.",
-    for: "High-value clients and private relationships",
-    tone: "Reserved, bespoke, memorable"
-  },
-  {
-    title: "Family Blessing Gifts",
-    copy: "Tea as a gesture of harmony, longevity, and gratitude.",
-    for: "Parents, elders, weddings, and family reunions",
-    tone: "Blessed, intimate, respectful"
-  }
+  "Real Estate Settlement Gifts",
+  "Corporate Gifts",
+  "VIP Client Gifts",
+  "Family Blessing Gifts",
+  "Fu Lu Shou Collection",
+  "Brotherhood / Oath Collection"
 ];
 
 const journalCards = [
@@ -515,7 +467,6 @@ export function ChazenHomeExperience() {
   const [soundOpen, setSoundOpen] = useState(false);
   const [soundNotice, setSoundNotice] = useState("Sound is off");
   const [soundActive, setSoundActive] = useState(false);
-  const [activeSoundLabel, setActiveSoundLabel] = useState<string | undefined>();
   const activeAudioRef = useRef<HTMLAudioElement | null>(null);
   const rainRef = useRef<HTMLAudioElement | null>(null);
   const soundTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -558,16 +509,14 @@ export function ChazenHomeExperience() {
     audio.loop = loop;
     audio.volume = loop ? 0.35 : 0.72;
     audio.addEventListener("error", () => {
-      setSoundNotice("Audio coming soon / 聲音即將加入");
+      setSoundNotice("Audio file coming soon");
       setSoundActive(false);
-      setActiveSoundLabel(undefined);
     });
     audio
       .play()
       .then(() => {
         setSoundNotice(loop ? `${label} is playing softly` : `${label} played once`);
         setSoundActive(true);
-        setActiveSoundLabel(label);
         activeAudioRef.current = audio;
         if (loop) rainRef.current = audio;
         if (!loop) {
@@ -575,9 +524,8 @@ export function ChazenHomeExperience() {
         }
       })
       .catch(() => {
-        setSoundNotice("Audio coming soon / 聲音即將加入");
+        setSoundNotice("Audio file coming soon");
         setSoundActive(false);
-        setActiveSoundLabel(undefined);
       });
   };
 
@@ -592,7 +540,6 @@ export function ChazenHomeExperience() {
     }
     if (soundTimerRef.current) clearTimeout(soundTimerRef.current);
     setSoundActive(false);
-    setActiveSoundLabel(undefined);
     setSoundNotice("Silent Mode");
   };
 
@@ -608,15 +555,7 @@ export function ChazenHomeExperience() {
     <>
       <section id="philosophy" className="museum-section philosophy-exhibit">
         <div className="museum-container philosophy-panel">
-          <figure className="philosophy-image-panel">
-            <Image
-              src={imageUrl("chazen-tea-room-hero-v2.png")}
-              alt="Quiet tea room still life with ceramic bowl, soft morning light, steam, and contemplative atmosphere."
-              fill
-              sizes="(max-width: 900px) 100vw, 28vw"
-            />
-            <figcaption>Still life of return / <span lang="zh-Hant">回歸之器</span></figcaption>
-          </figure>
+          <div className="ink-circle" aria-hidden="true" />
           <div className="philosophy-copy">
             <p className="museum-kicker">Chapter 02 / Philosophy</p>
             <h2>Tea is not just a drink. It is a way of returning.</h2>
@@ -658,30 +597,15 @@ export function ChazenHomeExperience() {
                 className="museum-link-button"
                 onClick={() => playSound("/audio/singing-bowl.mp3", "Singing Bowl")}
               >
-                Hear the Bowl <Volume2 size={15} aria-hidden="true" />
+                Hear the Singing Bowl <Volume2 size={15} aria-hidden="true" />
               </button>
             </div>
           </div>
-          <aside className="philosophy-detail-card" aria-label="Tea philosophy details">
-            <p className="museum-kicker">Cultural Register</p>
-            <dl>
-              <div>
-                <dt>Origin</dt>
-                <dd>China / 中國</dd>
-              </div>
-              <div>
-                <dt>Cultural Role</dt>
-                <dd>medicine / ritual / hospitality / contemplation</dd>
-              </div>
-              <div>
-                <dt>Modern Meaning</dt>
-                <dd>stillness / attention / return</dd>
-              </div>
-            </dl>
-            <p>
-              The cup becomes a small architecture for attention: leaf, water, vessel, hand, silence.
-            </p>
-          </aside>
+          <div className="ink-mountain" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </div>
         </div>
       </section>
 
@@ -746,9 +670,6 @@ export function ChazenHomeExperience() {
               </button>
               <button type="button" className="dark-cta compact" onClick={() => setActiveStep(ritualSteps[0])}>
                 Begin Step-by-Step Guide
-              </button>
-              <button type="button" className="dark-cta compact" onClick={() => playSound("/audio/tea-pour.mp3", "Tea Pouring")}>
-                Hear the Pour
               </button>
             </div>
           </div>
@@ -816,24 +737,11 @@ export function ChazenHomeExperience() {
                 在宋代，茶不只是入口之物，也是文人的修養、器物的審美，與心性的練習。
               </p>
               <div className="song-mini-grid">
-                {songCards.map((card) => (
-                  <div key={card.title}>
-                    <div className="song-card-thumb">
-                      <Image
-                        src={imageUrl(card.image)}
-                        alt={`${card.title} ${card.chinese} Song tea detail`}
-                        fill
-                        sizes="(max-width: 900px) 45vw, 11vw"
-                      />
-                    </div>
-                    <strong>{card.title}</strong>
-                    <span lang="zh-Hant">{card.chinese}</span>
-                    <p>{card.copy}</p>
-                    <ul>
-                      {card.details.map((detail) => (
-                        <li key={detail}>{detail}</li>
-                      ))}
-                    </ul>
+                {songCards.map(([title, chinese, copy]) => (
+                  <div key={title}>
+                    <strong>{title}</strong>
+                    <span lang="zh-Hant">{chinese}</span>
+                    <p>{copy}</p>
                   </div>
                 ))}
               </div>
@@ -890,7 +798,6 @@ export function ChazenHomeExperience() {
             <StillnessPractice
               onStart={() => setBreathingOpen(true)}
               onPlayBowl={() => playSound("/audio/singing-bowl.mp3", "Singing Bowl")}
-              onAmbience={() => playSound("/audio/tea-room-ambience.mp3", "Tea Room Ambience", true)}
               onStop={stopSound}
               onWatchRoom={() => openVideo("Stillness Room", "/video/stillness-room.mp4")}
               onMood={() =>
@@ -925,7 +832,6 @@ export function ChazenHomeExperience() {
                       { label: "Landscape", value: origin.landscape },
                       { label: "Climate", value: origin.climate },
                       { label: "Terroir", value: origin.terroir },
-                      { label: "Taste Profile", value: origin.taste },
                       { label: "Brewing Suggestion", value: origin.brewing }
                     ]
                   })
@@ -942,7 +848,6 @@ export function ChazenHomeExperience() {
                   })
                 )
               }
-              onRain={() => playSound("/audio/garden-rain.mp3", "Garden Rain", true)}
             />
           </div>
 
@@ -959,7 +864,7 @@ export function ChazenHomeExperience() {
                       makeInfo({
                         kicker: "Wisdom Figures / 東方智慧",
                         title: "Explore the Figures",
-                        body: wisdomCards.map((card) => `${card.character} ${card.name}: ${card.meaning}. ${card.detail}`)
+                        body: wisdomCards.map(([character, name, meaning]) => `${character} ${name}: ${meaning}.`)
                       })
                     )
                   }
@@ -992,30 +897,24 @@ export function ChazenHomeExperience() {
               </div>
             </div>
             <div className="wisdom-grid">
-              {wisdomCards.map((card) => (
+              {wisdomCards.map(([character, name, meaning]) => (
                 <button
                   type="button"
-                  key={card.character}
+                  key={character}
                   onClick={() =>
                     setInfoModal(
                       makeInfo({
                         kicker: "Wisdom Archetype / 傳世典範",
-                        title: card.name,
-                        chinese: card.character,
-                        body: [card.meaning, card.detail, "In CHAZEN, symbolic figures become a refined language for gifting, reflection, and ritual identity."],
-                        items: [
-                          { label: "Chinese Name", value: card.chinese },
-                          { label: "Symbolic Object", value: card.object }
-                        ]
+                        title: name,
+                        chinese: character,
+                        body: [meaning, "In CHAZEN, symbolic figures become a refined language for gifting, reflection, and ritual identity."]
                       })
                     )
                   }
                 >
-                  <i className="wisdom-portrait" aria-hidden="true" />
-                  <span lang="zh-Hant">{card.character}</span>
-                  <strong>{card.name}</strong>
-                  <p>{card.meaning}</p>
-                  <small>{card.detail}</small>
+                  <span lang="zh-Hant">{character}</span>
+                  <strong>{name}</strong>
+                  <p>{meaning}</p>
                 </button>
               ))}
             </div>
@@ -1074,17 +973,13 @@ export function ChazenHomeExperience() {
                 </button>
               </div>
               <div className="product-catalogue">
-                {teaProducts.map((tea, index) => (
+                {teaProducts.map((tea) => (
                   <div key={tea.name}>
-                    <div className={`tea-card-visual tea-card-visual-${index + 1}`} aria-hidden="true">
-                      <span />
-                    </div>
                     <span>{tea.type}</span>
                     <h3>{tea.name}</h3>
                     <strong lang="zh-Hant">{tea.chinese}</strong>
                     <p>{tea.origin}</p>
                     <small>{tea.taste}</small>
-                    <small>{tea.ritual}</small>
                     <button
                       type="button"
                       className="text-link-button"
@@ -1118,18 +1013,7 @@ export function ChazenHomeExperience() {
               <p lang="zh-Hant">禮，不只是送出。是被記住。</p>
               <div className="gift-tags">
                 {giftTypes.map((item) => (
-                  <span key={item.title}>{item.title}</span>
-                ))}
-              </div>
-              <div className="gift-detail-grid">
-                {giftTypes.map((gift) => (
-                  <article key={gift.title}>
-                    <i aria-hidden="true" />
-                    <h3>{gift.title}</h3>
-                    <p>{gift.copy}</p>
-                    <small>For: {gift.for}</small>
-                    <small>Tone: {gift.tone}</small>
-                  </article>
+                  <span key={item}>{item}</span>
                 ))}
               </div>
               <div className="chapter-actions">
@@ -1221,10 +1105,6 @@ export function ChazenHomeExperience() {
         <div className="museum-container">
           <p className="display-title">CHAZEN 茶禪</p>
           <h2>Tea. Return. Stillness.</h2>
-          <p className="sound-respect-note">
-            Sound optional. Silence respected.
-            <span lang="zh-Hant">聲音可選，靜默亦被尊重。</span>
-          </p>
           <div className="brand-footer-links">
             <a href="mailto:hello@chazen.example">
               <Mail size={15} aria-hidden="true" /> Inquiry
@@ -1242,7 +1122,6 @@ export function ChazenHomeExperience() {
       <SoundDock
         open={soundOpen}
         active={soundActive}
-        activeLabel={activeSoundLabel}
         notice={soundNotice}
         onToggle={() => setSoundOpen((value) => !value)}
         onPlay={playSound}
