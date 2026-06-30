@@ -7,28 +7,20 @@ import {
   BookOpen,
   Globe2,
   Mail,
-  MapPinned,
   Volume2,
   X
 } from "lucide-react";
 import { SoundDock } from "@/components/SoundDock";
+import { StillnessPractice } from "@/components/StillnessPractice";
+import { TeaAtlasMap } from "@/components/TeaAtlasMap";
+import { TeaHistoryTimeline } from "@/components/TeaHistoryTimeline";
+import { TeaTableInteractive } from "@/components/TeaTableInteractive";
 import { VideoModal } from "@/components/VideoModal";
+import { teaHistoryItems } from "@/data/teaHistory";
+import { teaObjects, type TeaObject } from "@/data/teaObjects";
+import { teaOrigins, type TeaOrigin } from "@/data/teaOrigins";
 
-type TeaTool = {
-  number: string;
-  english: string;
-  chinese: string;
-  purpose: string;
-  meaning: string;
-  used: string;
-  note: string;
-  sound: string;
-  soundLabel: string;
-  video: string;
-  brewingRole: string;
-  x: string;
-  y: string;
-};
+type TeaTool = TeaObject;
 
 type InfoModalContent = {
   kicker: string;
@@ -466,15 +458,16 @@ const journalCards = [
 const makeInfo = (content: InfoModalContent) => content;
 
 export function ChazenHomeExperience() {
-  const [activeTool, setActiveTool] = useState(teaTools[0]);
+  const [activeTool, setActiveTool] = useState<TeaObject>(teaObjects[0]);
   const [activeStep, setActiveStep] = useState(ritualSteps[0]);
-  const [activeRegion, setActiveRegion] = useState(atlasRegions[1]);
+  const [activeRegion, setActiveRegion] = useState<TeaOrigin>(teaOrigins[1]);
   const [videoModal, setVideoModal] = useState<{ title: string; src: string } | null>(null);
   const [infoModal, setInfoModal] = useState<InfoModalContent | null>(null);
   const [breathingOpen, setBreathingOpen] = useState(false);
   const [soundOpen, setSoundOpen] = useState(false);
   const [soundNotice, setSoundNotice] = useState("Sound is off");
   const [soundActive, setSoundActive] = useState(false);
+  const activeAudioRef = useRef<HTMLAudioElement | null>(null);
   const rainRef = useRef<HTMLAudioElement | null>(null);
   const soundTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
@@ -506,13 +499,17 @@ export function ChazenHomeExperience() {
       rainRef.current.pause();
       rainRef.current = null;
     }
+    if (activeAudioRef.current) {
+      activeAudioRef.current.pause();
+      activeAudioRef.current = null;
+    }
     if (soundTimerRef.current) clearTimeout(soundTimerRef.current);
 
     const audio = new Audio(mediaUrl(path));
     audio.loop = loop;
     audio.volume = loop ? 0.35 : 0.72;
     audio.addEventListener("error", () => {
-      setSoundNotice(`${label} audio coming soon`);
+      setSoundNotice("Audio file coming soon");
       setSoundActive(false);
     });
     audio
@@ -520,13 +517,14 @@ export function ChazenHomeExperience() {
       .then(() => {
         setSoundNotice(loop ? `${label} is playing softly` : `${label} played once`);
         setSoundActive(true);
+        activeAudioRef.current = audio;
         if (loop) rainRef.current = audio;
         if (!loop) {
           soundTimerRef.current = setTimeout(() => setSoundActive(false), 1800);
         }
       })
       .catch(() => {
-        setSoundNotice(`${label} audio coming soon`);
+        setSoundNotice("Audio file coming soon");
         setSoundActive(false);
       });
   };
@@ -536,6 +534,10 @@ export function ChazenHomeExperience() {
       rainRef.current.pause();
       rainRef.current = null;
     }
+    if (activeAudioRef.current) {
+      activeAudioRef.current.pause();
+      activeAudioRef.current = null;
+    }
     if (soundTimerRef.current) clearTimeout(soundTimerRef.current);
     setSoundActive(false);
     setSoundNotice("Silent Mode");
@@ -544,6 +546,7 @@ export function ChazenHomeExperience() {
   useEffect(() => {
     return () => {
       if (rainRef.current) rainRef.current.pause();
+      if (activeAudioRef.current) activeAudioRef.current.pause();
       if (soundTimerRef.current) clearTimeout(soundTimerRef.current);
     };
   }, []);
@@ -606,192 +609,43 @@ export function ChazenHomeExperience() {
         </div>
       </section>
 
-      <section id="tea-history" className="museum-section history-timeline-section">
-        <div className="museum-container">
-          <div className="section-title-block">
-            <p className="museum-kicker">Chapter 03 / The History of Tea</p>
-            <h2>Tea moves from legend to medicine, from scholarship to stillness.</h2>
-            <p lang="zh-Hant">茶之源流，從傳說、藥性、文人審美，到當代靜心。</p>
-          </div>
-          <div className="history-timeline">
-            {teaHistory.map(([number, title, chinese, copy]) => (
-              <article key={number}>
-                <span>{number}</span>
-                <h3>{title}</h3>
-                <strong lang="zh-Hant">{chinese}</strong>
-                <p>{copy}</p>
-              </article>
-            ))}
-          </div>
-          <div className="knowledge-grid" aria-label="Tea culture knowledge cards">
-            {knowledgeCards.map(([title, chinese, copy, href]) => (
-              <article key={title}>
-                <span className="seal-mark" aria-hidden="true" />
-                <h3>{title}</h3>
-                <strong lang="zh-Hant">{chinese}</strong>
-                <p>{copy}</p>
-                <a href={href} className="text-link-button">
-                  Learn More
-                </a>
-              </article>
-            ))}
-          </div>
-          <div className="chapter-actions">
-            <button
-              type="button"
-              className="museum-link-button dark-on-light"
-              onClick={() =>
-                setInfoModal(
-                  makeInfo({
-                    kicker: "Museum Timeline / 茶之源流",
-                    title: "Enter the Timeline",
-                    chinese: "進入茶史",
-                    body: teaHistory.map(([number, title, chinese, copy]) => `${number} ${title} / ${chinese}: ${copy}`),
-                    action: "This overlay is a placeholder for a future full-screen tea history room."
-                  })
-                )
-              }
-            >
-              Enter the Timeline <ArrowRight size={15} aria-hidden="true" />
-            </button>
-          </div>
-        </div>
-      </section>
+      <TeaHistoryTimeline
+        onEnterTimeline={() =>
+          setInfoModal(
+            makeInfo({
+              kicker: "Museum Timeline / 茶之源流",
+              title: "Enter the Timeline",
+              chinese: "進入茶史",
+              body: teaHistoryItems.map((item) => `${item.number} ${item.title} / ${item.chinese}: ${item.copy}`),
+              action: "This overlay is a placeholder for a future full-screen tea history room."
+            })
+          )
+        }
+      />
 
-      <section id="tea-table" className="museum-section tea-table-exhibit">
-        <div className="museum-container">
-          <div className="section-title-block">
-            <p className="museum-kicker">Chapter 04 / The Tea Table</p>
-            <h2>Every vessel has its place. Every movement is a return.</h2>
-            <p lang="zh-Hant">器有其位，動作有序。茶之道，在於回歸本真。</p>
-          </div>
-
-          <div className="tea-table-grid">
-            <div className="tool-selector" aria-label="Tea table objects">
-              {teaTools.map((tool) => (
-                <button
-                  type="button"
-                  key={tool.number}
-                  className={activeTool.number === tool.number ? "is-active" : ""}
-                  onClick={() => setActiveTool(tool)}
-                  aria-pressed={activeTool.number === tool.number}
-                >
-                  <span>{tool.number}</span>
-                  <strong>{tool.english}</strong>
-                  <em lang="zh-Hant">{tool.chinese}</em>
-                </button>
-              ))}
-            </div>
-
-            <figure className="table-object-stage">
-              <Image
-                src={imageUrl("chazen-tea-table-topdown-v3.png")}
-                alt="Top-down Chinese tea table with gaiwan, fairness cup, tasting cups, tea tray, tea tools, cloth, and singing bowl."
-                fill
-                sizes="(max-width: 900px) 100vw, 48vw"
-                className="table-object-image"
-              />
-              <div className="table-object-shade" />
-              <svg className="table-annotation-layer" viewBox="0 0 100 100" aria-hidden="true">
-                <path d="M48 42 C44 31 41 24 35 18" />
-                <path d="M63 34 C70 25 76 20 85 18" />
-                <path d="M72 58 C82 58 88 63 92 71" />
-                <path d="M28 60 C17 62 10 68 7 78" />
-                <path d="M18 32 C12 26 10 18 13 10" />
-              </svg>
-              {teaTools.map((tool) => (
-                <button
-                  type="button"
-                  key={tool.number}
-                  className={`object-marker ${activeTool.number === tool.number ? "is-active" : ""}`}
-                  style={{ left: tool.x, top: tool.y }}
-                  onClick={() => {
-                    setActiveTool(tool);
-                  }}
-                  aria-label={`${tool.number} ${tool.english} ${tool.chinese}`}
-                  title={`${tool.english} / ${tool.chinese}`}
-                >
-                  <span>{tool.number}</span>
-                  <em>{tool.chinese}</em>
-                </button>
-              ))}
-              <figcaption>
-                Object study / Click each numbered vessel / <span lang="zh-Hant">器物標本圖</span>
-              </figcaption>
-            </figure>
-
-            <article className="selected-object-panel">
-              <p className="museum-kicker">Selected Object</p>
-              <h3 lang="zh-Hant">{activeTool.chinese}</h3>
-              <h4>{activeTool.english}</h4>
-              <dl>
-                <div>
-                  <dt>Purpose</dt>
-                  <dd>{activeTool.purpose}</dd>
-                </div>
-                <div>
-                  <dt>Ritual Meaning</dt>
-                  <dd>{activeTool.meaning}</dd>
-                </div>
-                <div>
-                  <dt>Used When</dt>
-                  <dd>{activeTool.used}</dd>
-                </div>
-                <div>
-                  <dt>Cultural Note</dt>
-                  <dd>{activeTool.note}</dd>
-                </div>
-                <div>
-                  <dt>Brewing Role</dt>
-                  <dd>{activeTool.brewingRole}</dd>
-                </div>
-              </dl>
-              <div className="object-actions">
-                <button type="button" className="museum-link-button dark-on-light" onClick={() => openObjectModal(activeTool)}>
-                  Learn This Vessel
-                </button>
-                <button
-                  type="button"
-                  className="museum-link-button dark-on-light"
-                  onClick={() =>
-                    setInfoModal(
-                      makeInfo({
-                        kicker: "Brewing Role / 沖泡角色",
-                        title: `${activeTool.english} in the Ritual`,
-                        chinese: activeTool.chinese,
-                        body: [activeTool.brewingRole, activeTool.used, activeTool.meaning],
-                        items: [
-                          { label: "Purpose", value: activeTool.purpose },
-                          { label: "Cultural Note", value: activeTool.note }
-                        ]
-                      })
-                    )
-                  }
-                >
-                  View Brewing Role
-                </button>
-                <button type="button" className="museum-link-button dark-on-light" onClick={() => playSound(activeTool.sound, activeTool.soundLabel)}>
-                  Hear Object Sound
-                </button>
-                <button
-                  type="button"
-                  className="museum-link-button dark-on-light"
-                  onClick={() => openVideo(`${activeTool.english} in Use`, activeTool.video)}
-                >
-                  Watch in Use
-                </button>
-              </div>
-            </article>
-          </div>
-
-          <div className="gaiwan-line-study" aria-hidden="true">
-            <span className="line-saucer" />
-            <span className="line-bowl" />
-            <span className="line-lid" />
-            <span className="line-knob" />
-          </div>
-        </div>
-      </section>
+      <TeaTableInteractive
+        tools={teaObjects}
+        activeTool={activeTool}
+        imageSrc={imageUrl("chazen-tea-table-topdown-v3.png")}
+        onSelect={setActiveTool}
+        onLearn={openObjectModal}
+        onBrewingRole={(tool) =>
+          setInfoModal(
+            makeInfo({
+              kicker: "Brewing Role / 沖泡角色",
+              title: `${tool.english} in the Ritual`,
+              chinese: tool.chinese,
+              body: [tool.brewingRole, tool.used, tool.meaning],
+              items: [
+                { label: "Purpose", value: tool.purpose },
+                { label: "Cultural Note", value: tool.note }
+              ]
+            })
+          )
+        }
+        onSound={(tool) => playSound(tool.sound, tool.soundLabel)}
+        onVideo={(tool) => openVideo(tool.english === "Singing Bowl" ? "Stillness Room" : "Gaiwan Ritual", tool.video)}
+      />
 
       <section id="gaiwan-ritual" className="museum-section ritual-exhibit">
         <div className="museum-container ritual-panel">
@@ -941,131 +795,60 @@ export function ChazenHomeExperience() {
           </article>
 
           <div className="museum-duo-grid">
-            <article id="stillness-mode" className="stillness-panel">
-              <p className="museum-kicker">Chapter 08 / Stillness Mode / 靜心茶室</p>
-              <h2>Breathe in. Return to the tea. Breathe out. Return to yourself.</h2>
-              <p lang="zh-Hant">吸氣，回到茶。呼氣，回到自己。</p>
-              <div className="bowl-stage" aria-hidden="true">
-                <span className="bowl-rim" />
-                <span className="bowl-body" />
-                <span className="bowl-smoke" />
-              </div>
-              <div className="stillness-options">
-                {["Breathing Guide", "Tea Meditation", "Sound of Bowl", "Recommended Tea"].map((item) => (
-                  <span key={item}>{item}</span>
-                ))}
-              </div>
-              <div className="chapter-actions">
-                <button type="button" className="dark-cta compact" onClick={() => setBreathingOpen(true)}>
-                  Start 60-Second Practice
-                </button>
-                <button type="button" className="dark-cta compact" onClick={() => playSound("/audio/singing-bowl.mp3", "Singing Bowl")}>
-                  Play Singing Bowl
-                </button>
-                <button
-                  type="button"
-                  className="dark-cta compact"
-                  onClick={() =>
-                    setInfoModal(
-                      makeInfo({
-                        kicker: "Mood Selector / 茶與心境",
-                        title: "Tea for My Mood",
-                        body: [
-                          "For clarity: Longjing.",
-                          "For depth: Da Hong Pao.",
-                          "For softness: Bai Hao Yin Zhen.",
-                          "For grounding: Pu'er."
-                        ],
-                        action: "A future selector can turn this into a guided recommendation."
-                      })
-                    )
-                  }
-                >
-                  Tea for My Mood
-                </button>
-                <button type="button" className="dark-cta compact" onClick={stopSound}>
-                  Silent Mode
-                </button>
-              </div>
-            </article>
+            <StillnessPractice
+              onStart={() => setBreathingOpen(true)}
+              onPlayBowl={() => playSound("/audio/singing-bowl.mp3", "Singing Bowl")}
+              onStop={stopSound}
+              onWatchRoom={() => openVideo("Stillness Room", "/video/stillness-room.mp4")}
+              onMood={() =>
+                setInfoModal(
+                  makeInfo({
+                    kicker: "Tea Recommendation / 茶與心境",
+                    title: "Tea for My Mood",
+                    body: [
+                      "For clarity: Longjing.",
+                      "For depth: Da Hong Pao.",
+                      "For softness: Bai Hao Yin Zhen.",
+                      "For grounding: Pu'er."
+                    ],
+                    action: "After the breathing room, CHAZEN can recommend a tea by mood, time of day, and ritual intention."
+                  })
+                )
+              }
+            />
 
-            <article className="atlas-panel">
-              <p className="museum-kicker">Chapter 07 / Tea Atlas / 茶之地圖</p>
-              <h2>Origin is not a coordinate. It is climate remembered by leaf.</h2>
-              <div className="atlas-map" aria-label="Highlighted tea regions">
-                {atlasRegions.map((region) => (
-                  <button
-                    type="button"
-                    key={region.name}
-                    className={activeRegion.name === region.name ? "is-active" : ""}
-                    onClick={() => setActiveRegion(region)}
-                  >
-                    {region.name}
-                  </button>
-                ))}
-              </div>
-              <div className="atlas-feature">
-                <span>Featured Origin</span>
-                <strong>
-                  {activeRegion.name} {activeRegion.chinese}
-                </strong>
-                <p>{activeRegion.tea}</p>
-                <dl className="atlas-detail-list">
-                  <div>
-                    <dt>Climate</dt>
-                    <dd>{activeRegion.climate}</dd>
-                  </div>
-                  <div>
-                    <dt>Terroir</dt>
-                    <dd>{activeRegion.terroir}</dd>
-                  </div>
-                  <div>
-                    <dt>Taste</dt>
-                    <dd>{activeRegion.taste}</dd>
-                  </div>
-                </dl>
-              </div>
-              <button
-                type="button"
-                className="museum-link-button dark-on-light"
-                onClick={() =>
-                  setInfoModal(
-                    makeInfo({
-                      kicker: "Tea Atlas / 茶之地圖",
-                      title: `${activeRegion.name} ${activeRegion.chinese}`,
-                      body: [activeRegion.history, activeRegion.process, activeRegion.ritual],
-                      items: [
-                        { label: "Tea", value: activeRegion.tea },
-                        { label: "Climate", value: activeRegion.climate },
-                        { label: "Terroir", value: activeRegion.terroir },
-                        { label: "Taste", value: activeRegion.taste }
-                      ]
-                    })
-                  )
-                }
-              >
-                Explore Tea Origins <MapPinned size={15} aria-hidden="true" />
-              </button>
-              <button
-                type="button"
-                className="museum-link-button dark-on-light"
-                onClick={() =>
-                  setInfoModal(
-                    makeInfo({
-                      kicker: "Open Tea Map / 茶之地圖",
-                      title: "Origin Map",
-                      chinese: "茶山與水土",
-                      body: atlasRegions.map(
-                        (region) => `${region.name} ${region.chinese}: ${region.tea}. ${region.climate} ${region.terroir}`
-                      ),
-                      action: "A future room can expand this into a full interactive East Asia tea map."
-                    })
-                  )
-                }
-              >
-                Open Tea Map
-              </button>
-            </article>
+            <TeaAtlasMap
+              origins={teaOrigins}
+              activeOrigin={activeRegion}
+              onSelect={setActiveRegion}
+              onExplore={(origin) =>
+                setInfoModal(
+                  makeInfo({
+                    kicker: "Tea Atlas / 茶之地圖",
+                    title: `${origin.name} ${origin.chinese}`,
+                    body: [origin.history, origin.process, origin.ritual],
+                    items: [
+                      { label: "Tea", value: origin.tea },
+                      { label: "Landscape", value: origin.landscape },
+                      { label: "Climate", value: origin.climate },
+                      { label: "Terroir", value: origin.terroir },
+                      { label: "Brewing Suggestion", value: origin.brewing }
+                    ]
+                  })
+                )
+              }
+              onOpenMap={() =>
+                setInfoModal(
+                  makeInfo({
+                    kicker: "Open Tea Map / 茶之地圖",
+                    title: "Origin Map",
+                    chinese: "茶山與水土",
+                    body: teaOrigins.map((origin) => `${origin.name} ${origin.chinese}: ${origin.tea}. ${origin.landscape}`),
+                    action: "A future room can expand this into a full interactive East Asia tea map."
+                  })
+                )
+              }
+            />
           </div>
 
           <article className="wisdom-panel">

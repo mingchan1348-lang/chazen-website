@@ -39,6 +39,9 @@ export function SoundDock({ open, active, notice, onToggle, onPlay, onStop }: So
         onClick={onToggle}
       >
         <Volume2 size={17} aria-hidden="true" />
+        <span>
+          Sound of Stillness <em lang="zh-Hant">靜心之聲</em>
+        </span>
       </button>
     </div>
   );
