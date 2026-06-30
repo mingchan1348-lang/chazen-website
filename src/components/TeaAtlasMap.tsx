@@ -8,9 +8,10 @@ type TeaAtlasMapProps = {
   onSelect: (origin: TeaOrigin) => void;
   onExplore: (origin: TeaOrigin) => void;
   onOpenMap: () => void;
+  onRain: () => void;
 };
 
-export function TeaAtlasMap({ origins, activeOrigin, onSelect, onExplore, onOpenMap }: TeaAtlasMapProps) {
+export function TeaAtlasMap({ origins, activeOrigin, onSelect, onExplore, onOpenMap, onRain }: TeaAtlasMapProps) {
   return (
     <article className="atlas-panel">
       <p className="museum-kicker">Chapter 07 / Tea Atlas / 茶之地圖</p>
@@ -34,7 +35,20 @@ export function TeaAtlasMap({ origins, activeOrigin, onSelect, onExplore, onOpen
           {activeOrigin.name} {activeOrigin.chinese}
         </strong>
         <p>{activeOrigin.tea}</p>
+        <div className="origin-image-triptych" aria-hidden="true">
+          <span data-label="Origin" />
+          <span data-label="Leaf" />
+          <span data-label="Landscape" />
+        </div>
         <dl className="atlas-detail-list">
+          <div>
+            <dt>Region</dt>
+            <dd>{activeOrigin.name} / {activeOrigin.chinese}</dd>
+          </div>
+          <div>
+            <dt>Tea Type</dt>
+            <dd>{activeOrigin.tea}</dd>
+          </div>
           <div>
             <dt>Landscape</dt>
             <dd>{activeOrigin.landscape}</dd>
@@ -48,7 +62,11 @@ export function TeaAtlasMap({ origins, activeOrigin, onSelect, onExplore, onOpen
             <dd>{activeOrigin.terroir}</dd>
           </div>
           <div>
-            <dt>Brewing</dt>
+            <dt>Taste Profile</dt>
+            <dd>{activeOrigin.taste}</dd>
+          </div>
+          <div>
+            <dt>Ritual Suggestion</dt>
             <dd>{activeOrigin.brewing}</dd>
           </div>
         </dl>
@@ -59,6 +77,9 @@ export function TeaAtlasMap({ origins, activeOrigin, onSelect, onExplore, onOpen
         </button>
         <button type="button" className="museum-link-button dark-on-light" onClick={onOpenMap}>
           Open Tea Map
+        </button>
+        <button type="button" className="museum-link-button dark-on-light" onClick={onRain}>
+          Enter Mountain Rain
         </button>
       </div>
     </article>
