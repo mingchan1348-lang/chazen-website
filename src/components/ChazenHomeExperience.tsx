@@ -202,15 +202,15 @@ const teaTools: TeaTool[] = [
 const ritualSteps = [
   {
     number: "01",
-    title: "Warm the cup",
+    title: "Warm the vessel",
     chinese: "溫杯",
     copy: "Heat crosses porcelain first. The vessel wakes before the leaf, and the room learns the pace of the hand.",
     image: "chazen-tea-table-topdown-v3.png"
   },
   {
     number: "02",
-    title: "Add tea",
-    chinese: "投茶",
+    title: "Present the leaves",
+    chinese: "賞茶",
     copy: "The dry leaf is offered to the eye: twist, roast, stem, fragrance, season, and mountain.",
     image: "chazen-tea-collection-v1.png"
   },
@@ -224,7 +224,7 @@ const ritualSteps = [
   {
     number: "04",
     title: "Brew",
-    chinese: "沖泡",
+    chinese: "注水",
     copy: "Water falls with intention. Temperature, angle, seconds, and silence become architecture.",
     image: "chazen-hero-gongfu-room-v3.png"
   },
@@ -237,7 +237,7 @@ const ritualSteps = [
   },
   {
     number: "06",
-    title: "Savour",
+    title: "Taste",
     chinese: "品茗",
     copy: "The first sip is received before it is judged: aroma, texture, warmth, return.",
     image: "chazen-song-diancha-v1.png"
@@ -649,8 +649,39 @@ export function ChazenHomeExperience() {
 
       <section id="gaiwan-ritual" className="museum-section ritual-exhibit">
         <div className="museum-container ritual-panel">
-          <div className="ritual-nav" aria-label="Gaiwan ritual steps">
+          <div className="ritual-copy-block">
             <p className="museum-kicker">Chapter 05 / Gaiwan Ritual / 蓋碗沖茶</p>
+            <h2>Six movements. One return.</h2>
+            <p>
+              The gaiwan ritual is not a recipe. It is a sequence of temperature,
+              fragrance, timing, and restraint.
+            </p>
+            <p lang="zh-Hant">蓋碗之法，不在繁複，而在水溫、香氣、時間與克制。</p>
+          </div>
+
+          <div className="ritual-cinema-stage">
+            <Image
+              src={imageUrl(activeStep.image)}
+              alt={`${activeStep.number} ${activeStep.title} ${activeStep.chinese}`}
+              fill
+              sizes="(max-width: 900px) 100vw, 58vw"
+              className="ritual-cinema-image"
+            />
+            <div className="ritual-cinema-shade" />
+            <article className="ritual-story">
+              <span>{activeStep.number}</span>
+              <h2>{activeStep.title}</h2>
+              <h3 lang="zh-Hant">{activeStep.chinese}</h3>
+              <p>{activeStep.copy}</p>
+              <blockquote>
+                Water, leaf, time. Nothing more.
+                <br />
+                <span lang="zh-Hant">水、葉、時。除此之外，皆是雜音。</span>
+              </blockquote>
+            </article>
+          </div>
+
+          <div className="ritual-step-rail" aria-label="Gaiwan ritual steps">
             {ritualSteps.map((step) => (
               <button
                 type="button"
@@ -664,57 +695,19 @@ export function ChazenHomeExperience() {
                 <em lang="zh-Hant">{step.chinese}</em>
               </button>
             ))}
-            <div className="chapter-actions ritual-actions">
-              <button type="button" className="dark-cta compact" onClick={() => openVideo("Gaiwan Ritual", "/video/gaiwan-ritual.mp4")}>
-                Watch Gaiwan Ritual
-              </button>
-              <button type="button" className="dark-cta compact" onClick={() => setActiveStep(ritualSteps[0])}>
-                Begin Step-by-Step Guide
-              </button>
-            </div>
           </div>
 
-          <div className="ritual-filmstrip">
-            {ritualSteps.map((step) => (
-              <button
-                type="button"
-                key={step.number}
-                className={activeStep.number === step.number ? "is-active" : ""}
-                onClick={() => setActiveStep(step)}
-                aria-label={`${step.number} ${step.title}`}
-              >
-                <Image
-                  src={imageUrl(step.image)}
-                  alt=""
-                  fill
-                  sizes="(max-width: 900px) 72vw, 24vw"
-                  className="ritual-film-image"
-                />
-                <span>{step.number}</span>
-              </button>
-            ))}
-          </div>
-
-          <article className="ritual-story">
-            <span>{activeStep.number}</span>
-            <h2>{activeStep.title}</h2>
-            <h3 lang="zh-Hant">{activeStep.chinese}</h3>
-            <p>{activeStep.copy}</p>
-            <button
-              type="button"
-              className="dark-cta compact ritual-step-watch"
-              onClick={() => openVideo(`${activeStep.number} ${activeStep.title}`, "/video/gaiwan-ritual.mp4")}
-            >
-              Watch This Step
+          <div className="chapter-actions ritual-actions">
+            <button type="button" className="dark-cta compact" onClick={() => openVideo("Gaiwan Ritual", "/video/gaiwan-ritual.mp4")}>
+              Watch Gaiwan Ritual
             </button>
-            <blockquote>
-              Water, leaf, time. Nothing more. In six movements, tea becomes a type of listening.
-              <br />
-              <span lang="zh-Hant">水、葉、時、手、心。六步之間，茶成為一種聆聽。</span>
-            </blockquote>
-          </article>
-
-          <div className="ritual-ink-wash" aria-hidden="true" />
+            <button type="button" className="dark-cta compact" onClick={() => playSound("/audio/tea-pour.mp3", "Tea Pouring")}>
+              Hear the Pour
+            </button>
+            <button type="button" className="dark-cta compact" onClick={() => setActiveStep(ritualSteps[0])}>
+              Restart Sequence
+            </button>
+          </div>
         </div>
       </section>
 

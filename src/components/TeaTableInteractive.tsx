@@ -28,13 +28,18 @@ export function TeaTableInteractive({
     <section id="tea-table" className="museum-section tea-table-exhibit">
       <div className="museum-container">
         <div className="section-title-block">
-          <p className="museum-kicker">Chapter 04 / The Tea Table</p>
-          <h2>Every vessel has its place. Every movement is a return.</h2>
-          <p lang="zh-Hant">器有其位，動作有序。茶之道，在於回歸本真。</p>
+          <p className="museum-kicker">Chapter 04 / The Tea Table / 茶席器物</p>
+          <h2>The table is the ritual before the first pour.</h2>
+          <p>
+            A gongfu tea table is not decoration. It is an ordered field of heat, water,
+            vessel, sound, and attention.
+          </p>
+          <p lang="zh-Hant">茶席不是陳列，而是水、火、器、聲與心的秩序。</p>
         </div>
 
         <div className="tea-table-grid">
           <div className="tool-selector" aria-label="Tea table objects">
+            <p className="tool-selector-label">Object Index / 器物目錄</p>
             {tools.map((tool) => (
               <button
                 type="button"
@@ -44,8 +49,10 @@ export function TeaTableInteractive({
                 aria-pressed={activeTool.number === tool.number}
               >
                 <span>{tool.number}</span>
-                <strong>{tool.english}</strong>
-                <em lang="zh-Hant">{tool.chinese}</em>
+                <strong>
+                  {tool.english}
+                  <em lang="zh-Hant">{tool.chinese}</em>
+                </strong>
               </button>
             ))}
           </div>
@@ -59,6 +66,11 @@ export function TeaTableInteractive({
               className="table-object-image"
             />
             <div className="table-object-shade" />
+            <div className="table-object-title">
+              <span>Top View</span>
+              <strong>Gongfu Tea Table</strong>
+              <em lang="zh-Hant">工夫茶席俯視圖</em>
+            </div>
             <svg className="table-annotation-layer" viewBox="0 0 100 100" aria-hidden="true">
               <path d="M48 42 C44 31 41 24 35 18" />
               <path d="M63 34 C70 25 76 20 85 18" />
@@ -77,16 +89,17 @@ export function TeaTableInteractive({
                 title={`${tool.english} / ${tool.chinese}`}
               >
                 <span>{tool.number}</span>
-                <em lang="zh-Hant">{tool.chinese}</em>
+                <em>{tool.english}</em>
               </button>
             ))}
             <figcaption>
-              Object study / Click each numbered vessel / <span lang="zh-Hant">器物標本圖</span>
+              Click a numbered object to read its purpose, ritual meaning, and moment of use.
             </figcaption>
           </figure>
 
           <article className="selected-object-panel">
-            <p className="museum-kicker">Selected Object</p>
+            <p className="museum-kicker">Selected Object / 器物標籤</p>
+            <span className="object-accession">{activeTool.number}</span>
             <h3 lang="zh-Hant">{activeTool.chinese}</h3>
             <h4>{activeTool.english}</h4>
             <dl>

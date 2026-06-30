@@ -13,7 +13,7 @@ export default function Home() {
     <main className="museum-home">
       <section className="cinema-hero" aria-labelledby="home-title">
         <Image
-          src={`${basePath}/images/chazen-hero-gongfu-room-v3.png`}
+          src={`${basePath}/images/chazen-tea-room-hero-v2.png`}
           alt="A dark wooden Chinese tea room with a real gongfu tea table, gaiwan, fairness cup, tasting cups, tea tray, singing bowl, steam, and garden morning light."
           fill
           priority
@@ -21,13 +21,8 @@ export default function Home() {
           className="cinema-hero-image"
         />
         <div className="cinema-hero-shade" />
-        <div className="hero-chapter-rail" aria-label="Homepage chapters">
-          {["01", "02", "03", "04", "05"].map((chapter) => (
-            <span key={chapter}>{chapter}</span>
-          ))}
-        </div>
         <div className="cinema-hero-inner">
-          <p className="museum-kicker">Chapter 01 / The Arrival</p>
+          <p className="museum-kicker hero-eyebrow">Private tea room / 茶禪入室</p>
           <div>
             <h1 id="home-title" className="cinema-title">
               CHAZEN <span>茶禪</span>
@@ -47,18 +42,22 @@ export default function Home() {
                 Enter the Ritual
               </a>
               <button type="button" className="museum-cta museum-cta-secondary" onClick={() => setFilmOpen(true)}>
-                Watch the Ritual Film
+                Watch Ritual Film
               </button>
             </div>
           </div>
+          <aside className="hero-object-caption" aria-label="Hero object caption">
+            <span>01</span>
+            <p>
+              Gaiwan, fairness cup, tasting cups, tea tray, singing bowl, morning garden light.
+            </p>
+            <small lang="zh-Hant">蓋碗、公道杯、品茗杯、茶盤、冥想鉢與晨光。</small>
+          </aside>
           <div className="hero-scroll-cue" aria-hidden="true">
             <span />
             Scroll
           </div>
         </div>
-        <button type="button" className="hero-film-control" aria-label="Pause ambient hero film">
-          II
-        </button>
       </section>
 
       <ChazenHomeExperience />
