@@ -576,7 +576,7 @@ const entranceRooms = [
     chinese: "先覺察當下狀態，再進入一盞茶。",
     body: "A guided reflection for sleep, stress, focus, mood, and pace. It is not a diagnosis; it is a quiet way to understand what kind of tea ritual may support today.",
     cta: "Discover Your Tea",
-    href: "/discover-your-tea/",
+    href: "/discover-your-tea/index.html",
     tone: "reflection"
   },
   {
@@ -630,6 +630,33 @@ const journalCards = [
   ["Atlas", "Tea Atlas: Wuyi Rock Tea", "Cliff, mist, mineral, roast, and the taste of mountain stone."]
 ];
 
+const philosophyPathways = [
+  {
+    number: "01",
+    title: "See the room",
+    chinese: "先入茶室",
+    body: "Film, image, sound, and silence introduce the feeling before the explanation.",
+    href: "#ritual-media-room",
+    action: "Enter Ritual Room"
+  },
+  {
+    number: "02",
+    title: "Practice the cup",
+    chinese: "再學一盞茶",
+    body: "The gaiwan sequence turns vessel, heat, fragrance, and timing into a repeatable ritual.",
+    href: "#gaiwan-ritual",
+    action: "Learn the Ritual"
+  },
+  {
+    number: "03",
+    title: "Shape the gift",
+    chinese: "最後成為禮",
+    body: "Tea, object, blessing, and packaging become a private cultural gift with memory.",
+    href: "#meaningful-gifts",
+    action: "Explore Gifting"
+  }
+];
+
 const makeInfo = (content: InfoModalContent) => content;
 
 export function ChazenHomeExperience() {
@@ -651,7 +678,7 @@ export function ChazenHomeExperience() {
   const imageUrl = (name: string) => withBasePath(`/images/chazen-generated/${name}`);
   const mediaUrl = (path: string) => withBasePath(path);
   const teaCollectionUrl = withBasePath("/tea-collection/");
-  const discoverTeaUrl = withBasePath("/discover-your-tea/");
+  const discoverTeaUrl = withBasePath("/discover-your-tea/index.html");
   const scrollToStepRail = () => {
     stepRailRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
   };
@@ -747,12 +774,7 @@ export function ChazenHomeExperience() {
           </div>
           <div className="culture-room-grid" aria-label="CHAZEN cultural rooms">
             {entranceRooms.map((room) => {
-              const href =
-                room.href === "/discover-your-tea/"
-                  ? discoverTeaUrl
-                  : room.href.startsWith("/")
-                    ? withBasePath(room.href)
-                    : room.href;
+              const href = room.href.startsWith("/") ? withBasePath(room.href) : room.href;
 
               return (
                 <article key={room.number} className={`culture-room culture-room-${room.tone}`}>
@@ -848,14 +870,15 @@ export function ChazenHomeExperience() {
             <p lang="zh-Hant">茶不只是飲品，是回到自身的一種方式。</p>
             <div className="cultural-copy-block">
               <p>
-                Chazen believes tea is a way to understand your state. Through tea,
-                breath, sound, and cultural memory, we help modern people slow down,
-                notice sleep, stress, focus, and mood, then return to a calmer way of living.
+                CHAZEN is not a tea shop. It is a ritual house for tea, stillness,
+                origin, and meaningful gifts. Through tea, breath, sound, and
+                cultural memory, visitors slow down, notice their state, and return
+                to a calmer way of living.
               </p>
               <p lang="zh-Hant">
-                Chazen 相信，茶唔只係飲品，而係一種理解自己狀態嘅方式。
-                透過茶、呼吸、聲音同中國文化記憶，我哋希望幫助現代人慢落嚟，
-                覺察睡眠、壓力、專注同情緒，再用一盞茶回到安定。
+                茶禪不是普通茶店，而是一處以茶、器、聲與心意構成的儀式之所。
+                透過茶、呼吸、聲音同中國文化記憶，讓人慢落嚟，覺察當下狀態，
+                再用一盞茶回到安定。
               </p>
             </div>
             <div className="chapter-actions">
@@ -899,6 +922,19 @@ export function ChazenHomeExperience() {
             <strong>Landscape as Breath</strong>
             <p>Mountain, water, mist, and cup steam share one field of attention.</p>
           </div>
+        </div>
+        <div className="museum-container philosophy-flow" aria-label="CHAZEN ritual pathway">
+          {philosophyPathways.map((pathway) => (
+            <a key={pathway.number} href={pathway.href}>
+              <span>{pathway.number}</span>
+              <strong>{pathway.title}</strong>
+              <em lang="zh-Hant">{pathway.chinese}</em>
+              <p>{pathway.body}</p>
+              <small>
+                {pathway.action} <ArrowRight size={14} aria-hidden="true" />
+              </small>
+            </a>
+          ))}
         </div>
       </section>
 

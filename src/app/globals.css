@@ -3957,6 +3957,50 @@ a {
   color: #fbfaf6;
 }
 
+.museum-footer-newsletter {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 1rem;
+}
+
+.museum-footer-newsletter label {
+  color: rgba(251, 250, 246, 0.72);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.museum-footer-newsletter div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.45rem;
+}
+
+.museum-footer-newsletter input,
+.museum-footer-newsletter button {
+  min-height: 42px;
+  border: 1px solid rgba(251, 250, 246, 0.18);
+  border-radius: 999px;
+  font: inherit;
+}
+
+.museum-footer-newsletter input {
+  min-width: 0;
+  background: rgba(251, 250, 246, 0.08);
+  padding: 0 0.9rem;
+  color: #fbfaf6;
+}
+
+.museum-footer-newsletter input::placeholder {
+  color: rgba(251, 250, 246, 0.42);
+}
+
+.museum-footer-newsletter button {
+  background: #fbfaf6;
+  padding: 0 0.95rem;
+  color: #203a2b;
+  font-weight: 800;
+}
+
 @keyframes museum-steam {
   0% {
     opacity: 0;
@@ -7842,6 +7886,106 @@ a {
   line-height: 1.65;
 }
 
+.philosophy-flow {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  margin-top: clamp(1rem, 2vw, 1.4rem);
+  border-top: 1px solid rgba(23, 23, 19, 0.12);
+  border-bottom: 1px solid rgba(23, 23, 19, 0.12);
+}
+
+.philosophy-flow a {
+  display: grid;
+  min-height: 230px;
+  align-content: start;
+  gap: 0.72rem;
+  padding: clamp(1.1rem, 2.4vw, 1.7rem);
+  color: #171713;
+  text-decoration: none;
+  transition: background-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.philosophy-flow a + a {
+  border-left: 1px solid rgba(23, 23, 19, 0.12);
+}
+
+.philosophy-flow a:hover,
+.philosophy-flow a:focus-visible {
+  background: #171713;
+  color: #fbfaf6;
+  transform: translateY(-2px);
+}
+
+.philosophy-flow span {
+  color: #9f3f2f;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+}
+
+.philosophy-flow a:hover span,
+.philosophy-flow a:focus-visible span,
+.philosophy-flow a:hover small,
+.philosophy-flow a:focus-visible small {
+  color: #d9bd86;
+}
+
+.philosophy-flow strong {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.55rem, 2.2vw, 2.35rem);
+  font-weight: 400;
+  line-height: 1.06;
+}
+
+.philosophy-flow em {
+  color: rgba(23, 23, 19, 0.62);
+  font-style: normal;
+  line-height: 1.5;
+}
+
+.philosophy-flow p {
+  max-width: 28rem;
+  margin: 0;
+  color: rgba(23, 23, 19, 0.62);
+  font-size: 0.95rem;
+  line-height: 1.68;
+}
+
+.philosophy-flow small {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.4rem;
+  color: #9f3f2f;
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.philosophy-flow a:hover em,
+.philosophy-flow a:focus-visible em,
+.philosophy-flow a:hover p,
+.philosophy-flow a:focus-visible p {
+  color: rgba(251, 250, 246, 0.72);
+}
+
+@media (max-width: 900px) {
+  .philosophy-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .philosophy-flow a {
+    min-height: auto;
+  }
+
+  .philosophy-flow a + a {
+    border-top: 1px solid rgba(23, 23, 19, 0.12);
+    border-left: 0;
+  }
+}
+
 @keyframes chazen-mist-drift {
   from {
     opacity: 0.58;
@@ -8646,6 +8790,35 @@ a {
 
 .hero-actions {
   max-width: 620px;
+}
+
+.discover-yourself-box {
+  width: min(100%, 560px);
+  margin-top: 1.1rem;
+  padding: 1.1rem 1.15rem;
+  border: 1px solid rgba(230, 204, 148, 0.38);
+  background: rgba(18, 17, 13, 0.64);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.26);
+  backdrop-filter: blur(14px);
+}
+
+.discover-yourself-box h2 {
+  margin: 0.25rem 0 0.85rem;
+  max-width: 26rem;
+  color: #fff8ea;
+  font-family: var(--font-serif);
+  font-size: clamp(1.3rem, 2.2vw, 2rem);
+  font-weight: 500;
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+
+.discover-yourself-box .museum-cta {
+  width: fit-content;
+  min-height: 42px;
+  padding: 0.72rem 1rem;
+  background: rgba(221, 192, 129, 0.96);
+  color: #17130c;
 }
 
 .museum-home .museum-section {
@@ -9486,5 +9659,1192 @@ a {
   .culture-entrance-cta a {
     width: 100%;
     justify-content: center;
+  }
+}
+
+/* CHAZEN Song courtyard homepage */
+.courtyard-home {
+  --ivory: #fffaf0;
+  --paper: #fbf5e8;
+  --wall: #f8f4ea;
+  --wood: #6f4a2f;
+  --wood-dark: #352418;
+  --amber: #b97932;
+  --bamboo: #526f49;
+  --ink: #25251f;
+  --muted-gold: #c7a866;
+  --roof: #8a8b84;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(199, 168, 102, 0.18), transparent 28rem),
+    linear-gradient(180deg, #fffaf0 0%, #f3eadb 44%, #fbf5e8 100%);
+  color: var(--ink);
+  overflow-x: clip;
+}
+
+.courtyard-container {
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.song-courtyard-hero {
+  position: relative;
+  min-height: calc(100svh - 64px);
+  display: grid;
+  align-items: end;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    linear-gradient(180deg, rgba(255, 250, 240, 0.7), rgba(255, 250, 240, 0.96)),
+    #fffaf0;
+}
+
+.song-courtyard-photo {
+  z-index: -4;
+  object-fit: cover;
+  object-position: 58% center;
+  filter: saturate(0.88) brightness(1.13) contrast(0.88);
+  opacity: 0.56;
+  transform: scale(1.03);
+  animation: courtyard-parallax 18s ease-in-out infinite alternate;
+}
+
+.courtyard-daylight {
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  background:
+    linear-gradient(90deg, rgba(255, 250, 240, 0.96) 0 37%, rgba(255, 250, 240, 0.55) 58%, rgba(255, 250, 240, 0.9)),
+    radial-gradient(circle at 77% 30%, rgba(255, 255, 244, 0.74), transparent 20rem),
+    linear-gradient(180deg, rgba(255, 250, 240, 0.08), rgba(255, 250, 240, 0.98));
+}
+
+.courtyard-roofline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: -1;
+  height: clamp(54px, 8vw, 96px);
+  background:
+    repeating-linear-gradient(90deg, rgba(71, 72, 68, 0.42) 0 34px, rgba(139, 140, 132, 0.38) 34px 68px),
+    linear-gradient(180deg, rgba(81, 80, 74, 0.58), rgba(81, 80, 74, 0));
+  clip-path: polygon(0 0, 100% 0, 100% 56%, 50% 100%, 0 56%);
+  opacity: 0.34;
+}
+
+.bamboo-shadow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(100deg, transparent 0 42%, rgba(82, 111, 73, 0.16) 43% 44%, transparent 45%),
+    linear-gradient(78deg, transparent 0 61%, rgba(82, 111, 73, 0.11) 62% 63%, transparent 64%);
+  opacity: 0.72;
+  animation: bamboo-drift 12s ease-in-out infinite alternate;
+}
+
+.bamboo-shadow-two {
+  transform: translateX(14%);
+  opacity: 0.46;
+  animation-duration: 16s;
+}
+
+.courtyard-host {
+  position: absolute;
+  right: min(9vw, 140px);
+  bottom: clamp(92px, 12vw, 168px);
+  z-index: 0;
+  width: clamp(116px, 13vw, 176px);
+  height: clamp(168px, 18vw, 238px);
+  border-radius: 44% 44% 22% 22%;
+  background:
+    radial-gradient(ellipse at 50% 100%, rgba(111, 74, 47, 0.35), transparent 48%),
+    linear-gradient(180deg, rgba(64, 47, 34, 0.36), rgba(64, 47, 34, 0.16));
+  opacity: 0.5;
+  filter: blur(0.2px);
+}
+
+.courtyard-host::before {
+  position: absolute;
+  content: "";
+  left: 50%;
+  top: 8%;
+  width: 34%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 28%, rgba(41, 30, 23, 0.64) 0 18%, transparent 19%),
+    linear-gradient(180deg, rgba(217, 180, 142, 0.66), rgba(173, 132, 98, 0.5));
+  transform: translateX(-50%);
+}
+
+.courtyard-host span {
+  position: absolute;
+  left: -35%;
+  right: -55%;
+  bottom: 8%;
+  height: 14%;
+  border-radius: 999px;
+  background: rgba(111, 74, 47, 0.24);
+  transform: rotate(-3deg);
+}
+
+.hero-steam {
+  position: absolute;
+  right: 27%;
+  bottom: 28%;
+  z-index: 1;
+  width: 120px;
+  height: 170px;
+  pointer-events: none;
+}
+
+.hero-steam span,
+.jian-cup::before,
+.cup-world-preview::before {
+  position: absolute;
+  content: "";
+  width: 34px;
+  height: 108px;
+  border-left: 2px solid rgba(116, 105, 88, 0.28);
+  border-radius: 50%;
+  filter: blur(0.3px);
+  animation: steam-rise 4.8s ease-in-out infinite;
+}
+
+.hero-steam span:nth-child(2) {
+  left: 38px;
+  height: 128px;
+  animation-delay: 0.8s;
+}
+
+.hero-steam span:nth-child(3) {
+  left: 76px;
+  height: 94px;
+  animation-delay: 1.6s;
+}
+
+.courtyard-hero-inner {
+  position: relative;
+  z-index: 2;
+  width: min(1180px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: clamp(6rem, 12vw, 11rem) 0 clamp(4rem, 8vw, 7rem);
+}
+
+.courtyard-kicker,
+.courtyard-section-intro > p {
+  margin: 0;
+  color: var(--wood);
+  font-size: 0.76rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.courtyard-hero-inner h1 {
+  max-width: 820px;
+  margin: 0.9rem 0 0;
+  color: #231d17;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(4.2rem, 10.2vw, 9.8rem);
+  font-weight: 400;
+  line-height: 0.94;
+  text-wrap: balance;
+}
+
+.courtyard-hero-inner h1 span {
+  display: block;
+}
+
+.hero-english {
+  margin: 1rem 0 0;
+  color: var(--wood);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.25rem, 2.3vw, 2.2rem);
+}
+
+.hero-copy {
+  display: grid;
+  gap: 0.5rem;
+  max-width: 680px;
+  margin-top: 1.4rem;
+  color: rgba(37, 37, 31, 0.74);
+  font-size: clamp(1rem, 1.3vw, 1.16rem);
+  line-height: 1.8;
+}
+
+.hero-copy p {
+  margin: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.courtyard-actions,
+.ritual-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  align-items: center;
+  margin-top: 1.7rem;
+}
+
+.courtyard-cta,
+.sound-toggle {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border-radius: 999px;
+  padding: 0.84rem 1.18rem;
+  font-size: 0.92rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-decoration: none;
+  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, border-color 180ms ease;
+}
+
+.courtyard-cta.primary {
+  border: 1px solid rgba(53, 36, 24, 0.9);
+  background: var(--wood-dark);
+  color: #fffaf0;
+  box-shadow: 0 18px 42px rgba(53, 36, 24, 0.18);
+}
+
+.courtyard-cta.secondary,
+.sound-toggle {
+  border: 1px solid rgba(111, 74, 47, 0.24);
+  background: rgba(255, 250, 240, 0.64);
+  color: var(--wood-dark);
+}
+
+.sound-toggle {
+  cursor: pointer;
+}
+
+.courtyard-cta:hover,
+.sound-toggle:hover,
+.atlas-test-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 38px rgba(53, 36, 24, 0.13);
+}
+
+.cup-portals-section,
+.tea-test-section,
+.living-exhibition-section,
+.ritual-preview-section,
+.philosophy-section,
+.tea-history-scroll,
+.tea-atlas-section,
+.tea-journey-section,
+.membership-section,
+.b2b-gifts-section,
+.journal-section,
+.courtyard-closing {
+  padding: clamp(4.5rem, 8vw, 8rem) 0;
+}
+
+.cup-portals-section {
+  background:
+    linear-gradient(180deg, rgba(255, 250, 240, 0.92), rgba(238, 228, 211, 0.86)),
+    radial-gradient(circle at 80% 10%, rgba(82, 111, 73, 0.15), transparent 24rem);
+}
+
+.courtyard-section-intro {
+  display: grid;
+  gap: 0.55rem;
+  max-width: 820px;
+}
+
+.courtyard-section-intro h2 {
+  margin: 0.2rem 0 0;
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.45rem, 5.4vw, 5.8rem);
+  font-weight: 400;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.courtyard-section-intro strong {
+  color: var(--wood);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.08rem, 1.8vw, 1.7rem);
+  font-weight: 400;
+}
+
+.courtyard-section-intro span {
+  max-width: 680px;
+  color: rgba(37, 37, 31, 0.68);
+  line-height: 1.75;
+}
+
+.pouring-table {
+  position: relative;
+  min-height: 220px;
+  margin: clamp(2rem, 4vw, 3rem) 0 1.4rem;
+  border: 1px solid rgba(111, 74, 47, 0.16);
+  background:
+    linear-gradient(90deg, rgba(111, 74, 47, 0.12), transparent 18% 82%, rgba(111, 74, 47, 0.1)),
+    repeating-linear-gradient(90deg, rgba(111, 74, 47, 0.18) 0 1px, transparent 1px 58px),
+    linear-gradient(180deg, rgba(255, 250, 240, 0.88), rgba(232, 217, 194, 0.72));
+  box-shadow: inset 0 -20px 38px rgba(111, 74, 47, 0.08);
+}
+
+.gaiwan-vessel,
+.fairness-pitcher,
+.cup-world-preview {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.gaiwan-vessel {
+  left: 12%;
+  width: 132px;
+  height: 72px;
+  border: 2px solid rgba(53, 36, 24, 0.54);
+  border-top: 0;
+  border-radius: 0 0 80px 80px;
+  background: linear-gradient(180deg, #fffdf6, #d9ccb8);
+}
+
+.gaiwan-vessel::before {
+  position: absolute;
+  content: "";
+  left: 18%;
+  right: 18%;
+  top: -18px;
+  height: 24px;
+  border: 2px solid rgba(53, 36, 24, 0.44);
+  border-radius: 50%;
+  background: #fffdf6;
+}
+
+.tea-flow-line {
+  position: absolute;
+  left: 25%;
+  top: 45%;
+  width: 28%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(185, 121, 50, 0.75), transparent);
+  transform: rotate(4deg);
+  animation: tea-flow 2.8s ease-in-out infinite;
+}
+
+.fairness-pitcher {
+  left: 52%;
+  width: 112px;
+  height: 84px;
+  border: 2px solid rgba(53, 36, 24, 0.34);
+  border-radius: 40% 46% 42% 42%;
+  background: rgba(255, 253, 246, 0.58);
+}
+
+.fairness-pitcher::after {
+  position: absolute;
+  content: "";
+  right: -28px;
+  top: 20px;
+  width: 34px;
+  height: 42px;
+  border: 2px solid rgba(53, 36, 24, 0.26);
+  border-left: 0;
+  border-radius: 0 60px 60px 0;
+}
+
+.cup-world-preview {
+  right: 13%;
+  display: grid;
+  width: 128px;
+  height: 128px;
+  place-items: center;
+  border: 1px solid rgba(53, 36, 24, 0.42);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 44%, rgba(185, 121, 50, 0.42), transparent 34%),
+    radial-gradient(circle at 50% 56%, #1d1713 0 38%, #3b2b20 39% 52%, #15110e 53%);
+  color: rgba(255, 250, 240, 0.82);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 3.4rem;
+  box-shadow: 0 22px 45px rgba(53, 36, 24, 0.18);
+}
+
+.cup-world-preview::before {
+  left: 42%;
+  top: -72px;
+}
+
+.cup-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.cup-portal {
+  position: relative;
+  display: grid;
+  min-height: 360px;
+  overflow: hidden;
+  align-content: start;
+  border: 1px solid rgba(111, 74, 47, 0.14);
+  border-radius: 8px;
+  background: rgba(255, 250, 240, 0.78);
+  padding: 1rem;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease, background-color 220ms ease;
+}
+
+.cup-portal::after {
+  position: absolute;
+  content: "";
+  inset: 0;
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.cup-portal.is-active,
+.cup-portal:hover,
+.cup-portal:focus-visible {
+  border-color: rgba(111, 74, 47, 0.34);
+  background: #fffaf0;
+  box-shadow: 0 24px 54px rgba(83, 60, 38, 0.12);
+  transform: translateY(-5px);
+}
+
+.cup-portal.is-active::after,
+.cup-portal:hover::after,
+.cup-portal:focus-visible::after {
+  opacity: 1;
+}
+
+.cup-calm::after {
+  background: radial-gradient(circle at 50% 22%, rgba(140, 158, 158, 0.28), transparent 34%);
+}
+
+.cup-focus::after {
+  background: radial-gradient(circle at 50% 22%, rgba(82, 111, 73, 0.24), transparent 34%);
+}
+
+.cup-sleep::after {
+  background: radial-gradient(circle at 50% 22%, rgba(176, 176, 170, 0.24), transparent 34%);
+}
+
+.cup-release::after {
+  background: radial-gradient(circle at 50% 22%, rgba(185, 121, 50, 0.25), transparent 34%);
+}
+
+.cup-clarity::after {
+  background: radial-gradient(circle at 50% 22%, rgba(199, 168, 102, 0.26), transparent 34%);
+}
+
+.jian-cup {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 116px;
+  height: 78px;
+  margin: 1rem auto 1.4rem;
+  border: 1px solid rgba(255, 250, 240, 0.5);
+  border-radius: 50% 50% 46% 46%;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(185, 121, 50, 0.5), transparent 25%),
+    radial-gradient(circle at 50% 44%, #17110d 0 42%, #483527 43% 57%, #19120e 58%);
+  box-shadow: 0 18px 28px rgba(53, 36, 24, 0.16);
+}
+
+.jian-cup::before {
+  left: 46px;
+  top: -82px;
+  height: 92px;
+  opacity: 0;
+  transition: opacity 180ms ease;
+}
+
+.cup-portal:hover .jian-cup::before,
+.cup-portal.is-active .jian-cup::before {
+  opacity: 1;
+}
+
+.jian-cup i {
+  position: absolute;
+  inset: 18px 20px;
+  border: 1px solid rgba(255, 250, 240, 0.2);
+  border-radius: 50%;
+  background: rgba(185, 121, 50, 0.22);
+  animation: ripple-soft 3.2s ease-in-out infinite;
+}
+
+.cup-character,
+.cup-portal strong,
+.cup-portal small,
+.cup-portal em,
+.cup-portal b {
+  position: relative;
+  z-index: 1;
+}
+
+.cup-character {
+  color: var(--wood);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 3rem;
+  line-height: 1;
+}
+
+.cup-portal strong {
+  margin-top: 0.4rem;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.45rem;
+  font-weight: 400;
+}
+
+.cup-portal small,
+.cup-portal em {
+  display: block;
+  margin-top: 0.8rem;
+  color: rgba(37, 37, 31, 0.66);
+  font-size: 0.88rem;
+  font-style: normal;
+  line-height: 1.55;
+}
+
+.cup-portal b {
+  margin-top: 1rem;
+  color: var(--wood);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+.tea-test-section {
+  background:
+    linear-gradient(180deg, rgba(248, 244, 234, 0.95), rgba(255, 250, 240, 0.94)),
+    repeating-linear-gradient(0deg, rgba(53, 36, 24, 0.035) 0 1px, transparent 1px 34px);
+}
+
+.tea-test-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(320px, 0.44fr);
+  gap: clamp(1.2rem, 3vw, 2rem);
+  align-items: start;
+}
+
+.tea-test-layout .courtyard-section-intro {
+  grid-column: 1 / -1;
+}
+
+.paper-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.paper-steps article,
+.tea-result-card,
+.exhibition-card,
+.philosophy-grid article,
+.tea-direction-grid article,
+.journey-card-grid article,
+.membership-tiers article {
+  border: 1px solid rgba(111, 74, 47, 0.16);
+  border-radius: 8px;
+  background:
+    linear-gradient(180deg, rgba(255, 250, 240, 0.94), rgba(244, 235, 220, 0.72)),
+    var(--ivory);
+  box-shadow: 0 18px 46px rgba(83, 60, 38, 0.08);
+}
+
+.paper-steps article {
+  min-height: 178px;
+  padding: 1.1rem;
+}
+
+.paper-steps span,
+.exhibition-card span,
+.ritual-scroll span {
+  display: grid;
+  width: 2.35rem;
+  height: 2.35rem;
+  place-items: center;
+  border: 1px solid rgba(111, 74, 47, 0.22);
+  border-radius: 50%;
+  color: var(--wood);
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.paper-steps p {
+  margin: 1.2rem 0 0;
+  color: rgba(37, 37, 31, 0.76);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.45rem;
+  line-height: 1.25;
+}
+
+.tea-result-card {
+  padding: 1.3rem;
+}
+
+.tea-result-card > p {
+  margin: 0;
+  color: var(--wood);
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.tea-result-card h3 {
+  margin: 0.8rem 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.7rem, 2.5vw, 2.4rem);
+  font-weight: 400;
+  line-height: 1.08;
+}
+
+.tea-result-card dl,
+.tea-direction-grid dl {
+  display: grid;
+  gap: 0;
+  margin: 1.2rem 0;
+}
+
+.tea-result-card dl div,
+.tea-direction-grid dl div {
+  border-top: 1px solid rgba(111, 74, 47, 0.14);
+  padding: 0.82rem 0;
+}
+
+.tea-result-card dt,
+.tea-direction-grid dt {
+  color: var(--wood);
+  font-size: 0.7rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.tea-result-card dd,
+.tea-direction-grid dd {
+  margin: 0.35rem 0 0;
+  color: rgba(37, 37, 31, 0.72);
+  line-height: 1.55;
+}
+
+.living-exhibition-section,
+.tea-atlas-section,
+.membership-section {
+  background: #fffaf0;
+}
+
+.exhibition-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-top: 2rem;
+}
+
+.exhibition-card {
+  position: relative;
+  min-height: 320px;
+  padding: 1rem;
+}
+
+.exhibition-card::before {
+  position: absolute;
+  content: "";
+  inset: 0.65rem;
+  pointer-events: none;
+  border: 1px solid rgba(111, 74, 47, 0.1);
+}
+
+.exhibition-card h3,
+.philosophy-grid h3,
+.journey-card-grid h3,
+.membership-tiers h3 {
+  margin: 1rem 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.55rem;
+  font-weight: 400;
+  line-height: 1.1;
+}
+
+.exhibition-card strong {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--wood);
+  font-weight: 500;
+}
+
+.exhibition-card p,
+.philosophy-grid p,
+.journey-card-grid p,
+.membership-tiers p {
+  color: rgba(37, 37, 31, 0.68);
+  line-height: 1.7;
+}
+
+.exhibition-card svg {
+  position: absolute;
+  right: 1rem;
+  bottom: 1rem;
+  color: rgba(111, 74, 47, 0.46);
+}
+
+.ritual-preview-section {
+  background:
+    radial-gradient(circle at 12% 20%, rgba(82, 111, 73, 0.12), transparent 24rem),
+    #f3eadb;
+}
+
+.ritual-preview-layout,
+.b2b-layout,
+.membership-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.62fr) minmax(320px, 0.58fr);
+  gap: clamp(1.2rem, 4vw, 3rem);
+  align-items: start;
+}
+
+.ritual-scroll {
+  display: grid;
+  gap: 0.75rem;
+  max-height: 680px;
+  overflow: auto;
+  padding-right: 0.4rem;
+  scroll-snap-type: y proximity;
+}
+
+.ritual-scroll article {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.2rem 1rem;
+  min-height: 145px;
+  align-items: start;
+  scroll-snap-align: start;
+  border-left: 5px solid rgba(111, 74, 47, 0.34);
+  background: rgba(255, 250, 240, 0.72);
+  padding: 1rem;
+  box-shadow: 0 14px 34px rgba(83, 60, 38, 0.07);
+}
+
+.ritual-scroll h3 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.ritual-scroll p {
+  grid-column: 2;
+  margin: 0.4rem 0 0;
+  color: rgba(37, 37, 31, 0.68);
+}
+
+.philosophy-section {
+  background:
+    linear-gradient(90deg, rgba(255, 250, 240, 0.96), rgba(255, 250, 240, 0.78)),
+    url("/images/chazen-generated/chazen-shanshui-chapter-2.png");
+  background-size: cover;
+  background-position: center;
+}
+
+.philosophy-grid,
+.journey-card-grid,
+.membership-tiers {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-top: 2rem;
+}
+
+.philosophy-grid article,
+.journey-card-grid article,
+.membership-tiers article {
+  min-height: 250px;
+  padding: 1.2rem;
+}
+
+.philosophy-grid svg,
+.journey-card-grid svg,
+.membership-tiers svg {
+  color: var(--wood);
+}
+
+.tea-history-scroll {
+  background:
+    linear-gradient(180deg, #f7efe1, #fffaf0);
+  overflow: hidden;
+}
+
+.history-scroll {
+  display: grid;
+  grid-auto-columns: minmax(270px, 330px);
+  grid-auto-flow: column;
+  gap: 0.9rem;
+  margin-top: 2rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  scroll-snap-type: x proximity;
+}
+
+.history-scroll article {
+  scroll-snap-align: start;
+  border: 1px solid rgba(111, 74, 47, 0.16);
+  border-radius: 8px;
+  background: rgba(255, 250, 240, 0.82);
+  padding: 0.85rem;
+}
+
+.timeline-image-space {
+  display: grid;
+  min-height: 160px;
+  place-items: center;
+  border: 1px solid rgba(111, 74, 47, 0.12);
+  background:
+    radial-gradient(circle at 52% 44%, rgba(199, 168, 102, 0.2), transparent 32%),
+    linear-gradient(135deg, rgba(82, 111, 73, 0.14), rgba(255, 250, 240, 0.68)),
+    repeating-linear-gradient(90deg, rgba(111, 74, 47, 0.1) 0 1px, transparent 1px 26px);
+}
+
+.timeline-image-space span {
+  color: rgba(111, 74, 47, 0.28);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 3.2rem;
+}
+
+.history-scroll h3 {
+  margin: 1rem 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 1.16;
+}
+
+.history-scroll p {
+  min-height: 94px;
+  color: rgba(37, 37, 31, 0.68);
+  line-height: 1.65;
+}
+
+.history-scroll a,
+.journey-card-grid a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--wood);
+  font-weight: 850;
+  text-decoration: none;
+}
+
+.tea-direction-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin-top: 2rem;
+}
+
+.tea-direction-grid article {
+  min-height: 350px;
+  padding: 1rem;
+}
+
+.tea-direction-grid h3 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+
+.tea-direction-grid strong {
+  color: var(--wood);
+  font-weight: 500;
+}
+
+.atlas-test-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+  border: 1px solid rgba(111, 74, 47, 0.18);
+  border-radius: 8px;
+  background: var(--wood-dark);
+  padding: 1rem 1.2rem;
+  color: #fffaf0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.35rem;
+  text-decoration: none;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.atlas-test-cta span {
+  color: rgba(255, 250, 240, 0.7);
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.tea-journey-section,
+.b2b-gifts-section {
+  background:
+    linear-gradient(180deg, rgba(255, 250, 240, 0.9), rgba(241, 231, 214, 0.9)),
+    radial-gradient(circle at 80% 26%, rgba(185, 121, 50, 0.12), transparent 20rem);
+}
+
+.journey-card-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.journey-card-grid article {
+  min-height: 280px;
+}
+
+.journey-card-grid a {
+  margin-top: 1rem;
+}
+
+.membership-tiers {
+  margin-top: 0;
+  grid-template-columns: 1fr;
+}
+
+.b2b-use-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.b2b-use-grid span,
+.journal-category-grid a {
+  border: 1px solid rgba(111, 74, 47, 0.16);
+  border-radius: 8px;
+  background: rgba(255, 250, 240, 0.74);
+  padding: 1rem;
+  color: var(--ink);
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.journal-section {
+  background: #fffaf0;
+}
+
+.journal-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.46fr) minmax(0, 1fr);
+  gap: clamp(1.2rem, 4vw, 3rem);
+  align-items: start;
+}
+
+.journal-category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.journal-category-grid a {
+  min-height: 92px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  transition: transform 180ms ease, border-color 180ms ease;
+}
+
+.journal-category-grid a:hover {
+  border-color: rgba(111, 74, 47, 0.34);
+  transform: translateY(-2px);
+}
+
+.courtyard-closing {
+  background:
+    linear-gradient(180deg, rgba(37, 37, 31, 0.82), rgba(37, 37, 31, 0.92)),
+    url("/images/chazen-generated/chazen-song-diancha-v1.png");
+  background-size: cover;
+  background-position: center;
+  color: #fffaf0;
+  text-align: center;
+}
+
+.courtyard-closing .courtyard-container {
+  display: grid;
+  justify-items: center;
+  gap: 0.85rem;
+}
+
+.courtyard-closing p {
+  max-width: 760px;
+  margin: 0;
+  color: rgba(255, 250, 240, 0.78);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.35rem, 2.6vw, 2.4rem);
+  line-height: 1.25;
+}
+
+.courtyard-closing p[lang="zh-Hant"] {
+  color: var(--muted-gold);
+  font-size: clamp(1rem, 1.6vw, 1.35rem);
+}
+
+@keyframes courtyard-parallax {
+  from {
+    transform: scale(1.03) translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: scale(1.07) translate3d(-1.5%, -1%, 0);
+  }
+}
+
+@keyframes bamboo-drift {
+  from {
+    transform: translateX(-2%);
+  }
+
+  to {
+    transform: translateX(3%);
+  }
+}
+
+@keyframes steam-rise {
+  0% {
+    opacity: 0;
+    transform: translateY(28px) rotate(8deg) scaleX(0.8);
+  }
+
+  35% {
+    opacity: 0.72;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-58px) rotate(-12deg) scaleX(1.2);
+  }
+}
+
+@keyframes tea-flow {
+  0%,
+  100% {
+    opacity: 0.28;
+    transform: rotate(4deg) scaleX(0.72);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: rotate(4deg) scaleX(1);
+  }
+}
+
+@keyframes ripple-soft {
+  0%,
+  100% {
+    transform: scale(0.88);
+    opacity: 0.36;
+  }
+
+  50% {
+    transform: scale(1.08);
+    opacity: 0.78;
+  }
+}
+
+@media (max-width: 1120px) {
+  .cup-grid,
+  .exhibition-grid,
+  .tea-direction-grid,
+  .journey-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tea-test-layout,
+  .ritual-preview-layout,
+  .b2b-layout,
+  .journal-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .paper-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .philosophy-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .journal-category-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 760px) {
+  .courtyard-container,
+  .courtyard-hero-inner {
+    width: min(1180px, calc(100% - 28px));
+  }
+
+  .song-courtyard-hero {
+    min-height: calc(92svh - 64px);
+  }
+
+  .courtyard-host,
+  .hero-steam {
+    display: none;
+  }
+
+  .courtyard-hero-inner h1 {
+    max-width: 100%;
+    font-size: clamp(2.9rem, 14.6vw, 4.35rem);
+    line-height: 1.02;
+    overflow-wrap: anywhere;
+  }
+
+  .courtyard-actions,
+  .ritual-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .courtyard-cta,
+  .sound-toggle {
+    width: 100%;
+  }
+
+  .cup-grid,
+  .exhibition-grid,
+  .tea-direction-grid,
+  .journey-card-grid,
+  .paper-steps,
+  .b2b-use-grid,
+  .journal-category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pouring-table {
+    min-height: 190px;
+  }
+
+  .gaiwan-vessel {
+    left: 7%;
+    width: 96px;
+  }
+
+  .fairness-pitcher {
+    left: 45%;
+    width: 86px;
+  }
+
+  .cup-world-preview {
+    right: 5%;
+    width: 96px;
+    height: 96px;
+    font-size: 2.5rem;
+  }
+
+  .tea-flow-line {
+    left: 22%;
+    width: 25%;
   }
 }
