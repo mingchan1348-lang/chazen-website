@@ -2,7 +2,6 @@ import { notFound } from "next/navigation";
 import {
   ChazenContentSection,
   ChazenCtaBand,
-  ChazenMediaPlaceholder,
   ChazenSubpageHero
 } from "@/components/ChazenSubpage";
 import { cupKeys, fiveCups, type CupKey } from "@/app/five-cups/fiveCupsData";
@@ -80,13 +79,7 @@ export default async function FiveCupPage({ params }: FiveCupPageProps) {
         title="從 A$25 First Pack 開始"
         english="Bridge the philosophy into a first cup"
       >
-        <div className="faculty-product-bridge">
-          <ChazenMediaPlaceholder
-            asset="first-pack-mockup.webp"
-            label="Future visual: A$25 First Pack"
-            note={`Starter pack connected to ${currentCup.english}`}
-          />
-          <article className="chazen-subpage-card">
+        <article className="chazen-subpage-card faculty-product-bridge">
             <span>A$25 First Pack</span>
             <h3>A simple first step after {currentCup.tab}</h3>
             <p>
@@ -98,8 +91,7 @@ export default async function FiveCupPage({ params }: FiveCupPageProps) {
                 <li key={item}>{item}</li>
               ))}
             </ul>
-          </article>
-        </div>
+        </article>
       </ChazenContentSection>
 
       <ChazenCtaBand
