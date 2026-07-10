@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
@@ -9,13 +10,48 @@ type ChazenMediaPlaceholderProps = {
   note?: string;
 };
 
+type ChazenMediaProps = {
+  asset: string;
+  alt: string;
+  type?: "image" | "video";
+};
+
 type ChazenSubpageHeroProps = {
   eyebrow: string;
   title: string;
   english: string;
   copy: string;
   placeholder: ChazenMediaPlaceholderProps;
+  media?: ChazenMediaProps;
 };
+
+export function ChazenSubpageMedia({ asset, alt, type = "image" }: ChazenMediaProps) {
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
+  return (
+    <figure className="chazen-media-placeholder chazen-media-real">
+      {type === "video" ? (
+        <video
+          className="h-full w-full object-cover"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          src={`${basePath}/video/${asset}`}
+        />
+      ) : (
+        <Image
+          src={`${basePath}/images/${asset}`}
+          alt={alt}
+          fill
+          sizes="(min-width: 1024px) 50vw, 100vw"
+          className="object-cover"
+        />
+      )}
+    </figure>
+  );
+}
 
 type ChazenContentSectionProps = {
   eyebrow?: string;
@@ -64,7 +100,7 @@ export function ChazenMediaPlaceholder({
   );
 }
 
-export function ChazenSubpageHero({ eyebrow, title, english, copy, placeholder }: ChazenSubpageHeroProps) {
+export function ChazenSubpageHero({ eyebrow, title, english, copy, placeholder, media }: ChazenSubpageHeroProps) {
   return (
     <section className="chazen-subpage-hero">
       <div className="chazen-subpage-container chazen-subpage-hero-grid">
@@ -75,7 +111,7 @@ export function ChazenSubpageHero({ eyebrow, title, english, copy, placeholder }
           <p lang="zh-Hant">{copy}</p>
           <div className="chazen-subpage-hero-rule" aria-hidden="true" />
         </div>
-        <ChazenMediaPlaceholder {...placeholder} />
+        {media ? <ChazenSubpageMedia {...media} /> : <ChazenMediaPlaceholder {...placeholder} />}
       </div>
     </section>
   );

@@ -8,16 +8,26 @@ type ChapterHeroProps = {
   chinese: string;
   copy: string;
   children?: ReactNode;
+  image?: string;
+  imageAlt?: string;
 };
 
-export function ChapterHero({ chapter, title, chinese, copy, children }: ChapterHeroProps) {
+export function ChapterHero({
+  chapter,
+  title,
+  chinese,
+  copy,
+  children,
+  image = "chazen-arrival-room.avif",
+  imageAlt = ""
+}: ChapterHeroProps) {
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
   return (
     <section className="chapter-hero">
       <Image
-        src={`${basePath}/images/chazen-arrival-room.avif`}
-        alt=""
+        src={`${basePath}/images/${image}`}
+        alt={imageAlt}
         fill
         priority
         sizes="100vw"

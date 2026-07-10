@@ -70,8 +70,8 @@ const teaWorlds = [
     english: "Wisdom / Clarity",
     copy: "第五盞，是慧。茶不是答案，而是一面鏡，讓人看清當下真正需要的是什麼。",
     support: "慧，不是知道更多，而是看得更清楚。當你慢下來，茶會把你真正需要的東西映照出來。",
-    cta: "開始茶測試",
-    ctaEnglish: "Start Tea Test",
+    cta: "照見所需",
+    ctaEnglish: "See What You Need",
     href: "/five-cups/wisdom"
   }
 ];
@@ -343,7 +343,7 @@ export default function Home() {
         <canvas ref={particlesRef} className="chazen-particles" aria-hidden="true" />
 
         <nav className="chazen-motion-nav" aria-label="Homepage navigation">
-          <a href="#" className="chazen-motion-logo">
+          <a href={withBasePath("/")} className="chazen-motion-logo">
             <span>Chazen</span>
             <small>茶禪</small>
           </a>
@@ -351,9 +351,13 @@ export default function Home() {
             <a href={withBasePath("/tea-test")}>Tea Test</a>
             <a href={withBasePath("/tea-ritual")}>Ritual</a>
             <a href={withBasePath("/tea-culture")}>Culture</a>
+            <a href={withBasePath("/tea-collection")}>Tea Collection</a>
             <a href={withBasePath("/tea-boxes")}>Tea Boxes</a>
-            <a href={withBasePath("/b2b")}>B2B Gifts</a>
             <a href={withBasePath("/five-cups")}>Five Cups</a>
+            <a href={withBasePath("/song-room")}>Song Room</a>
+            <a href={withBasePath("/stillness-mode")}>Stillness Mode</a>
+            <a href={withBasePath("/ai-tea-guide")}>AI Tea Guide</a>
+            <a href={withBasePath("/b2b")}>B2B Gifts</a>
           </div>
           <a href={withBasePath("/tea-test")} className="chazen-nav-cta">
             Start Tea Test
@@ -372,7 +376,7 @@ export default function Home() {
             </div>
             <div className="chazen-motion-actions chazen-home-hero-actions">
               <a href={withBasePath("/tea-test")} className="chazen-primary-btn">
-                Start AI Tea Test <ArrowRight size={16} aria-hidden="true" />
+                Start Tea Test <ArrowRight size={16} aria-hidden="true" />
               </a>
               <a href={withBasePath("/tea-ritual")} className="chazen-secondary-btn">Explore Tea Ritual</a>
             </div>
@@ -460,11 +464,11 @@ export default function Home() {
             ))}
           </div>
           <aside className="chazen-result-card">
-            <p>Current State: Overthinking / Restless</p>
+            <p>Example result · Current State: Overthinking / Restless</p>
             <h3>Tea Direction: Warm roasted oolong</h3>
             <span lang="zh-Hant">Why: 適合需要慢下來，但又不想太沉重的晚上。</span>
             <a href={withBasePath("/tea-test")} className="chazen-primary-btn">
-              Start My Tea Test
+              Start Tea Test
             </a>
           </aside>
         </div>
@@ -619,10 +623,10 @@ export default function Home() {
           <SectionHeading title="繼續認識茶" english="Learn More About Tea" />
           <div className="chazen-journal-grid">
             {journalCategories.map((category) => (
-              <a key={category} href={withBasePath("/tea-atlas/")} lang="zh-Hant">{category}</a>
+              <span key={category} lang="zh-Hant">{category}</span>
             ))}
           </div>
-          <a href={withBasePath("/tea-atlas/")} className="chazen-wide-cta">Read the Journal</a>
+          <a href={withBasePath("/tea-atlas/")} className="chazen-wide-cta">Explore the Tea Atlas</a>
         </div>
       </section>
 
@@ -635,9 +639,13 @@ export default function Home() {
             <a href={withBasePath("/tea-test")}>Tea Test</a>
             <a href={withBasePath("/tea-ritual")}>Tea Ritual</a>
             <a href={withBasePath("/tea-culture")}>Tea Culture</a>
+            <a href={withBasePath("/tea-collection")}>Tea Collection</a>
             <a href={withBasePath("/tea-boxes")}>Tea Boxes</a>
-            <a href={withBasePath("/b2b")}>B2B Gifts</a>
             <a href={withBasePath("/five-cups")}>Five Cups</a>
+            <a href={withBasePath("/song-room")}>Song Room</a>
+            <a href={withBasePath("/stillness-mode")}>Stillness Mode</a>
+            <a href={withBasePath("/ai-tea-guide")}>AI Tea Guide</a>
+            <a href={withBasePath("/b2b")}>B2B Gifts</a>
           </div>
           <div aria-label="Signature focus">
             <span>AI tea state test</span>
@@ -648,7 +656,7 @@ export default function Home() {
           </div>
           <form>
             <input type="email" placeholder="Email for tea notes" aria-label="Email for newsletter" />
-            <button type="submit">Join</button>
+            <button type="submit">Join for Tea Notes</button>
           </form>
           <small>hello@chazentea.com.au · Instagram · YouTube</small>
         </div>

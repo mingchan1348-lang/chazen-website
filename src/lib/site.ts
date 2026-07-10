@@ -11,8 +11,12 @@ export const navItems = [
   { label: "Tea Test", href: "/tea-test" },
   { label: "Ritual", href: "/tea-ritual" },
   { label: "Culture", href: "/tea-culture" },
+  { label: "Tea Collection", href: "/tea-collection" },
   { label: "Five Cups", href: "/five-cups" },
   { label: "Tea Boxes", href: "/tea-boxes" },
+  { label: "Song Room", href: "/song-room" },
+  { label: "Stillness Mode", href: "/stillness-mode" },
+  { label: "AI Tea Guide", href: "/ai-tea-guide" },
   { label: "B2B Gifts", href: "/b2b" }
 ];
 
@@ -20,8 +24,12 @@ export const footerItems = [
   { label: "Tea Test", href: "/tea-test" },
   { label: "Tea Ritual", href: "/tea-ritual" },
   { label: "Tea Culture", href: "/tea-culture" },
+  { label: "Tea Collection", href: "/tea-collection" },
   { label: "Five Cups", href: "/five-cups" },
   { label: "Tea Boxes", href: "/tea-boxes" },
+  { label: "Song Room", href: "/song-room" },
+  { label: "Stillness Mode", href: "/stillness-mode" },
+  { label: "AI Tea Guide", href: "/ai-tea-guide" },
   { label: "B2B Gifts", href: "/b2b" }
 ];
 

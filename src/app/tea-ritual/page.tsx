@@ -39,6 +39,11 @@ export default function TeaRitualPage() {
           label: "Future visual: Gaiwan ritual closeup",
           note: "Hero placeholder for future ritual photography"
         }}
+        media={{
+          asset: "gaiwan-ritual.mp4",
+          alt: "A close, unhurried gaiwan tea ritual: warming the vessel, pouring, and settling the leaf.",
+          type: "video"
+        }}
       />
 
       <ChazenContentSection

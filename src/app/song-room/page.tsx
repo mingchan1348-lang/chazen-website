@@ -36,6 +36,8 @@ export default function SongRoomPage() {
         title="The Song Room"
         chinese="宋室"
         copy="A quiet exhibition on Song dynasty tea aesthetics: foam, dark ceramic, scholar restraint, and the luxury of saying almost nothing."
+        image="chazen-song-diancha-v1.png"
+        imageAlt="A Song dynasty style dian cha tea whisking scene with dark ceramic bowl and pale foam."
       />
 
       <section className="song-gallery bg-porcelain">
@@ -47,17 +49,19 @@ export default function SongRoomPage() {
             </h2>
           </MotionReveal>
           <MotionReveal delay={0.08}>
-            <div className="song-vessel-wall">
-              <div className="jian-bowl" />
-              <div className="foam-disc" />
-              <div className="tea-whisk-study">
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-              </div>
-              <p>foam / black glaze / breath / silence</p>
+            <div className="overflow-hidden rounded-lg border border-ink/10 shadow-soft">
+              <video
+                className="aspect-[4/5] w-full object-cover"
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                src={`${process.env.NEXT_PUBLIC_BASE_PATH ?? ""}/video/dian-cha.mp4`}
+              />
+              <p className="museum-label border-t border-ink/10 bg-porcelain px-5 py-3 text-ink/60">
+                foam / black glaze / breath / silence
+              </p>
             </div>
           </MotionReveal>
         </div>
@@ -80,7 +84,7 @@ export default function SongRoomPage() {
         </div>
       </section>
 
-      <section className="section bg-[#171713] text-porcelain">
+      <section className="section bg-ink text-porcelain">
         <div className="container grid gap-10 lg:grid-cols-[1fr_1.1fr] lg:items-center">
           <MotionReveal>
             <p className="museum-label text-brass">Curator Note</p>

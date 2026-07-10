@@ -163,7 +163,7 @@ export function InquiryForm({
             onChange={(event) => updateField("name", event.target.value)}
           />
           {errors.name ? (
-            <span id="inquiry-name-error" className="text-xs font-semibold text-[#9f3d2f]">
+            <span id="inquiry-name-error" className="text-xs font-semibold text-seal">
               {errors.name}
             </span>
           ) : null}
@@ -181,7 +181,7 @@ export function InquiryForm({
             onChange={(event) => updateField("email", event.target.value)}
           />
           {errors.email ? (
-            <span id="inquiry-email-error" className="text-xs font-semibold text-[#9f3d2f]">
+            <span id="inquiry-email-error" className="text-xs font-semibold text-seal">
               {errors.email}
             </span>
           ) : null}
@@ -247,7 +247,7 @@ export function InquiryForm({
           onChange={(event) => updateField("message", event.target.value)}
         />
         {errors.message ? (
-          <span id="inquiry-message-error" className="text-xs font-semibold text-[#9f3d2f]">
+          <span id="inquiry-message-error" className="text-xs font-semibold text-seal">
             {errors.message}
           </span>
         ) : null}
@@ -262,7 +262,7 @@ export function InquiryForm({
       </div>
       <div className="grid gap-2 text-xs leading-6 text-ink/58" aria-live="polite">
         {hasErrors ? (
-          <p className="font-semibold text-[#9f3d2f]">Please fix the highlighted fields before sending.</p>
+          <p className="font-semibold text-seal">Please fix the highlighted fields before sending.</p>
         ) : null}
         {status === "opening" ? (
           <p className="flex max-w-xl items-start gap-2">

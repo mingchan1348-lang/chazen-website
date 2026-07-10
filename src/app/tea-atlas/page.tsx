@@ -14,6 +14,8 @@ export default function TeaAtlasPage() {
         title="Tea Atlas"
         chinese="茶之地圖"
         copy="A living map of mountain, mist, altitude, processing, and ritual. The leaf remembers where it came from."
+        image="chazen-shanshui-chapter-2.png"
+        imageAlt="A misted mountain and water landscape evoking the origins of Chinese tea."
       />
 
       <section className="section bg-paper">

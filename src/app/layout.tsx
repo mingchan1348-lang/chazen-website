@@ -1,8 +1,22 @@
 import type { Metadata } from "next";
+import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { site } from "@/lib/site";
+
+const displaySerif = Cormorant_Garamond({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-serif",
+  display: "swap"
+});
+
+const interfaceSans = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap"
+});
 
 export const metadata: Metadata = {
   title: {
@@ -18,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${displaySerif.variable} ${interfaceSans.variable}`}>
       <body>
         <div className="page-shell">
           <Header />

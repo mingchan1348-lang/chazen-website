@@ -101,7 +101,7 @@ export default function GiftBoxPage() {
         </div>
       </section>
 
-      <section className="section bg-[#e8decc]">
+      <section className="section bg-stone">
         <div className="container grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
           <div>
             <p className="eyebrow">For private and agency gifting</p>

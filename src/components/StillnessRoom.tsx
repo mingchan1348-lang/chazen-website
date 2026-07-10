@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Pause, Play, Timer, Volume2 } from "lucide-react";
 
 const moods = [
@@ -25,7 +25,7 @@ export function StillnessRoom() {
   const [seconds, setSeconds] = useState(60);
   const [running, setRunning] = useState(false);
   const [mood, setMood] = useState(moods[0]);
-  const [rings, setRings] = useState(0);
+  const bowlAudioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     if (!running || seconds === 0) {
@@ -58,90 +58,83 @@ export function StillnessRoom() {
     setRunning((value) => !value);
   }
 
-  function strikeBowl() {
-    setRings((value) => value + 1);
+  function resetMeditation() {
+    setSeconds(60);
+    setRunning(false);
+  }
 
-    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContextClass) {
-      return;
+  function strikeBowl() {
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+    if (!bowlAudioRef.current) {
+      bowlAudioRef.current = new Audio(`${basePath}/audio/singing-bowl.mp3`);
     }
 
-    const context = new AudioContextClass();
-    const oscillator = context.createOscillator();
-    const gain = context.createGain();
-    oscillator.type = "sine";
-    oscillator.frequency.setValueAtTime(196, context.currentTime);
-    oscillator.frequency.exponentialRampToValueAtTime(98, context.currentTime + 2.8);
-    gain.gain.setValueAtTime(0.0001, context.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.18, context.currentTime + 0.08);
-    gain.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 3.2);
-    oscillator.connect(gain).connect(context.destination);
-    oscillator.start();
-    oscillator.stop(context.currentTime + 3.3);
+    const audio = bowlAudioRef.current;
+    audio.currentTime = 0;
+    audio.volume = 0.6;
+    void audio.play();
   }
 
   return (
-    <div className="stillness-room">
-      <div className="stillness-stage">
-        <div className={`breath-orb ${running ? "is-breathing" : ""}`}>
-          <span>{running ? "Inhale / Exhale" : "One Breath"}</span>
+    <div className="premium-card mx-auto max-w-2xl bg-porcelain p-8 sm:p-12">
+      <div className="text-center">
+        <div
+          className={`mx-auto grid h-16 w-16 place-items-center rounded-full border border-moss/30 bg-moss/5 text-[0.65rem] font-bold uppercase tracking-widest text-moss ${
+            running ? "animate-pulse" : ""
+          }`}
+          aria-hidden="true"
+        >
+          {running ? "Breathe" : "Begin"}
         </div>
-        <button type="button" className="bowl-button" onClick={strikeBowl}>
-          <Volume2 size={18} />
-          Strike bowl
-          <span key={rings} className="bowl-ripple" />
-        </button>
-        <div className="stillness-steam" aria-hidden="true" />
-      </div>
-
-      <div className="stillness-panel">
-        <p className="museum-label text-brass">60-second tea meditation</p>
-        <p className="display-title mt-5 text-7xl leading-none text-porcelain">{timeLabel}</p>
-        <p className="mt-5 text-sm leading-7 text-porcelain/64">
+        <p className="museum-label mt-6 text-brass">60-second tea meditation</p>
+        <p className="display-title mt-3 text-6xl leading-none text-ink">{timeLabel}</p>
+        <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-ink/62">
           Let the first sound mark the beginning. Watch the breath expand and release. Return to
           the cup before returning to the day.
         </p>
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <button type="button" className="button-light" onClick={toggleMeditation}>
-            {running ? <Pause size={17} /> : <Play size={17} />}
-            {running ? "Pause" : seconds === 0 ? "Restart" : "Begin"}
-          </button>
-          <button
-            type="button"
-            className="button-ghost"
-            onClick={() => {
-              setSeconds(60);
-              setRunning(false);
-            }}
-          >
-            <Timer size={17} />
-            Reset
-          </button>
-        </div>
-        <div className="mood-selector">
+      </div>
+
+      <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+        <button type="button" className="button-primary" onClick={toggleMeditation}>
+          {running ? <Pause size={17} /> : <Play size={17} />}
+          {running ? "Pause" : seconds === 0 ? "Restart" : "Begin"}
+        </button>
+        <button type="button" className="button-secondary" onClick={resetMeditation}>
+          <Timer size={17} />
+          Reset
+        </button>
+        <button type="button" className="button-secondary" onClick={strikeBowl}>
+          <Volume2 size={17} />
+          Strike bowl
+        </button>
+      </div>
+
+      <div className="mt-10 border-t border-ink/10 pt-8">
+        <p className="museum-label text-center text-ink/50">How are you feeling?</p>
+        <div className="mt-4 flex flex-wrap justify-center gap-2">
           {moods.map((item) => (
             <button
               type="button"
               key={item.name}
-              className={mood.name === item.name ? "is-active" : ""}
+              aria-pressed={mood.name === item.name}
+              className={
+                mood.name === item.name
+                  ? "rounded-full border border-moss bg-moss px-4 py-2 text-sm font-semibold text-porcelain transition"
+                  : "rounded-full border border-ink/15 px-4 py-2 text-sm font-semibold text-ink/68 transition hover:border-moss/50"
+              }
               onClick={() => setMood(item)}
             >
               {item.name}
             </button>
           ))}
         </div>
-        <div className="tea-recommendation">
-          <p>Recommended tea</p>
-          <strong>{mood.tea}</strong>
-          <span>{mood.copy}</span>
+
+        <div className="mt-6 rounded-lg border border-clay/20 bg-paper px-6 py-5 text-center">
+          <p className="museum-label text-clay">Recommended tea</p>
+          <strong className="display-title mt-2 block text-2xl text-ink">{mood.tea}</strong>
+          <span className="mt-1 block text-sm leading-6 text-ink/62">{mood.copy}</span>
         </div>
       </div>
     </div>
   );
-}
-
-declare global {
-  interface Window {
-    webkitAudioContext?: typeof AudioContext;
-  }
 }

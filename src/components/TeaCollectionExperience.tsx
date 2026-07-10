@@ -172,7 +172,7 @@ export function TeaCollectionExperience({ basePath }: TeaCollectionExperiencePro
           <p className="museum-kicker">Tea Collection / 茶品收藏</p>
           <h1>Leaves as origin, craft, taste, and ritual.</h1>
           <p lang="zh-Hant">茶不是商品格子。是一座座山，一種手藝，一杯時間。</p>
-          <a href={`${basePath}/#chapter-index`} className="museum-link-button">
+          <a href={`${basePath}/#entrance`} className="museum-link-button">
             Return to CHAZEN
           </a>
         </div>
@@ -239,7 +239,7 @@ export function TeaCollectionExperience({ basePath }: TeaCollectionExperiencePro
                 </div>
               </dl>
               <div className="tea-curator-actions">
-                <a href={`${basePath}/tea-assessment/`}>Add to Assessment Profile</a>
+                <a href={`${basePath}/tea-test/`}>Add to Assessment Profile</a>
                 <a
                   href={buildInquiryPath({
                     basePath,

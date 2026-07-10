@@ -420,6 +420,20 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
     ].join("\n");
 
     try {
+      const blob = new Blob([resultText], { type: "text/plain;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `chazen-tea-mind-result-${result.primary.key}.txt`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    } catch {
+      // Fall back to clipboard below if a file download isn't available in this environment.
+    }
+
+    try {
       if (navigator.clipboard?.writeText) {
         await navigator.clipboard.writeText(resultText);
       }

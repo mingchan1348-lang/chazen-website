@@ -13,14 +13,16 @@ export default function StillnessModePage() {
         chapter="Chapter 07 / Stillness Mode"
         title="Stillness Mode"
         chinese="靜心茶室"
-        copy="A darkened digital tea room for one minute of breath, bowl sound, steam, and a tea recommendation based on the mood you bring to the cup."
+        copy="A quiet digital tea room for one minute of breath, bowl sound, and a tea recommendation based on the mood you bring to the cup."
+        image="chazen-tea-room-hero-v2.png"
+        imageAlt="A dim, quiet tea room prepared for a moment of stillness."
       />
 
-      <section className="section bg-[#10120f]">
+      <section className="section bg-porcelain">
         <div className="container">
           <MotionReveal className="mb-12 max-w-3xl">
             <p className="museum-label text-brass">Interactive Meditation Chamber</p>
-            <h2 className="display-title mt-5 text-5xl leading-none text-porcelain md:text-7xl">
+            <h2 className="display-title mt-5 text-5xl leading-none text-ink md:text-7xl">
               Listen once. Breathe for sixty seconds.
             </h2>
           </MotionReveal>
@@ -30,11 +32,11 @@ export default function StillnessModePage() {
         </div>
       </section>
 
-      <section className="section bg-porcelain">
+      <section className="section bg-paper">
         <div className="container grid gap-8 md:grid-cols-3">
           {[
             ["Sound", "A single bowl tone gives the mind a threshold."],
-            ["Steam", "The softest movement on the screen becomes the visual pace of breath."],
+            ["Breath", "A quiet pulse marks each inhale and exhale for sixty seconds."],
             ["Tea", "The recommendation is not an upsell. It is a ritual pairing for the state you arrived in."]
           ].map(([title, copy], index) => (
             <MotionReveal key={title} delay={index * 0.06}>
