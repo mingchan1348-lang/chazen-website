@@ -2,26 +2,31 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Pause, Play, Timer, Volume2 } from "lucide-react";
+import { useLanguage } from "@/lib/language";
 
 const moods = [
   {
-    name: "Scattered",
-    tea: "Wuyi Rock Tea",
-    copy: "Mineral warmth and roasted depth for returning attention to the body."
+    name: { en: "Scattered", zh: "思緒紛亂" },
+    tea: { en: "Wuyi Rock Tea", zh: "武夷岩茶" },
+    copy: {
+      en: "Mineral warmth and roasted depth for returning attention to the body.",
+      zh: "礦質般的溫暖與焙火的深度，讓注意力回到身體。"
+    }
   },
   {
-    name: "Heavy",
-    tea: "Longjing",
-    copy: "Spring green clarity for a lighter, cleaner beginning."
+    name: { en: "Heavy", zh: "沉重疲憊" },
+    tea: { en: "Longjing", zh: "龍井" },
+    copy: { en: "Spring green clarity for a lighter, cleaner beginning.", zh: "春日綠茶的清澈，帶來更輕盈、乾淨的開始。" }
   },
   {
-    name: "Restless",
-    tea: "High Mountain Oolong",
-    copy: "Soft alpine aroma for slowing the edge of the day."
+    name: { en: "Restless", zh: "焦躁不安" },
+    tea: { en: "High Mountain Oolong", zh: "高山烏龍" },
+    copy: { en: "Soft alpine aroma for slowing the edge of the day.", zh: "柔和的高山香氣，撫平這一天的稜角。" }
   }
 ];
 
 export function StillnessRoom() {
+  const { t } = useLanguage();
   const [seconds, setSeconds] = useState(60);
   const [running, setRunning] = useState(false);
   const [mood, setMood] = useState(moods[0]);
@@ -84,55 +89,57 @@ export function StillnessRoom() {
           }`}
           aria-hidden="true"
         >
-          {running ? "Breathe" : "Begin"}
+          {running ? t("Breathe", "呼吸") : t("Begin", "開始")}
         </div>
-        <p className="museum-label mt-6 text-brass">60-second tea meditation</p>
+        <p className="museum-label mt-6 text-brass">{t("60-second tea meditation", "六十秒茶冥想")}</p>
         <p className="display-title mt-3 text-6xl leading-none text-ink">{timeLabel}</p>
         <p className="mx-auto mt-4 max-w-md text-sm leading-7 text-ink/62">
-          Let the first sound mark the beginning. Watch the breath expand and release. Return to
-          the cup before returning to the day.
+          {t(
+            "Let the first sound mark the beginning. Watch the breath expand and release. Return to the cup before returning to the day.",
+            "讓第一聲響標記開始。看著呼吸的展開與釋放。在回到日常之前，先回到這杯茶。"
+          )}
         </p>
       </div>
 
       <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
         <button type="button" className="button-primary" onClick={toggleMeditation}>
           {running ? <Pause size={17} /> : <Play size={17} />}
-          {running ? "Pause" : seconds === 0 ? "Restart" : "Begin"}
+          {running ? t("Pause", "暫停") : seconds === 0 ? t("Restart", "重新開始") : t("Begin", "開始")}
         </button>
         <button type="button" className="button-secondary" onClick={resetMeditation}>
           <Timer size={17} />
-          Reset
+          {t("Reset", "重設")}
         </button>
         <button type="button" className="button-secondary" onClick={strikeBowl}>
           <Volume2 size={17} />
-          Strike bowl
+          {t("Strike bowl", "敲擊缽音")}
         </button>
       </div>
 
       <div className="mt-10 border-t border-ink/10 pt-8">
-        <p className="museum-label text-center text-ink/50">How are you feeling?</p>
+        <p className="museum-label text-center text-ink/50">{t("How are you feeling?", "你現在感覺如何？")}</p>
         <div className="mt-4 flex flex-wrap justify-center gap-2">
           {moods.map((item) => (
             <button
               type="button"
-              key={item.name}
-              aria-pressed={mood.name === item.name}
+              key={item.name.en}
+              aria-pressed={mood.name.en === item.name.en}
               className={
-                mood.name === item.name
+                mood.name.en === item.name.en
                   ? "rounded-full border border-moss bg-moss px-4 py-2 text-sm font-semibold text-porcelain transition"
                   : "rounded-full border border-ink/15 px-4 py-2 text-sm font-semibold text-ink/68 transition hover:border-moss/50"
               }
               onClick={() => setMood(item)}
             >
-              {item.name}
+              {t(item.name.en, item.name.zh)}
             </button>
           ))}
         </div>
 
         <div className="mt-6 rounded-lg border border-clay/20 bg-paper px-6 py-5 text-center">
-          <p className="museum-label text-clay">Recommended tea</p>
-          <strong className="display-title mt-2 block text-2xl text-ink">{mood.tea}</strong>
-          <span className="mt-1 block text-sm leading-6 text-ink/62">{mood.copy}</span>
+          <p className="museum-label text-clay">{t("Recommended tea", "建議茶款")}</p>
+          <strong className="display-title mt-2 block text-2xl text-ink">{t(mood.tea.en, mood.tea.zh)}</strong>
+          <span className="mt-1 block text-sm leading-6 text-ink/62">{t(mood.copy.en, mood.copy.zh)}</span>
         </div>
       </div>
     </div>
