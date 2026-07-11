@@ -4,8 +4,10 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useId, useMemo, useRef, useState } from "react";
 import { fiveCups, type CupKey, type FiveCup } from "@/app/five-cups/fiveCupsData";
+import { useLanguage } from "@/lib/language";
 
 export function FiveCupsTabs() {
+  const { t, language } = useLanguage();
   const [activeKey, setActiveKey] = useState<CupKey>("faith");
   const buttonRefs = useRef<Array<HTMLButtonElement | null>>([]);
   const baseId = useId();
@@ -25,9 +27,15 @@ export function FiveCupsTabs() {
     <section className="five-cups-section chazen-subpage-section chazen-subpage-section-paper">
       <div className="chazen-subpage-container">
         <div className="chazen-subpage-heading">
-          <p className="chazen-subpage-eyebrow">Five Spiritual Faculties</p>
-          <h2 lang="zh-Hant">由一盞茶，走回自己</h2>
-          <strong>Faith, Diligence, Mindfulness, Stillness, Wisdom</strong>
+          <p className="chazen-subpage-eyebrow">{t("Five Spiritual Faculties", "五根")}</p>
+          {language === "zh" ? (
+            <>
+              <h2 lang="zh-Hant">由一盞茶，走回自己</h2>
+              <strong>Faith, Diligence, Mindfulness, Stillness, Wisdom</strong>
+            </>
+          ) : (
+            <h2>Faith, Diligence, Mindfulness, Stillness, Wisdom</h2>
+          )}
         </div>
 
         <div className="five-cups-layout">
@@ -71,8 +79,14 @@ export function FiveCupsTabs() {
                     }
                   }}
                 >
-                  <span lang="zh-Hant">{cup.tab}</span>
-                  <small>{cup.english}</small>
+                  {language === "zh" ? (
+                    <>
+                      <span lang="zh-Hant">{cup.tab}</span>
+                      <small>{cup.english}</small>
+                    </>
+                  ) : (
+                    <span>{cup.english}</span>
+                  )}
                 </button>
               );
             })}
@@ -88,6 +102,7 @@ export function FiveCupsTabs() {
 }
 
 function CupPanel({ cup, baseId, hidden }: { cup: FiveCup; baseId: string; hidden: boolean }) {
+  const { t, language } = useLanguage();
   return (
     <article
       id={`${baseId}-${cup.key}-panel`}
@@ -98,42 +113,48 @@ function CupPanel({ cup, baseId, hidden }: { cup: FiveCup; baseId: string; hidde
       hidden={hidden}
     >
       <div className="five-cups-visual-wrap">
-        <JianZhanVisual asset={cup.asset} label={cup.visualDirection} />
+        <JianZhanVisual asset={cup.asset} label={t(cup.visualDirectionEn, cup.visualDirection)} />
       </div>
 
       <div className="five-cups-copy">
         <p className="chazen-subpage-eyebrow">{cup.buddhistTerm}</p>
-        <h3 lang="zh-Hant">{cup.tab}</h3>
-        <strong>{cup.english}</strong>
+        {language === "zh" ? (
+          <>
+            <h3 lang="zh-Hant">{cup.tab}</h3>
+            <strong>{cup.english}</strong>
+          </>
+        ) : (
+          <h3>{cup.english}</h3>
+        )}
 
         <dl className="five-cups-meaning-list">
           <div>
-            <dt>Core meaning</dt>
-            <dd lang="zh-Hant">{cup.coreMeaning}</dd>
+            <dt>{t("Core meaning", "核心含義")}</dt>
+            <dd lang={language === "zh" ? "zh-Hant" : undefined}>{t(cup.coreMeaningEn, cup.coreMeaning)}</dd>
           </div>
           <div>
-            <dt>Modern state</dt>
-            <dd lang="zh-Hant">{cup.modernState}</dd>
+            <dt>{t("Modern state", "現代狀態")}</dt>
+            <dd lang={language === "zh" ? "zh-Hant" : undefined}>{t(cup.modernStateEn, cup.modernState)}</dd>
           </div>
           <div>
-            <dt>Tea-Zen meaning</dt>
-            <dd lang="zh-Hant">{cup.teaZenMeaning}</dd>
+            <dt>{t("Tea-Zen meaning", "茶禪含義")}</dt>
+            <dd lang={language === "zh" ? "zh-Hant" : undefined}>{t(cup.teaZenMeaningEn, cup.teaZenMeaning)}</dd>
           </div>
         </dl>
 
-        <div className="five-cups-poetry" lang="zh-Hant">
-          {cup.mainCopy.map((paragraph) => (
+        <div className="five-cups-poetry" lang={language === "zh" ? "zh-Hant" : undefined}>
+          {(language === "zh" ? cup.mainCopy : cup.mainCopyEn).map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
         </div>
 
         <div className="five-cups-direction">
-          <span>Visual direction</span>
-          <p lang="zh-Hant">{cup.visualDirection}</p>
+          <span>{t("Visual direction", "視覺方向")}</span>
+          <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(cup.visualDirectionEn, cup.visualDirection)}</p>
         </div>
 
         <Link href={cup.cta.href} className="chazen-subpage-button chazen-subpage-button-primary">
-          {cup.cta.label} <ArrowRight size={16} aria-hidden="true" />
+          {t(cup.cta.label, cup.cta.labelZh)} <ArrowRight size={16} aria-hidden="true" />
         </Link>
       </div>
     </article>
@@ -153,7 +174,7 @@ function JianZhanVisual({ asset, label }: { asset: string; label: string }) {
       </div>
       <figcaption>
         <span>{asset}</span>
-        <small lang="zh-Hant">{label}</small>
+        <small>{label}</small>
       </figcaption>
     </figure>
   );

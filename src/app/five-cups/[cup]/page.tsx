@@ -5,14 +5,13 @@ import {
   ChazenSubpageHero
 } from "@/components/ChazenSubpage";
 import { cupKeys, fiveCups, type CupKey } from "@/app/five-cups/fiveCupsData";
+import { FiveCupPhilosophy, FiveCupProductBridge } from "@/app/five-cups/[cup]/FiveCupDetail";
 
 type FiveCupPageProps = {
   params: Promise<{
     cup: string;
   }>;
 };
-
-const firstPackContents = ["Curated starter tea", "Tea-Mind result card", "Simple brewing guide"];
 
 function getCup(cup: string) {
   if (!cupKeys.includes(cup as CupKey)) {
@@ -50,6 +49,7 @@ export default async function FiveCupPage({ params }: FiveCupPageProps) {
         title={`${currentCup.tab}｜${currentCup.coreMeaning}`}
         english={currentCup.english}
         copy={currentCup.teaZenMeaning}
+        copyEn={currentCup.teaZenMeaningEn}
         placeholder={{
           asset: currentCup.asset,
           label: currentCup.visualDirection,
@@ -59,47 +59,31 @@ export default async function FiveCupPage({ params }: FiveCupPageProps) {
 
       <ChazenContentSection
         eyebrow="Philosophy"
+        eyebrowZh="哲理"
         title="這一盞茶，對應一種當下狀態"
         english="A faculty for this moment"
         tone="paper"
       >
-        <article className="chazen-subpage-note five-cups-detail-note">
-          <h3>{currentCup.english}</h3>
-          <p lang="zh-Hant">{currentCup.modernState}</p>
-          <div lang="zh-Hant">
-            {currentCup.mainCopy.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </div>
-        </article>
+        <FiveCupPhilosophy cup={currentCup} />
       </ChazenContentSection>
 
       <ChazenContentSection
         eyebrow="First product step"
+        eyebrowZh="產品第一步"
         title="從 A$25 First Pack 開始"
         english="Bridge the philosophy into a first cup"
       >
-        <article className="chazen-subpage-card faculty-product-bridge">
-            <span>A$25 First Pack</span>
-            <h3>A simple first step after {currentCup.tab}</h3>
-            <p>
-              This pack turns the {currentCup.english.toLowerCase()} idea into a practical first tea ritual:
-              one approachable tea direction, one short guide, and one result card to keep the meaning close.
-            </p>
-            <ul>
-              {firstPackContents.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
-        </article>
+        <FiveCupProductBridge cup={currentCup} />
       </ChazenContentSection>
 
       <ChazenCtaBand
         title="先找到你此刻需要的茶"
+        titleEn="First, Find the Tea You Need Right Now"
         copy="Take the Tea Test, then choose the first pack or tea box that fits your current rhythm."
-        primary={{ href: "/tea-test", label: "Start Tea Test" }}
-        secondary={{ href: "/tea-boxes", label: "Explore Tea Boxes" }}
-        next={{ href: "/five-cups", label: "Back to Five Cups" }}
+        copyZh="先做茶測試，再選擇符合你此刻節奏的初次體驗包或茶盒。"
+        primary={{ href: "/tea-test", label: "Start Tea Test", labelZh: "開始茶測試" }}
+        secondary={{ href: "/tea-boxes", label: "Explore Tea Boxes", labelZh: "探索茶盒" }}
+        next={{ href: "/five-cups", label: "Back to Five Cups", labelZh: "返回五盞建盞" }}
       />
     </main>
   );

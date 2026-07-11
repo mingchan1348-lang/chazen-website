@@ -1,7 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
+import { useLanguage } from "@/lib/language";
 
 type ChazenMediaPlaceholderProps = {
   asset: string;
@@ -18,9 +21,11 @@ type ChazenMediaProps = {
 
 type ChazenSubpageHeroProps = {
   eyebrow: string;
+  eyebrowZh?: string;
   title: string;
   english: string;
   copy: string;
+  copyEn?: string;
   placeholder: ChazenMediaPlaceholderProps;
   media?: ChazenMediaProps;
 };
@@ -55,27 +60,34 @@ export function ChazenSubpageMedia({ asset, alt, type = "image" }: ChazenMediaPr
 
 type ChazenContentSectionProps = {
   eyebrow?: string;
+  eyebrowZh?: string;
   title: string;
   english?: string;
   copy?: string;
+  copyEn?: string;
   children?: ReactNode;
   tone?: "paper" | "ivory";
 };
 
 type ChazenCtaBandProps = {
   title: string;
+  titleEn?: string;
   copy: string;
+  copyZh?: string;
   primary: {
     href: string;
     label: string;
+    labelZh?: string;
   };
   secondary?: {
     href: string;
     label: string;
+    labelZh?: string;
   };
   next?: {
     href: string;
     label: string;
+    labelZh?: string;
   };
 };
 
@@ -100,15 +112,31 @@ export function ChazenMediaPlaceholder({
   );
 }
 
-export function ChazenSubpageHero({ eyebrow, title, english, copy, placeholder, media }: ChazenSubpageHeroProps) {
+export function ChazenSubpageHero({
+  eyebrow,
+  eyebrowZh,
+  title,
+  english,
+  copy,
+  copyEn,
+  placeholder,
+  media
+}: ChazenSubpageHeroProps) {
+  const { t, language } = useLanguage();
   return (
     <section className="chazen-subpage-hero">
       <div className="chazen-subpage-container chazen-subpage-hero-grid">
         <div>
-          <p className="chazen-subpage-eyebrow">{eyebrow}</p>
-          <h1 lang="zh-Hant">{title}</h1>
-          <strong>{english}</strong>
-          <p lang="zh-Hant">{copy}</p>
+          <p className="chazen-subpage-eyebrow">{t(eyebrow, eyebrowZh ?? eyebrow)}</p>
+          {language === "zh" ? (
+            <>
+              <h1 lang="zh-Hant">{title}</h1>
+              <strong>{english}</strong>
+            </>
+          ) : (
+            <h1>{english}</h1>
+          )}
+          <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(copyEn ?? copy, copy)}</p>
           <div className="chazen-subpage-hero-rule" aria-hidden="true" />
         </div>
         {media ? <ChazenSubpageMedia {...media} /> : <ChazenMediaPlaceholder {...placeholder} />}
@@ -119,20 +147,29 @@ export function ChazenSubpageHero({ eyebrow, title, english, copy, placeholder, 
 
 export function ChazenContentSection({
   eyebrow,
+  eyebrowZh,
   title,
   english,
   copy,
+  copyEn,
   children,
   tone = "ivory"
 }: ChazenContentSectionProps) {
+  const { t, language } = useLanguage();
   return (
     <section className={`chazen-subpage-section chazen-subpage-section-${tone}`}>
       <div className="chazen-subpage-container">
         <div className="chazen-subpage-heading">
-          {eyebrow ? <p className="chazen-subpage-eyebrow">{eyebrow}</p> : null}
-          <h2 lang="zh-Hant">{title}</h2>
-          {english ? <strong>{english}</strong> : null}
-          {copy ? <p lang="zh-Hant">{copy}</p> : null}
+          {eyebrow ? <p className="chazen-subpage-eyebrow">{t(eyebrow, eyebrowZh ?? eyebrow)}</p> : null}
+          {language === "zh" || !english ? (
+            <>
+              <h2 lang="zh-Hant">{title}</h2>
+              {english ? <strong>{english}</strong> : null}
+            </>
+          ) : (
+            <h2>{english}</h2>
+          )}
+          {copy ? <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(copyEn ?? copy, copy)}</p> : null}
         </div>
         {children}
       </div>
@@ -140,27 +177,28 @@ export function ChazenContentSection({
   );
 }
 
-export function ChazenCtaBand({ title, copy, primary, secondary, next }: ChazenCtaBandProps) {
+export function ChazenCtaBand({ title, titleEn, copy, copyZh, primary, secondary, next }: ChazenCtaBandProps) {
+  const { t, language } = useLanguage();
   return (
     <section className="chazen-subpage-cta">
       <div className="chazen-subpage-container">
         <div>
-          <p className="chazen-subpage-eyebrow">Next step</p>
-          <h2 lang="zh-Hant">{title}</h2>
-          <p>{copy}</p>
+          <p className="chazen-subpage-eyebrow">{t("Next step", "下一步")}</p>
+          {language === "zh" || !titleEn ? <h2 lang="zh-Hant">{title}</h2> : <h2>{titleEn}</h2>}
+          <p>{t(copy, copyZh ?? copy)}</p>
         </div>
         <div className="chazen-subpage-actions">
           <Link href={primary.href} className="chazen-subpage-button chazen-subpage-button-primary">
-            {primary.label} <ArrowRight size={16} aria-hidden="true" />
+            {t(primary.label, primary.labelZh ?? primary.label)} <ArrowRight size={16} aria-hidden="true" />
           </Link>
           {secondary ? (
             <Link href={secondary.href} className="chazen-subpage-button">
-              {secondary.label}
+              {t(secondary.label, secondary.labelZh ?? secondary.label)}
             </Link>
           ) : null}
           {next ? (
             <Link href={next.href} className="chazen-subpage-button">
-              {next.label}
+              {t(next.label, next.labelZh ?? next.label)}
             </Link>
           ) : null}
         </div>
