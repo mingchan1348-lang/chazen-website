@@ -32,6 +32,11 @@ type AssessmentQuestion = {
   id: string;
   question: string;
   questionZh: string;
+  // Short, optional "why we ask this" line shown under a question — used
+  // sparingly, only where a question might otherwise feel like it's probing
+  // something clinical rather than a lifestyle reflection.
+  context?: string;
+  contextZh?: string;
   options: AssessmentOption[];
 };
 
@@ -294,6 +299,41 @@ const questions: AssessmentQuestion[] = [
     ]
   },
   {
+    id: "thirst",
+    question: "How thirsty do you feel through the day?",
+    questionZh: "你白天的口渴程度如何？",
+    options: [
+      { label: "Not very thirsty — I forget to drink water", labelZh: "不太渴——我常常忘記喝水", result: "qixu" },
+      { label: "Thirsty especially at night, with a dry mouth", labelZh: "特別是晚上容易口渴、口乾", result: "yinxu" },
+      { label: "Depends on my mood or stress that day", labelZh: "視乎當天的心情或壓力", result: "qiyu" },
+      { label: "Not thirsty, but my mouth feels sticky or heavy", labelZh: "不太渴，但口腔感覺黏膩沉重", result: "tanshi" }
+    ]
+  },
+  {
+    id: "mood",
+    question: "Which feels closer to how your days have been?",
+    questionZh: "哪一個比較接近你最近的日子？",
+    context: "Asking about mood as an everyday feeling, not a mental-health check.",
+    contextZh: "這裡問的是日常的感覺，而非心理健康檢測。",
+    options: [
+      { label: "Low on drive, easily discouraged — I run out of steam", labelZh: "動力不足，容易氣餒——很快就沒力氣", result: "qixu" },
+      { label: "Restless or wired by evening, hard to switch off", labelZh: "傍晚後不安或亢奮，難以放鬆", result: "yinxu" },
+      { label: "Tense, and quicker to snap when things pile up", labelZh: "緊繃，事情一多就容易發脾氣", result: "qiyu" },
+      { label: "Flat and hard to motivate — things roll off me", labelZh: "情緒平淡、提不起勁——什麼都無感", result: "tanshi" }
+    ]
+  },
+  {
+    id: "focus",
+    question: "How's your focus during the day?",
+    questionZh: "你白天的專注力如何？",
+    options: [
+      { label: "I start strong but fade fast", labelZh: "一開始很好，但很快就沒力", result: "qixu" },
+      { label: "Sharp, but overactive — hard to switch off", labelZh: "清晰但過度活躍——很難停下來", result: "yinxu" },
+      { label: "Distracted by whatever's bothering me", labelZh: "容易被煩心事分心", result: "qiyu" },
+      { label: "Slow to start, foggy most of the day", labelZh: "很難開始，一整天都昏沉", result: "tanshi" }
+    ]
+  },
+  {
     id: "today-needs",
     question: "What does today actually need from you?",
     questionZh: "今天，你真正需要的是什麼？",
@@ -449,6 +489,12 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
     }, 180);
   }
 
+  function handleBack() {
+    if (currentIndex === 0) return;
+    setSaveState("idle");
+    setCurrentIndex((index) => index - 1);
+  }
+
   function handleRestart() {
     setAnswers([]);
     setCurrentIndex(0);
@@ -538,8 +584,8 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
           <h1 id="assessment-title">{t("How are you, right now?", "此刻的你，感覺如何？")}</h1>
           <p>
             {t(
-              "Six plain questions about your energy, sleep, and tension today — inspired by traditional Chinese wellness patterns, not a personality quiz. Free instantly: your pattern and the tea suited to tonight. Unlock the full report for the rest.",
-              "六個關於今天精力、睡眠與緊繃程度的簡單問題——靈感來自傳統中式養生模式，而不是性格測驗。立即免費獲得：你的模式，以及今晚適合你的茶。解鎖完整報告，看見其餘的一切。"
+              "Nine plain questions about your energy, sleep, and tension today — inspired by traditional Chinese wellness patterns, not a personality quiz. Free instantly: your pattern and the tea suited to tonight. Unlock the full report for the rest.",
+              "九個關於今天精力、睡眠與緊繃程度的簡單問題——靈感來自傳統中式養生模式，而不是性格測驗。立即免費獲得：你的模式，以及今晚適合你的茶。解鎖完整報告，看見其餘的一切。"
             )}
           </p>
           <div className="tea-mind-character-rail" aria-label="Tea-Mind result types">
@@ -557,7 +603,7 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
             )}
           </p>
           <div className="assessment-hero-meta">
-            <span>{t("6 Questions · 2 Minutes", "六道問題 · 兩分鐘")}</span>
+            <span>{t("9 Questions · 3 Minutes", "九道問題 · 三分鐘")}</span>
             <span>{t("Free Quick Read", "免費速讀")}</span>
             <span>{t("A$25 Full Report + Tea", "A$25 完整報告 + 茶葉")}</span>
           </div>
@@ -600,8 +646,8 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
               <h2>{t("Begin with how your body feels today.", "從今天身體的感覺開始。")}</h2>
               <p>
                 {t(
-                  "Six plain questions on energy, sleep, and tension — no poetry, just how you actually feel. Your answers map to a simplified pattern from traditional Chinese wellness philosophy: 氣虛 running low, 陰虛 tired but wired, 氣鬱 held tension, or 痰濕 foggy and heavy. You'll get your pattern and a tea suited to tonight for free — unlock the full report for strengths, watch-outs, and a personal ritual.",
-                  "六道關於精力、睡眠與緊繃程度的簡單問題——沒有詩意的包裝，只有你真實的感覺。你的答案會對應到一個簡化的傳統中式養生模式：氣虛（精力不足）、陰虛（累但停不下來）、氣鬱（壓抑的緊繃）、或痰濕（昏沉又沉重）。你將免費獲得你的模式，以及今晚適合你的茶——解鎖完整報告即可看見優勢、注意事項與專屬儀式。"
+                  "Nine plain questions on energy, sleep, and tension — no poetry, just how you actually feel. Your answers map to a simplified pattern from traditional Chinese wellness philosophy: 氣虛 running low, 陰虛 tired but wired, 氣鬱 held tension, or 痰濕 foggy and heavy. You'll get your pattern and a tea suited to tonight for free — unlock the full report for strengths, watch-outs, and a personal ritual.",
+                  "九道關於精力、睡眠與緊繃程度的簡單問題——沒有詩意的包裝，只有你真實的感覺。你的答案會對應到一個簡化的傳統中式養生模式：氣虛（精力不足）、陰虛（累但停不下來）、氣鬱（壓抑的緊繃）、或痰濕（昏沉又沉重）。你將免費獲得你的模式，以及今晚適合你的茶——解鎖完整報告即可看見優勢、注意事項與專屬儀式。"
                 )}
               </p>
               <div className="tea-mind-type-grid" aria-label="Four wellness patterns">
@@ -625,14 +671,22 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
               <legend>
                 <span>{t("Question", "問題")} {currentIndex + 1}</span>
                 <strong>{t(currentQuestion.question, currentQuestion.questionZh)}</strong>
+                {currentQuestion.context ? (
+                  <em className="tea-mind-question-context">
+                    {t(currentQuestion.context, currentQuestion.contextZh ?? currentQuestion.context)}
+                  </em>
+                ) : null}
               </legend>
-              <div className="tea-mind-options">
+              <div className="tea-mind-options" role="radiogroup" aria-label={t(currentQuestion.question, currentQuestion.questionZh)}>
                 {currentQuestion.options.map((option) => {
                   const selected = answers[currentIndex] === option.result;
 
                   return (
                     <button
                       type="button"
+                      role="radio"
+                      aria-checked={selected}
+                      aria-pressed={selected}
                       key={`${currentQuestion.id}-${option.result}`}
                       className={selected ? "is-selected" : ""}
                       onClick={() => handleAnswer(option.result)}
@@ -643,6 +697,11 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
                   );
                 })}
               </div>
+              {currentIndex > 0 ? (
+                <button type="button" className="tea-mind-back-button" onClick={handleBack}>
+                  {t("Back", "上一題")}
+                </button>
+              ) : null}
             </fieldset>
           )}
 

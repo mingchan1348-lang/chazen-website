@@ -2473,9 +2473,41 @@ body:has(.chazen-motion-home) .museum-site-footer {
   text-wrap: balance;
 }
 
+.tea-mind-question-context {
+  display: block;
+  max-width: 640px;
+  margin-top: 0.6rem;
+  color: rgba(23, 23, 19, 0.55);
+  font-size: 0.85rem;
+  font-style: normal;
+  line-height: 1.5;
+}
+
+.tea-mind-back-button {
+  width: fit-content;
+  margin-top: 1.4rem;
+  border: none;
+  background: none;
+  padding: 0;
+  color: rgba(23, 23, 19, 0.55);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.tea-mind-back-button:hover,
+.tea-mind-back-button:focus-visible {
+  color: rgba(159, 63, 47, 0.9);
+}
+
 .tea-mind-options {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  /* Always exactly 4 options (one per Tea-Mind pattern) — 4 columns, not 5,
+     so the row doesn't leave a dangling empty cell at wide viewports. */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0.8rem;
 }
 
