@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { ArrowDown, ArrowRight } from "lucide-react";
 import { SectionIndexNav, type SectionIndexItem } from "@/components/SectionIndexNav";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import { videoAssets, withBasePath } from "@/lib/media";
 import { useLanguage } from "@/lib/language";
 
@@ -452,9 +453,12 @@ export default function Home() {
             <a href={withBasePath("/ai-tea-guide")}>{t("AI Tea Guide", "AI 茶指南")}</a>
             <a href={withBasePath("/b2b")}>{t("B2B Gifts", "企業茶禮")}</a>
           </div>
-          <a href={withBasePath("/tea-test")} className="chazen-nav-cta">
-            {t("Start Tea Test", "開始茶測試")}
-          </a>
+          <span className="chazen-nav-actions">
+            <LanguageToggle />
+            <a href={withBasePath("/tea-test")} className="chazen-nav-cta">
+              {t("Start Tea Test", "開始茶測試")}
+            </a>
+          </span>
         </nav>
 
         <section ref={heroRef} className="chazen-motion-hero chazen-home-hero" aria-labelledby="home-title">
