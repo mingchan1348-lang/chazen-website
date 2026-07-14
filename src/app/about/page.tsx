@@ -6,11 +6,26 @@ import { ArrowRight } from "lucide-react";
 import { SectionHeading } from "@/components/SectionHeading";
 import { useLanguage } from "@/lib/language";
 
+const pillars = [
+  {
+    en: ["Culture, carried forward", "We respect the knowledge, objects, and gestures of Chinese tea culture, then present them with clarity for contemporary life."],
+    zh: ["承傳文化", "我們尊重中國茶文化中的知識、器物與動作，再以清晰、當代的方式帶進日常生活。"]
+  },
+  {
+    en: ["Ritual before product", "Tea is more than something to consume. Warming the cup, watching the leaf open, and sharing the first pour can turn an ordinary pause into a meaningful return."],
+    zh: ["儀式先於商品", "茶不只是被消費的東西。溫杯、看茶葉舒展、分享第一泡，都能把普通的停頓變成一次有意義的回歸。"]
+  },
+  {
+    en: ["Quiet, considered luxury", "We choose restraint over noise: thoughtful materials, useful details, honest storytelling, and gifts that feel personal rather than promotional."],
+    zh: ["安靜而有分寸的質感", "我們選擇克制而非喧鬧：用心的材質、有用的細節、真誠的故事，以及有個人溫度而非宣傳式的禮物。"]
+  }
+];
+
 export default function AboutPage() {
   const { t, language } = useLanguage();
 
   useEffect(() => {
-    document.title = language === "zh" ? "關於我們 | Chazen" : "About | Chazen";
+    document.title = language === "zh" ? "品牌故事 | Chazen" : "Our Story | Chazen";
   }, [language]);
 
   return (
@@ -18,37 +33,59 @@ export default function AboutPage() {
       <section className="section">
         <div className="container">
           <SectionHeading
-            eyebrow="About Chazen"
-            eyebrowZh="關於 Chazen"
-            title="A premium tea ritual brand for calm living and meaningful gifting."
-            titleZh="一個為平靜生活與有意義贈禮而生的高端茶儀式品牌。"
-            copy="Chazen draws from Chinese tea culture and presents it through modern design, gifting, sound ritual, and future AI-guided personalization."
-            copyZh="Chazen 汲取中國茶文化，以現代設計、贈禮、聲音儀式，以及未來的 AI 個人化引導呈現。"
+            eyebrow="Our story"
+            eyebrowZh="品牌故事"
+            title="Tea as a way to return."
+            titleZh="以茶，回到當下。"
+            copy="Chazen 茶禪 is a culture-first Chinese tea brand created around a simple belief: a cup of tea can make space for calm, attention, and connection."
+            copyZh="Chazen 茶禪是一個以文化為本的中國茶品牌。我們相信，一杯茶可以為平靜、專注與連結留出空間。"
           />
+
+          <div className="mt-14 grid gap-8 border-y border-ink/10 py-12 lg:grid-cols-[0.8fr_1.2fr]">
+            <p className="display-title text-4xl leading-tight text-leaf md:text-5xl">
+              {t("茶禪一味", "茶禪一味")}
+            </p>
+            <div className="grid gap-6 text-base leading-8 text-ink/66">
+              <p>{t(
+                "The name Chazen brings tea and Zen into one idea. It reflects the long relationship between tea, awareness, hospitality, and the art of slowing down.",
+                "Chazen 將「茶」與「禪」放在同一個概念之中，回應茶、覺察、待客之道與慢下來的藝術之間悠久的連結。"
+              )}</p>
+              <p>{t(
+                "We are building a modern tea house beyond a physical room: tea rituals, cultural stories, guided discovery, sound, and meaningful gifts designed to meet people where they are.",
+                "我們正在建立一間不受實體空間限制的現代茶文化之家，透過茶儀式、文化故事、引導式探索、聲音與有意義的贈禮，讓不同的人都能找到自己的入口。"
+              )}</p>
+              <p>{t(
+                "Our intention is not to simplify Chinese tea into a trend. It is to make the first step welcoming while keeping the culture visible, respected, and worth learning.",
+                "我們的目的不是把中國茶簡化成潮流，而是讓第一步更容易親近，同時讓文化保持可見、受到尊重，並值得繼續學習。"
+              )}</p>
+            </div>
+          </div>
+
           <div className="mt-14 grid gap-8 md:grid-cols-3">
-            {[
-              {
-                en: ["Mission", "Help people reconnect through tea, ritual, sound, and mindful gifting."],
-                zh: ["使命", "透過茶、儀式、聲音與用心贈禮，幫助人們重新連結。"]
-              },
-              {
-                en: ["Vision", "Bring Chinese tea culture into contemporary calm living."],
-                zh: ["願景", "將中國茶文化帶入當代的平靜生活。"]
-              },
-              {
-                en: ["Principle", "Ritual before commodity. Calm luxury before loud selling."],
-                zh: ["原則", "儀式先於商品，靜奢先於喧囂的銷售。"]
-              }
-            ].map((item) => (
-              <div key={item.en[0]} className="border-t border-ink/12 pt-7">
-                <p className="display-title text-3xl text-leaf">{t(item.en[0], item.zh[0])}</p>
+            {pillars.map((item) => (
+              <article key={item.en[0]} className="border-t border-ink/12 pt-7">
+                <h2 className="display-title text-3xl text-leaf">{t(item.en[0], item.zh[0])}</h2>
                 <p className="mt-5 text-sm leading-7 text-ink/62">{t(item.en[1], item.zh[1])}</p>
-              </div>
+              </article>
             ))}
           </div>
-          <Link href="/gift-box" className="button-primary mt-12">
-            {t("Explore the first gift box", "探索第一款禮盒")} <ArrowRight size={17} />
-          </Link>
+
+          <div className="mt-16 bg-porcelain p-7 shadow-soft md:p-10">
+            <p className="eyebrow">{t("What we are building", "我們正在建立")}</p>
+            <h2 className="display-title mt-4 max-w-3xl text-4xl leading-tight text-ink">
+              {t("A thoughtful path from curiosity to personal ritual.", "一條從好奇心走向個人茶儀式的清晰路徑。")}
+            </h2>
+            <p className="mt-5 max-w-3xl leading-8 text-ink/66">
+              {t(
+                "Chazen brings together guided tea discovery, practical brewing rituals, cultural education, the Five Cups philosophy, and gifting for personal and professional milestones.",
+                "Chazen 結合引導式選茶、實用沖泡儀式、文化內容、五盞理念，以及為個人與企業重要時刻而設的贈禮。"
+              )}
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link href="/tea-test" className="button-primary">{t("Begin with the tea test", "從茶測試開始")} <ArrowRight size={17} /></Link>
+              <Link href="/b2b" className="button-secondary">{t("Explore cultural gifting", "探索文化贈禮")}</Link>
+            </div>
+          </div>
         </div>
       </section>
     </main>
