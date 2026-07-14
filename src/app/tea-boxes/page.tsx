@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import {
   ChazenContentSection,
   ChazenCtaBand,
-  ChazenMediaPlaceholder,
   ChazenSubpageHero
 } from "@/components/ChazenSubpage";
 import { useLanguage } from "@/lib/language";
@@ -128,12 +127,6 @@ const comparisonHeadings = [
   { en: "CTA", zh: "行動呼籲" }
 ];
 
-const mediaPlaceholders = [
-  { asset: "starter-travel-tea-set.webp", label: "Future visual: Starter travel tea set" },
-  { asset: "b2b-gift-box-mockup.webp", label: "Future visual: B2B settlement gift scene" },
-  { asset: "tea-box-comparison.webp", label: "Future visual: Tea box comparison" }
-];
-
 export default function TeaBoxesPage() {
   const { t, language } = useLanguage();
 
@@ -150,10 +143,10 @@ export default function TeaBoxesPage() {
         english="Begin or Continue Your Tea Journey"
         copy="Chazen 茶盒不是單純產品，而是把茶、儀式、文化與心境帶入日常的方式。"
         copyEn="A Chazen tea box isn't just a product — it's a way of bringing tea, ritual, culture, and mindset into daily life."
-        placeholder={{
-          asset: "starter-tea-box-mockup.webp",
-          label: "Future visual: Starter Tea Box mockup",
-          note: "Hero placeholder for future tea box photography"
+        media={{
+          asset: "chazen-gift-box-v1.png",
+          alt: "A refined Chazen cultural tea gift box presented with tea ware and story cards.",
+          type: "image"
         }}
       />
 
@@ -183,7 +176,7 @@ export default function TeaBoxesPage() {
         <div className="chazen-three-column">
           {boxCards.map((box) => (
             <article key={box.title.en} className="chazen-subpage-card">
-              <span>{t("In the Making", "製作中")}</span>
+              <span>{t("Collection preview", "系列預覽")}</span>
               <strong className="chazen-price-tag">{box.price}</strong>
               <h3>{t(box.title.en, box.title.zh)}</h3>
               <ul>
@@ -192,20 +185,6 @@ export default function TeaBoxesPage() {
                 ))}
               </ul>
             </article>
-          ))}
-        </div>
-      </ChazenContentSection>
-
-      <ChazenContentSection
-        eyebrow="Visual placeholders"
-        eyebrowZh="媒體預留位置"
-        title="未來影像位置先保持安靜"
-        english="Reserved Media Without Adding Weight"
-        tone="paper"
-      >
-        <div className="chazen-placeholder-grid">
-          {mediaPlaceholders.map((item) => (
-            <ChazenMediaPlaceholder key={item.asset} asset={item.asset} label={item.label} />
           ))}
         </div>
       </ChazenContentSection>
