@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import {
   ChazenContentSection,
   ChazenCtaBand,
-  ChazenMediaPlaceholder,
   ChazenSubpageHero
 } from "@/components/ChazenSubpage";
 import { useLanguage } from "@/lib/language";
@@ -131,10 +130,10 @@ export default function TeaCulturePage() {
         english="Tea Through Chinese History"
         copy="從神農傳說、唐代《茶經》、宋代點茶，到現代 Chazen，茶一直不只是飲品，而是一種文化與生活方式。"
         copyEn="From the legend of Shennong, to the Tang dynasty's Classic of Tea, to Song dynasty whisked tea, to modern Chazen — tea has always been more than a drink; it is a culture and a way of life."
-        placeholder={{
-          asset: "culture-song-diancha.webp",
-          label: "Digital tea museum atmosphere",
-          note: "Hero placeholder for Song dynasty tea culture"
+        media={{
+          asset: "chazen-song-diancha-v1.png",
+          alt: "A Song dynasty style whisked-tea (dian cha) scene, evoking the literati aesthetic this chapter of tea history is known for.",
+          type: "image"
         }}
       />
 
@@ -183,7 +182,7 @@ export default function TeaCulturePage() {
         copyEn="Chazen maps five Jian Zhan cups to Faith, Effort, Mindfulness, Stillness, and Wisdom. This isn't doctrine — it's a cultural metaphor: using a cup of tea to bring you closer to yourself."
         tone="paper"
       >
-        <div className="chazen-two-column">
+        <div className="chazen-pull-quote">
           <div className="chazen-subpage-note">
             <h3>{t("Faith, Effort, Mindfulness, Stillness, Wisdom", "信、精進、念、定、慧")}</h3>
             <p lang={language === "zh" ? "zh-Hant" : undefined}>
@@ -196,11 +195,6 @@ export default function TeaCulturePage() {
               {t("View Five Cups", "查看五盞建盞")}
             </Link>
           </div>
-          <ChazenMediaPlaceholder
-            asset="culture-five-faculties-jian-zhan.webp"
-            label="Future visual: Five Jian Zhan Cups and Five Faculties"
-            note="Reserved cultural Five Cups visual"
-          />
         </div>
       </ChazenContentSection>
 

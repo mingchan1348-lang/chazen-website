@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import {
   ChazenContentSection,
   ChazenCtaBand,
-  ChazenMediaPlaceholder,
   ChazenSubpageHero,
   ChazenSubpageMedia
 } from "@/components/ChazenSubpage";
@@ -51,11 +50,6 @@ export default function TeaRitualPage() {
         english="The Ritual Before the Tea"
         copy="從溫器、置茶、醒茶，到聞香、出湯、慢飲，茶不是急著完成，而是讓自己慢下來。"
         copyEn="From warming the teaware, to adding the leaves, waking the tea, smelling the aroma, pouring, and sipping slowly — tea isn't about finishing quickly. It's about letting yourself slow down."
-        placeholder={{
-          asset: "ritual-gaiwan-closeup.webp",
-          label: "Future visual: Gaiwan ritual closeup",
-          note: "Hero placeholder for future ritual photography"
-        }}
         media={{
           asset: "gaiwan-ritual.mp4",
           alt: "A close, unhurried gaiwan tea ritual: warming the vessel, pouring, and settling the leaf.",
@@ -86,9 +80,9 @@ export default function TeaRitualPage() {
               )}
             </p>
           </article>
-          <ChazenMediaPlaceholder
-            asset="ritual-gaiwan-closeup.webp"
-            label="Future visual: Gaiwan vessel study"
+          <ChazenSubpageMedia
+            asset="chazen-tea-table-topdown-v3.png"
+            alt="A top-down view of the tea table set for the ritual: gaiwan, fairness pitcher, and cups arranged in sequence."
           />
         </div>
       </ChazenContentSection>
@@ -100,9 +94,10 @@ export default function TeaRitualPage() {
         english="Why Use a Fairness Pitcher?"
       >
         <div className="chazen-two-column">
-          <ChazenMediaPlaceholder
-            asset="ritual-cha-hai-pour.webp"
-            label="Future visual: Cha Hai fairness pitcher pour"
+          <ChazenSubpageMedia
+            asset="chazen-ritual-film.mp4"
+            alt="A short film following the six-step tea ritual, including the pour into the fairness pitcher."
+            type="video"
           />
           <article className="chazen-subpage-note">
             <h3>{t("Fairness Pitcher / Cha Hai", "公道杯 / 茶海")}</h3>
@@ -160,26 +155,6 @@ export default function TeaRitualPage() {
               )}
             </p>
           </article>
-        </div>
-      </ChazenContentSection>
-
-      <ChazenContentSection
-        eyebrow="Media placeholders"
-        eyebrowZh="媒體預留位置"
-        title="未來可以加入儀式影像"
-        english="Reserved Ritual Media"
-        tone="paper"
-      >
-        <div className="chazen-placeholder-grid">
-          <ChazenSubpageMedia
-            asset="chazen-tea-table-topdown-v3.png"
-            alt="A top-down view of the tea table set for the ritual: gaiwan, fairness pitcher, and cups arranged in sequence."
-          />
-          <ChazenSubpageMedia
-            asset="chazen-ritual-film.mp4"
-            alt="A short film following the six-step tea ritual from warming the vessel to the final slow sip."
-            type="video"
-          />
         </div>
       </ChazenContentSection>
 

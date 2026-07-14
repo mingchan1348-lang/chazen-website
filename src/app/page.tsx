@@ -135,44 +135,6 @@ const ritualSteps = [
   { zh: "慢飲", en: "Sip Slowly", copy: { zh: "一口茶，一次呼吸。", en: "One sip, one breath." } }
 ];
 
-const timelineItems = [
-  {
-    title: { zh: "神農傳說", en: "The Legend of Shennong" },
-    copy: {
-      zh: "傳說中，茶的起源與神農嘗百草有關。茶從一片葉開始，逐漸成為中國文化中重要的一部分。",
-      en: "Legend traces tea's origin to Shennong tasting a hundred herbs. From a single leaf, tea grew into an essential part of Chinese culture."
-    }
-  },
-  {
-    title: { zh: "唐代 — 陸羽《茶經》", en: "Tang Dynasty — Lu Yu's Classic of Tea" },
-    copy: {
-      zh: "唐代茶文化逐漸成形，陸羽寫下《茶經》，令茶不再只是飲品，而成為一套有系統的文化。",
-      en: "Tea culture took shape in the Tang dynasty as Lu Yu wrote the Classic of Tea, turning tea from a simple drink into a systematic culture."
-    }
-  },
-  {
-    title: { zh: "宋代 — 點茶與文人美學", en: "Song Dynasty — Whisked Tea and Literati Aesthetics" },
-    copy: {
-      zh: "宋代盛行點茶，茶與美學、文人生活、器物文化連在一起。",
-      en: "Whisked tea flourished in the Song dynasty, intertwining tea with aesthetics, literati life, and the culture of fine objects."
-    }
-  },
-  {
-    title: { zh: "明代 — 散茶", en: "Ming Dynasty — Loose-Leaf Tea" },
-    copy: {
-      zh: "明代之後，散茶逐漸流行，飲茶方式變得更接近日常。",
-      en: "After the Ming dynasty, loose-leaf tea grew popular, and tea drinking became part of everyday life."
-    }
-  },
-  {
-    title: { zh: "Modern Chazen", en: "Modern Chazen" },
-    copy: {
-      zh: "Chazen 將中國茶文化帶入現代生活，以 AI 茶測試、茶儀式與文化內容，幫助人重新認識茶。",
-      en: "Chazen brings Chinese tea culture into modern life — using the AI Tea Test, tea ritual, and cultural content to help people rediscover tea."
-    }
-  }
-];
-
 const exploreLinks = [
   {
     id: "tea-atlas",
@@ -200,36 +162,6 @@ const exploreLinks = [
   }
 ];
 
-const membershipTiers = [
-  {
-    title: { en: "Free Member", zh: "免費會員" },
-    price: { en: "Free", zh: "免費" },
-    benefits: [
-      { en: "Included after first purchase", zh: "首次購買後自動加入" },
-      { en: "Birthday tea note and offer", zh: "生日茶語與優惠" },
-      { en: "Early product and journal updates", zh: "搶先獲得新品與文章更新" }
-    ]
-  },
-  {
-    title: { en: "Community Member", zh: "社群會員" },
-    price: { en: "A$28 / month", zh: "A$28 / 月" },
-    benefits: [
-      { en: "Monthly member offer", zh: "每月會員優惠" },
-      { en: "WhatsApp community access", zh: "WhatsApp 社群通道" },
-      { en: "Seasonal tea prompts and simple rituals", zh: "季節茶語與簡易儀式提示" }
-    ]
-  },
-  {
-    title: { en: "Premium Ritual Member", zh: "尊享儀式會員" },
-    price: { en: "A$38 / month", zh: "A$38 / 月" },
-    benefits: [
-      { en: "Premium member perks", zh: "尊享會員專屬禮遇" },
-      { en: "Limited teacup gift moments", zh: "限量茶杯贈禮時刻" },
-      { en: "Deeper ritual and culture content", zh: "更深入的儀式與文化內容" }
-    ]
-  }
-];
-
 const journalCategories = [
   { zh: "茶歷史", en: "Tea History" },
   { zh: "茶與睡眠", en: "Tea & Sleep" },
@@ -247,10 +179,8 @@ const sectionIndexItems: SectionIndexItem[] = [
   { id: "tea-test", label: "Tea Test", zh: "茶測試" },
   { id: "ritual", label: "Ritual", zh: "茶儀式" },
   { id: "culture", label: "Culture", zh: "茶文化" },
-  { id: "philosophy", label: "Philosophy", zh: "理念" },
   { id: "tea-atlas", label: "Tea Atlas", zh: "茶地圖" },
   { id: "tea-boxes", label: "Tea Boxes", zh: "茶盒" },
-  { id: "membership", label: "Membership", zh: "會員" },
   { id: "b2b", label: "B2B Gifts", zh: "企業茶禮" },
   { id: "journal", label: "Journal", zh: "文章" }
 ];
@@ -640,60 +570,6 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="philosophy" className="chazen-motion-section">
-        <div className="chazen-motion-container">
-          <SectionHeading title="茶，不只是飲品" english="Tea Is Not Only a Drink" />
-          <div className="chazen-philosophy-grid">
-            {[
-              {
-                title: { en: "Tea for Mind", zh: "茶與心" },
-                copy: {
-                  zh: "不同的茶，有不同的節奏。有些適合專注，有些適合放鬆，有些適合在晚上慢慢飲。",
-                  en: "Different teas carry different rhythms. Some suit focus, some suit relaxing, some are best sipped slowly at night."
-                }
-              },
-              {
-                title: { en: "Tea as Culture", zh: "茶與文化" },
-                copy: {
-                  zh: "中國茶文化承載歷史、禮儀、哲學與人與人之間的連結。",
-                  en: "Chinese tea culture carries history, etiquette, philosophy, and the connections between people."
-                }
-              },
-              {
-                title: { en: "Tea as Daily Practice", zh: "茶與日常修習" },
-                copy: {
-                  zh: "飲茶不一定複雜。可以用蓋碗，也可以用杯；可以正式，也可以自然地融入生活。",
-                  en: "Drinking tea doesn't need to be complicated. Use a gaiwan or a simple cup; make it formal, or fold it naturally into daily life."
-                }
-              }
-            ].map((item) => (
-              <article key={item.title.en}>
-                <h3>{t(item.title.en, item.title.zh)}</h3>
-                <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(item.copy.en, item.copy.zh)}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="chazen-motion-section" aria-label="Tea culture timeline">
-        <div className="chazen-motion-container">
-          <SectionHeading title="茶，如何穿過中國歷史" english="Tea Through Chinese History" />
-          <div className="chazen-timeline-scroll">
-            {timelineItems.map((item) => (
-              <article key={item.title.en}>
-                {language === "zh" ? (
-                  <h3 lang="zh-Hant">{item.title.zh}</h3>
-                ) : (
-                  <h3>{item.title.en}</h3>
-                )}
-                <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(item.copy.en, item.copy.zh)}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <RippleDivider />
 
       <section id="explore" className="chazen-motion-section chazen-explore-section">
@@ -736,26 +612,6 @@ export default function Home() {
       </section>
 
       <RippleDivider />
-
-      <section id="membership" className="chazen-motion-section">
-        <div className="chazen-motion-container chazen-membership">
-          <SectionHeading title="每個月，延續你的茶文化旅程" english="Continue Your Tea Journey Month by Month" />
-          {membershipTiers.map((tier) => (
-            <article key={tier.title.en}>
-              <span className="chazen-product-price">{t(tier.price.en, tier.price.zh)}</span>
-              <h3>{t(tier.title.en, tier.title.zh)}</h3>
-              <ul className="chazen-product-list">
-                {tier.benefits.map((benefit) => (
-                  <li key={benefit.en}>{t(benefit.en, benefit.zh)}</li>
-                ))}
-              </ul>
-            </article>
-          ))}
-          <a href={withBasePath("/tea-test")} className="chazen-primary-btn">
-            {t("Start Tea Test", "開始茶測試")}
-          </a>
-        </div>
-      </section>
 
       <footer className="chazen-motion-footer">
         <div className="chazen-motion-container">

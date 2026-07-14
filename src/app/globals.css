@@ -13114,6 +13114,26 @@ body:has(.chazen-motion-home) .museum-site-footer {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
+/* A narrower, centered single-column treatment for sections that make a
+   single editorial point rather than pairing text with an image — used in
+   place of forcing a placeholder image into every two-column slot. */
+.chazen-pull-quote {
+  position: relative;
+  z-index: 1;
+  width: min(640px, 100%);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.chazen-pull-quote .chazen-subpage-note {
+  text-align: center;
+}
+
+.chazen-pull-quote .chazen-subpage-button {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .chazen-subpage-card,
 .chazen-subpage-note,
 .chazen-subpage-table,
