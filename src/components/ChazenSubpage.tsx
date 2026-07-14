@@ -26,7 +26,7 @@ type ChazenSubpageHeroProps = {
   english: string;
   copy: string;
   copyEn?: string;
-  placeholder: ChazenMediaPlaceholderProps;
+  placeholder?: ChazenMediaPlaceholderProps;
   media?: ChazenMediaProps;
 };
 
@@ -145,7 +145,7 @@ export function ChazenSubpageHero({
           <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(copyEn ?? copy, copy)}</p>
           <div className="chazen-subpage-hero-rule" aria-hidden="true" />
         </div>
-        {media ? <ChazenSubpageMedia {...media} /> : <ChazenMediaPlaceholder {...placeholder} />}
+        {media ? <ChazenSubpageMedia {...media} /> : placeholder ? <ChazenMediaPlaceholder {...placeholder} /> : null}
       </div>
     </section>
   );
