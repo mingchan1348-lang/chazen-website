@@ -79,7 +79,11 @@ export function SectionIndexNav({ items }: SectionIndexNavProps) {
   };
 
   return (
-    <nav className="section-index-nav" aria-label="Homepage section index">
+    <nav
+      className="section-index-nav"
+      aria-label="Homepage section index"
+      style={{ backgroundColor: "rgba(251, 247, 239, 0.96)" }}
+    >
       {items.map((item) => {
         const active = item.id === activeId;
 
