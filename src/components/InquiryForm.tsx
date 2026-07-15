@@ -42,13 +42,6 @@ function validateInquiry(payload: InquiryPayload, t: (en: string, zh: string) =>
     errors.email = t("Please enter a valid email address.", "請輸入有效的電郵地址。");
   }
   if (!payload.type) errors.type = t("Please choose an inquiry type.", "請選擇查詢類型。");
-  if (payload.message.trim().length < 12) {
-    errors.message = t(
-      "Please share a little more detail so we can respond usefully.",
-      "請提供多一點詳情，讓我們能有效回覆你。"
-    );
-  }
-
   return errors;
 }
 
@@ -255,6 +248,7 @@ export function InquiryForm({
           name="message"
           rows={5}
           value={payload.message}
+          placeholder={t("Optional: tell us anything else we should know.", "選填：如有其他需要，請告訴我們。")}
           aria-invalid={Boolean(errors.message)}
           aria-describedby={errors.message ? "inquiry-message-error" : undefined}
           className="border border-ink/12 bg-white px-4 py-3 text-base outline-none transition focus:border-leaf"
@@ -299,14 +293,7 @@ export function InquiryForm({
           <p className="font-semibold text-seal">
             {t("We could not send your inquiry. Please check your connection and try again.", "未能送出你的查詢。請檢查網絡後再試。")}
           </p>
-        ) : (
-          <p className="max-w-xl">
-            {t(
-              "Send your enquiry directly from this page. No email app will open.",
-              "直接在此頁送出查詢，不會開啟電郵應用程式。"
-            )}
-          </p>
-        )}
+        ) : null}
       </div>
     </form>
   );
