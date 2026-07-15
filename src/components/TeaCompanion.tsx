@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { useLanguage } from "@/lib/language";
 
-const endpoint = "https://script.google.com/macros/s/AKfycbxNWxzcqD-_fKWDuySSGixtDW2aPUrgHVa2ySFzYiqMHeEv_sp2NTfCmU4hNhj_lhB4tg/exec";
+const endpoint = "https://script.google.com/macros/s/AKfycbxUYXnFHhxpjCB1lqt7RdvtuI3JQiFAqWNThjwzs_v6QmxmdwYt-nYTW-Id3IHKqbHfpw/exec";
 
 const paths = {
   teaTest: "/tea-test",
