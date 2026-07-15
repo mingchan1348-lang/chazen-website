@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
 import { useLanguage } from "@/lib/language";
 
-const endpoint = "https://script.google.com/macros/s/AKfycbxUYXnFHhxpjCB1lqt7RdvtuI3JQiFAqWNThjwzs_v6QmxmdwYt-nYTW-Id3IHKqbHfpw/exec";
+const endpoint = "https://plain-cell-e8fechazen-cha.chazen24tz.workers.dev/chat";
 
 const paths = {
   teaTest: "/tea-test",
@@ -37,44 +37,15 @@ function getVisitorId() {
   return created;
 }
 
-function askCha(message: string, visitorId: string) {
-  return new Promise<ChatResponse>((resolve) => {
-    const requestId = `cha_${Date.now()}_${Math.random().toString(36).slice(2)}`;
-    const url = new URL(endpoint);
-    url.search = new URLSearchParams({
-      action: "chat",
-      message,
-      visitorId,
-      bridge: "1",
-      requestId
-    }).toString();
-
-    const frame = document.createElement("iframe");
-    const timeout = window.setTimeout(() => finish({ error: "timeout" }), 25_000);
-
-    function finish(result: ChatResponse) {
-      window.clearTimeout(timeout);
-      window.removeEventListener("message", receive);
-      frame.remove();
-      resolve(result);
-    }
-
-    function receive(event: MessageEvent<unknown>) {
-      const data = event.data as { type?: string; requestId?: string; payload?: ChatResponse };
-      // Apps Script serves the bridge from changing Google subdomains. The random
-      // requestId prevents unrelated page messages from being accepted.
-      if (data?.type === "chazen-cha-reply" && data.requestId === requestId && data.payload) {
-        finish(data.payload);
-      }
-    }
-
-    window.addEventListener("message", receive);
-    frame.setAttribute("aria-hidden", "true");
-    frame.tabIndex = -1;
-    frame.style.cssText = "display:none;width:0;height:0;border:0";
-    frame.src = url.toString();
-    document.body.appendChild(frame);
+async function askCha(message: string, visitorId: string) {
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message, visitorId })
   });
+
+  const result = await response.json() as ChatResponse;
+  return result;
 }
 
 export function TeaCompanion() {
