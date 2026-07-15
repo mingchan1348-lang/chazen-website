@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
-import { ArrowRight, Check, Download, Loader2, RotateCcw } from "lucide-react";
+import { ArrowRight, Check, Download, LockKeyhole, Loader2, RotateCcw } from "lucide-react";
 import { buildInquiryPath } from "@/lib/inquiry";
 import { useLanguage } from "@/lib/language";
+import styles from "./TeaAssessmentExperience.module.css";
 
 type ResultKey =
   | "harmony"
@@ -107,8 +108,8 @@ const resultProfiles: Record<ResultKey, ResultProfile> = {
     primaryTeaZh: "清香型鐵觀音",
     alternativeTea: "Longjing green tea",
     alternativeTeaZh: "龍井綠茶",
-    timing: "Morning or early afternoon",
-    timingZh: "早上或午後較早時段",
+    timing: "During a morning reset or while you work",
+    timingZh: "早上整理節奏時，或工作期間",
     caution: "A steady rhythm can still be disrupted by strong tea late in the day.",
     cautionZh: "即使狀態穩定，太晚飲濃茶仍可能影響休息。",
     product: "Tea Discovery Selection",
@@ -129,15 +130,15 @@ const resultProfiles: Record<ResultKey, ResultProfile> = {
     strategies: [
       "Protect one reliable rest window each day.",
       "Avoid repeatedly using stronger caffeine to push through tiredness.",
-      "Make the first cup unhurried and have it with or after food."
+      "Let the first cup be a deliberate pause rather than a quick fix."
     ],
-    strategiesZh: ["每日保留一段穩定的休息時間。", "避免不停用更濃的咖啡因硬撐。", "第一杯茶慢慢飲，並安排在進食時或之後。"],
+    strategiesZh: ["每日保留一段穩定的休息時間。", "避免不停用更濃的咖啡因硬撐。", "讓第一杯茶成為有意識的停頓，而不是快速補救。"],
     primaryTea: "Chinese black tea",
     primaryTeaZh: "中國紅茶",
     alternativeTea: "Roasted oolong",
     alternativeTeaZh: "焙火烏龍",
-    timing: "Morning, with or after breakfast",
-    timingZh: "早上，隨早餐或餐後飲用",
+    timing: "At the start of the day or during a work break",
+    timingZh: "一天開始時，或工作休息期間",
     caution: "Tea can create alertness, but it does not replace sleep or medical care for persistent fatigue.",
     cautionZh: "茶可以帶來清醒感，但不能取代睡眠；持續疲倦亦不應只靠茶處理。",
     product: "Warm Rhythm Selection",
@@ -165,8 +166,8 @@ const resultProfiles: Record<ResultKey, ResultProfile> = {
     primaryTeaZh: "焙火鐵觀音",
     alternativeTea: "Wuyi rock oolong",
     alternativeTeaZh: "武夷岩茶",
-    timing: "Morning or a cool afternoon",
-    timingZh: "早上或較涼的午後",
+    timing: "On cooler mornings or whenever you want a warmer cup",
+    timingZh: "較涼的早上，或想飲一杯溫暖茶湯時",
     caution: "If you also feel hot, dry, or restless, choose a lighter brew instead.",
     cautionZh: "如果同時感到燥熱、口乾或不安，應改為較淡的沖泡。",
     product: "Roasted Oolong Selection",
@@ -194,8 +195,8 @@ const resultProfiles: Record<ResultKey, ResultProfile> = {
     primaryTeaZh: "菊花飲",
     alternativeTea: "Lightly brewed white tea",
     alternativeTeaZh: "淡泡白茶",
-    timing: "Afternoon",
-    timingZh: "午後",
+    timing: "On warm afternoons or during a quiet pause",
+    timingZh: "較暖的午後，或想安靜停一停時",
     caution: "Cooling infusions are not automatically suitable if you often feel cold or have digestive discomfort.",
     cautionZh: "如果經常怕冷或腸胃不適，清涼花草飲未必適合。",
     product: "Clear Afternoon Selection",
@@ -223,8 +224,8 @@ const resultProfiles: Record<ResultKey, ResultProfile> = {
     primaryTeaZh: "白茶",
     alternativeTea: "Safety-checked goji and chrysanthemum infusion",
     alternativeTeaZh: "通過安全篩選後的杞菊飲",
-    timing: "Late morning or early afternoon",
-    timingZh: "上午較後或午後較早時段",
+    timing: "During a gentle daytime pause",
+    timingZh: "日間想放慢一下的時候",
     caution: "Persistent dry mouth can have many causes and should not be self-treated with tea.",
     cautionZh: "持續口乾可以有多種原因，不應只靠茶自行處理。",
     product: "Soft White Tea Selection",
@@ -252,8 +253,8 @@ const resultProfiles: Record<ResultKey, ResultProfile> = {
     primaryTeaZh: "淡泡陳皮熟普",
     alternativeTea: "Roasted oolong",
     alternativeTeaZh: "焙火烏龍",
-    timing: "After food, never as a treatment for stomach symptoms",
-    timingZh: "餐後飲用，但不可當作治療胃部症狀",
+    timing: "With a meal or during a lighter afternoon pause",
+    timingZh: "用餐時，或午後想輕鬆一下時",
     caution: "If tea worsens heartburn, pain, or nausea, stop and seek professional advice rather than trying a stronger brew.",
     cautionZh: "如果茶令胃酸、疼痛或噁心加劇，應停止飲用並尋求專業意見，而不是沖得更濃。",
     product: "After-Meal Tea Selection",
@@ -281,8 +282,8 @@ const resultProfiles: Record<ResultKey, ResultProfile> = {
     primaryTeaZh: "茉莉花茶",
     alternativeTea: "Floral oolong",
     alternativeTeaZh: "花香烏龍",
-    timing: "Late morning or afternoon",
-    timingZh: "上午較後或午後",
+    timing: "During a work break or when you want to leave busy mode",
+    timingZh: "工作休息期間，或想離開忙碌狀態時",
     caution: "Choose a caffeine-free alternative if this ritual happens close to bedtime.",
     cautionZh: "如果儀式接近睡前，應改選無咖啡因飲品。",
     product: "Floral Tea Selection",
@@ -306,12 +307,12 @@ const resultProfiles: Record<ResultKey, ResultProfile> = {
       "Use the same short wind-down cue for several nights."
     ],
     strategiesZh: ["將每日最後一杯咖啡因飲品提前。", "最後的儀式保持柔和燈光、安靜及無螢幕。", "連續數晚使用同一個簡短降速提示。"],
-    primaryTea: "Caffeine-free evening infusion",
-    primaryTeaZh: "無咖啡因晚間飲",
-    alternativeTea: "Chrysanthemum infusion, only when the cooling direction also fits",
-    alternativeTeaZh: "只在同時適合清爽方向時選擇菊花飲",
-    timing: "Evening",
-    timingZh: "晚間",
+    primaryTea: "Lightly brewed aged white tea",
+    primaryTeaZh: "淡泡陳年白茶",
+    alternativeTea: "Light-roast oolong",
+    alternativeTeaZh: "輕焙火烏龍",
+    timing: "During a quiet pause earlier in the day",
+    timingZh: "日間較早、想安靜停一停的時候",
     caution: "Persistent sleep problems deserve professional assessment; tea is only part of a wind-down ritual.",
     cautionZh: "持續睡眠問題應接受專業評估；茶只可以是降速儀式的一部分。",
     product: "Evening Ritual Selection",
@@ -585,12 +586,27 @@ function calculateResult(answers: Answer[]) {
 
 function getTeaRecommendation(result: ReturnType<typeof calculateResult>) {
   const profile = result.primary;
+  const fitReasons: Record<ResultKey, [string, string]> = {
+    harmony: ["A clean, aromatic cup supports enjoyment and focus without treating a problem you do not have.", "清爽有香氣的茶，適合在狀態穩定時享受與集中，不需要製造問題。"],
+    restore: ["A rounded, roasted direction feels gentler than chasing tiredness with an increasingly strong brew.", "圓潤、帶烘焙感的方向，比起用愈來愈濃的茶硬撐疲倦更柔和。"],
+    warm: ["Roasted aromas and a fuller cup match your preference for warmth and a steadier start.", "烘焙香與較飽滿的茶感，配合你偏向溫暖與穩定開始的需要。"],
+    cool: ["A light floral direction creates a cleaner pause when heat or restlessness feels more noticeable.", "當燥熱或心緒不定較明顯時，清淡花香方向可帶來較乾淨的停頓。"],
+    replenish: ["A softer, lightly brewed cup keeps the ritual gentle when dryness or overextension stands out.", "當乾燥感或過度消耗較明顯時，柔和淡泡的茶感更適合作為日常儀式。"],
+    light: ["A mellow, lightly brewed direction suits the moments when meals leave you feeling heavy or slow.", "當用餐後容易覺得沉重或緩慢時，醇和淡泡的方向較容易配合。"],
+    release: ["A fragrant cup gives you a sensory cue to step out of busy mode and create mental space.", "有香氣的飲品可成為感官提示，幫你離開忙碌狀態並留出思緒空間。"],
+    settle: ["A gentle Chinese tea can support the slowing-down ritual, but it still contains caffeine and may suit an earlier pause better.", "柔和的中國茶可以配合放慢節奏的儀式，但仍然含咖啡因，較適合安排在日間較早時段。"]
+  };
   let primary = profile.primaryTea;
   let primaryZh = profile.primaryTeaZh;
   let alternative = profile.alternativeTea;
   let alternativeZh = profile.alternativeTeaZh;
   let caution = profile.caution;
   let cautionZh = profile.cautionZh;
+  let suitable = `${profile.primaryTea}, ${profile.alternativeTea}`;
+  let suitableZh = `${profile.primaryTeaZh}、${profile.alternativeTeaZh}`;
+  let [fit, fitZh] = fitReasons[profile.key];
+  let matchLabel = "Your Chinese tea match";
+  let matchLabelZh = "你的中國茶配對";
 
   if (profile.key === "harmony") {
     const harmonyChoices: Record<FlavourKey, [string, string, string, string]> = {
@@ -601,27 +617,44 @@ function getTeaRecommendation(result: ReturnType<typeof calculateResult>) {
       surprise: ["Light Tieguanyin", "清香型鐵觀音", "Seasonal Chazen selection", "Chazen 時令茶選"]
     };
     [primary, primaryZh, alternative, alternativeZh] = harmonyChoices[result.flavour ?? "surprise"];
+    suitable = `${primary}, ${alternative}`;
+    suitableZh = `${primaryZh}、${alternativeZh}`;
   }
 
   if (result.caffeine === "sleep" || result.caffeine === "sensitive") {
-    alternative = primary;
-    alternativeZh = primaryZh;
-    primary = "Caffeine-free evening infusion";
-    primaryZh = "無咖啡因晚間飲";
-    caution = "Because you reported caffeine sensitivity, ordinary green, white, oolong, black, and pu-erh tea may still affect you. Check herbal ingredients if you take medicines, are pregnant, or have allergies.";
-    cautionZh = "你表示對咖啡因敏感；一般綠茶、白茶、烏龍、紅茶及普洱仍可能影響你。如正服藥、懷孕或有過敏，亦應先核對花草成分。";
+    const caffeineFreeFlowerChoices: Record<ResultKey, [string, string, string, string]> = {
+      harmony: ["Pure rose infusion", "純玫瑰花飲", "Pure osmanthus infusion", "純桂花飲"],
+      restore: ["Pure rose infusion", "純玫瑰花飲", "Pure osmanthus infusion", "純桂花飲"],
+      warm: ["Pure osmanthus infusion", "純桂花飲", "Pure rose infusion", "純玫瑰花飲"],
+      cool: ["Pure chrysanthemum infusion", "純菊花飲", "Pure rose infusion", "純玫瑰花飲"],
+      replenish: ["Pure chrysanthemum infusion", "純菊花飲", "Pure osmanthus infusion", "純桂花飲"],
+      light: ["Pure osmanthus infusion", "純桂花飲", "Pure rose infusion", "純玫瑰花飲"],
+      release: ["Pure rose infusion", "純玫瑰花飲", "Pure osmanthus infusion", "純桂花飲"],
+      settle: ["Pure rose infusion", "純玫瑰花飲", "Pure chrysanthemum infusion", "純菊花飲"]
+    };
+    [primary, primaryZh, alternative, alternativeZh] = caffeineFreeFlowerChoices[profile.key];
+    suitable = `${primary}, ${alternative}`;
+    suitableZh = `${primaryZh}、${alternativeZh}`;
+    matchLabel = "Your caffeine-free Chinese flower infusion match";
+    matchLabelZh = "你的無咖啡因中式花飲配對";
+    fit = `${fit} Because you said caffeine can affect you, both recommendations are pure flower infusions with no tea leaves.`;
+    fitZh = `${fitZh} 由於你表示咖啡因會影響你，兩個建議都是不含茶葉的純花飲。`;
+    caution = "These recommendations are caffeine-free only when they contain pure flowers and no green, white, oolong, black, or dark tea base. Check ingredients carefully; ask a qualified health professional first if you take medicines, are pregnant, or have allergies or ongoing symptoms.";
+    cautionZh = "只有在配方使用純花、不含綠茶、白茶、烏龍、紅茶或黑茶茶底時，這些建議才屬無咖啡因。請細閱成分；如正服藥、懷孕、有過敏或持續症狀，應先向合資格專業人士查詢。";
   }
 
   if (result.stomachSensitive) {
-    if (profile.key === "light") {
-      primary = "Lightly brewed roasted oolong, after food";
-      primaryZh = "餐後淡泡焙火烏龍";
+    if (profile.key === "light" && result.caffeine !== "sleep" && result.caffeine !== "sensitive") {
+      primary = "Lightly brewed roasted oolong";
+      primaryZh = "淡泡焙火烏龍";
+      suitable = `${primary}, ${alternative}`;
+      suitableZh = `${primaryZh}、${alternativeZh}`;
     }
-    caution = "You mentioned stomach discomfort. Do not use tea as a treatment, avoid strong tea on an empty stomach, and seek professional advice if symptoms persist or worsen.";
-    cautionZh = "你提到胃部不適。不要將茶當作治療，避免空腹飲濃茶；如果情況持續或加劇，應尋求專業意見。";
+    caution = `${caution} You also mentioned stomach discomfort. Do not use tea as a treatment; seek professional advice if symptoms persist or worsen.`;
+    cautionZh = `${cautionZh} 你亦提到胃部不適。不要將茶當作治療；如果情況持續或加劇，應尋求專業意見。`;
   }
 
-  return { primary, primaryZh, alternative, alternativeZh, caution, cautionZh };
+  return { primary, primaryZh, alternative, alternativeZh, suitable, suitableZh, fit, fitZh, matchLabel, matchLabelZh, caution, cautionZh };
 }
 
 export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
@@ -695,7 +728,7 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
       "",
       `${t("Tea match", "茶葉配對")}: ${t(tea.primary, tea.primaryZh)}`,
       `${t("Alternative", "另一選擇")}: ${t(tea.alternative, tea.alternativeZh)}`,
-      `${t("Best time", "建議時間")}: ${t(result.primary.timing, result.primary.timingZh)}`,
+      `${t("Fits naturally into", "自然融入這些時刻")}: ${t(result.primary.timing, result.primary.timingZh)}`,
       "",
       `${t("Important note", "重要提示")}: ${t(tea.caution, tea.cautionZh)}`,
       "",
@@ -734,10 +767,16 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
     message: `I completed the Chazen Tea Rhythm Test. My result is ${result.primary.englishName}, and my tea match is ${tea.primary}. I would like to learn more about the ${result.primary.product}.`,
     source: "Chazen Tea Rhythm Test"
   });
+  const fullPlanHref = buildInquiryPath({
+    basePath,
+    type: "Tea recommendation",
+    message: `I completed the Chazen Tea Rhythm Test. My result is ${result.primary.englishName}, and my tea match is ${tea.primary}. I would like the A$25 First Pack with my matched tea, full Tea Rhythm Report, brewing guide, and member access.`,
+    source: "Tea Rhythm Full Plan"
+  });
   const routeHref = (path: string) => `${basePath}${path}`;
 
   return (
-    <main className="assessment-page tea-mind-page">
+    <main className={`assessment-page tea-mind-page ${styles.scope}`}>
       <section className="assessment-hero tea-mind-hero" aria-labelledby="assessment-title">
         <Image
           src={`${basePath}/images/chazen-hero-gongfu-room-v3.png`}
@@ -752,14 +791,14 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
           <h1 id="assessment-title">{t("What has your body been telling you lately?", "你的身體，最近想告訴你甚麼？")}</h1>
           <p>
             {t(
-              "Eight short questions about your recent rhythm, inner needs, and tea preferences. Your answers shape what comes next, then lead to a tea pairing — not a diagnosis.",
-              "八條關於最近節奏、內在需要與飲茶偏好的簡短問題。你的答案會決定下一題，最後配對一杯茶——不是作出診斷。"
+              "Notice the pattern behind your recent energy, rest, digestion, and inner pace. Leave with a tea direction, the best time to drink it, and a simple ritual you can actually use.",
+              "留意最近精神、休息、消化與內在節奏之間的脈絡，找出適合你的茶、飲用時間，以及真正做得到的簡單茶儀式。"
             )}
           </p>
           <div className="tea-mind-character-rail" aria-label="Assessment principles">
-            <span><strong>8</strong><em>{t("Adaptive questions", "動態問題")}</em></span>
             <span><strong>今</strong><em>{t("Current rhythm", "當下節奏")}</em></span>
             <span><strong>茶</strong><em>{t("Personal tea match", "個人茶配對")}</em></span>
+            <span><strong>行</strong><em>{t("Practical next steps", "可行下一步")}</em></span>
             <span><strong>非</strong><em>{t("No diagnosis", "不作診斷")}</em></span>
           </div>
           <p className="tea-mind-disclaimer">
@@ -804,22 +843,21 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
           {phase === "intro" && (
             <section className="tea-mind-intro-panel" aria-label="Assessment introduction">
               <div className="tea-mind-oracle-character" aria-hidden="true">茶</div>
-              <p className="museum-kicker">{t("A conversation, not a checklist", "一場對話，而不是檢查表")}</p>
-              <h2>{t("One answer opens the next question.", "每一個答案，都會打開下一個問題。")}</h2>
+              <p className="museum-kicker">{t("Your tea, with a reason", "適合你的茶，也有清楚原因")}</p>
+              <h2>{t("Understand your current rhythm. Find the tea that fits it.", "了解目前節奏，找到真正適合你的茶。")}</h2>
               <p>
                 {t(
-                  "Everyone follows an eight-question path, but not everyone sees the same questions. We first notice a signal, then ask about its context before matching a tea. Stable answers are a real result too — you will never be forced to choose a problem you do not have.",
-                  "每個人都會完成八題，但不一定看到相同問題。我們先留意訊號，再了解相關情境，然後配茶。狀態穩定亦是一個真正結果——你不會被迫選擇自己沒有的問題。"
+                  "This short reflection helps you make sense of how you have felt lately, then turns those observations into a practical tea direction. You can receive a balanced result too — the test will never invent a problem just to recommend a product.",
+                  "這個簡短測試會整理你最近的感受，再將觀察轉化成實際選茶方向。狀態平衡亦是一個真正結果；測試不會為了推薦產品而製造你沒有的問題。"
                 )}
               </p>
-              <div className="tea-mind-type-grid" aria-label="How the test works">
-                <article><strong>一</strong><span>{t("Notice", "觀察")}</span><em>{t("Recent rhythm", "最近節奏")}</em></article>
-                <article><strong>二</strong><span>{t("Follow", "追問")}</span><em>{t("Relevant context", "相關情境")}</em></article>
-                <article><strong>三</strong><span>{t("Understand", "理解")}</span><em>{t("What you need", "當下需要")}</em></article>
-                <article><strong>四</strong><span>{t("Match", "配對")}</span><em>{t("Tea and timing", "茶與時間")}</em></article>
-              </div>
+              <ul className="tea-mind-purpose-list" aria-label={t("What you will receive", "你會得到甚麼")}>
+                <li><Check size={17} aria-hidden="true" />{t("A clear reading of your current rhythm", "清楚了解你目前的生活節奏")}</li>
+                <li><Check size={17} aria-hidden="true" />{t("A tea match, an alternative, and the best time to drink it", "適合的茶、另一選擇與最佳飲用時間")}</li>
+                <li><Check size={17} aria-hidden="true" />{t("A practical seven-day approach", "一個實際可行的七日方向")}</li>
+              </ul>
               <button type="button" className="tea-mind-primary-action" onClick={handleStart}>
-                {t("Begin the 8 Questions", "開始八條問題")}
+                {t("Discover My Tea Rhythm", "找出我的茶節奏")}
                 <ArrowRight size={16} aria-hidden="true" />
               </button>
             </section>
@@ -872,6 +910,10 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
 
           {phase === "result" && (
             <section className={`tea-mind-result tea-mind-tone-${result.primary.key}`} aria-live="polite">
+              <div className="tea-mind-report-heading">
+                <span>{t("Free personal summary", "免費個人摘要")}</span>
+                <em>{t("Included with your test", "完成測試即可查看")}</em>
+              </div>
               <div className="tea-mind-result-hero">
                 <span className="tea-mind-result-character" aria-hidden="true">{result.primary.character}</span>
                 <div>
@@ -892,14 +934,14 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
                   <p>{t(result.primary.need, result.primary.needZh)}</p>
                 </article>
                 <article>
-                  <span>{t("Best time", "建議時間")}</span>
+                  <span>{t("Fits naturally into", "自然融入這些時刻")}</span>
                   <p>{t(result.primary.timing, result.primary.timingZh)}</p>
                 </article>
               </div>
 
               <article className="tea-mind-detail-grid">
                 <article>
-                  <h4>{t("Why you received this result", "為甚麼得到這個結果")}</h4>
+                  <h4>{t("The signals behind your result", "結果背後的訊號")}</h4>
                   <ul>
                     {result.evidence.length > 0 ? result.evidence.map((option) => (
                       <li key={option.id}>{t(option.insight, option.insightZh)}</li>
@@ -907,7 +949,7 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
                   </ul>
                 </article>
                 <article>
-                  <h4>{t("A simple 7-day approach", "簡單七日策略")}</h4>
+                  <h4>{t("Your seven-day experiment", "你的七日小實驗")}</h4>
                   <ol>
                     {(language === "zh" ? result.primary.strategiesZh : result.primary.strategies).map((step) => (
                       <li key={step}>{step}</li>
@@ -918,10 +960,16 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
 
               <div className="tea-mind-product-panel">
                 <div>
-                  <span>{t("Your tea match", "你的茶葉配對")}</span>
+                  <span>{t(tea.matchLabel, tea.matchLabelZh)}</span>
                   <strong>{t(tea.primary, tea.primaryZh)}</strong>
                   <p>
                     {t("Alternative", "另一選擇")}: {t(tea.alternative, tea.alternativeZh)}
+                  </p>
+                  <p className="tea-mind-tea-fit">
+                    <b>{t("Why these fit", "為甚麼適合")}: </b>{t(tea.fit, tea.fitZh)}
+                  </p>
+                  <p className="tea-mind-suitable-teas">
+                    <b>{t("Suitable tea directions", "適合的茶飲方向")}: </b>{t(tea.suitable, tea.suitableZh)}
                   </p>
                 </div>
                 <div className="tea-mind-result-actions">
@@ -939,6 +987,55 @@ export function TeaAssessmentExperience({ basePath }: { basePath: string }) {
                   </button>
                 </div>
               </div>
+
+              <section className="tea-mind-full-plan" aria-labelledby="full-plan-title">
+                <div className="tea-mind-full-plan-copy">
+                  <p className="museum-kicker">{t("The complete Chazen plan", "完整茶禪個人方案")}</p>
+                  <h3 id="full-plan-title">{t("Do not buy a report. Start with the right tea and a plan for using it.", "不只是買一份報告，而是帶走適合你的茶與實行方案。")}</h3>
+                  <p>
+                    {t(
+                      "The A$25 First Pack brings the insight, the tea, and the next step together. Your full report explains how your answers connect; your matched tea lets you put the plan into practice.",
+                      "A$25 初次體驗包將理解、茶葉與下一步放在一起。完整報告會解釋答案之間的關係；配對茶葉則讓你真正實踐建議。"
+                    )}
+                  </p>
+                  <div className="tea-mind-plan-price">
+                    <strong>A$25</strong>
+                    <span>{t("One-time First Pack", "一次性初次體驗包")}</span>
+                  </div>
+                  <a className="tea-mind-unlock-button" href={fullPlanHref}>
+                    {t("Get My Complete Tea Plan", "取得我的完整茶方案")}
+                    <ArrowRight size={16} aria-hidden="true" />
+                  </a>
+                  <small>{t("Product details, availability, and delivery are confirmed before payment.", "產品內容、供應與配送會在付款前確認。")}</small>
+                </div>
+
+                <div className="tea-mind-plan-includes">
+                  <span>{t("One purchase, four connected parts", "一次購買，四個互相配合的部分")}</span>
+                  <ul>
+                    <li><strong>{t("Your matched starter tea", "你的配對入門茶")}</strong><em>{t(tea.primary, tea.primaryZh)}</em></li>
+                    <li><strong>{t("Full Tea Rhythm Report", "完整茶節奏報告")}</strong><em>{t("Answer-by-answer interpretation, personal watch-points, and a detailed seven-day plan", "逐題分析、個人留意重點與詳細七日方案")}</em></li>
+                    <li><strong>{t("Personal brewing guide", "個人沖泡指南")}</strong><em>{t("Tea strength, timing, and a gentler alternative", "茶湯濃度、飲用時間與較柔和替代選擇")}</em></li>
+                    <li><strong>{t("Chazen Free Member access", "茶禪免費會員身份")}</strong><em>{t("Member updates, birthday tea note, and early product news after your first purchase", "首次購買後獲得會員更新、生日茶語與新品消息")}</em></li>
+                  </ul>
+                </div>
+              </section>
+
+              <section className="tea-mind-locked" aria-label={t("Full report preview", "完整報告預覽")}>
+                <div className="tea-mind-locked-preview" aria-hidden="true">
+                  <p>{t("Inside your full Tea Rhythm Report", "完整茶節奏報告內容")}</p>
+                  <div className="tea-mind-locked-grid">
+                    <span>{t("Your dominant and secondary signals", "主要與次要訊號")}</span>
+                    <span>{t("How context changed your result", "情境如何影響結果")}</span>
+                    <span>{t("Seven-day tea and timing schedule", "七日飲茶與時間安排")}</span>
+                    <span>{t("What to notice before your next check-in", "下次檢視前的留意重點")}</span>
+                  </div>
+                </div>
+                <div className="tea-mind-locked-overlay">
+                  <LockKeyhole size={24} aria-hidden="true" />
+                  <p>{t("Your free summary gives you the direction. The complete report shows how to apply it day by day.", "免費摘要提供方向；完整報告則逐日說明如何實行。")}</p>
+                  <span>{t("Included in the A$25 First Pack", "已包括在 A$25 初次體驗包內")}</span>
+                </div>
+              </section>
 
               <article className="tea-mind-quick-tea">
                 <span>{t("Important fit and safety note", "重要配對與安全提示")}</span>
