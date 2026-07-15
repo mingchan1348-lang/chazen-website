@@ -2,7 +2,7 @@ const ALLOWED_ORIGIN = "https://mingchan1348-lang.github.io";
 const MODEL = "gpt-5-mini";
 const MAX_MESSAGE_CHARS = 600;
 const MAX_OUTPUT_TOKENS = 180;
-const COOLDOWN_SECONDS = 30;
+const COOLDOWN_SECONDS = 60;
 const MAX_VISITOR_MESSAGES_PER_DAY = 12;
 const MAX_SITE_MESSAGES_PER_DAY = 150;
 
@@ -107,6 +107,10 @@ export default {
     const visitorId = String(data.visitorId || "");
     if (!message || message.length > MAX_MESSAGE_CHARS || !/^cha_[a-zA-Z0-9_-]{12,120}$/.test(visitorId)) {
       return json({ ok: false, error: "invalid" }, 400, origin);
+    }
+
+    if (!env.CHAZEN_LIMITS || !env.OPENAI_API_KEY) {
+      return json({ ok: false, error: "configuration" }, 500, origin);
     }
 
     const quota = await useQuota(visitorId, env.CHAZEN_LIMITS);
