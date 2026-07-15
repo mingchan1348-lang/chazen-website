@@ -3,6 +3,7 @@ import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
+import { TeaCompanion } from "@/components/TeaCompanion";
 import { LanguageProvider } from "@/lib/language";
 import { site } from "@/lib/site";
 
@@ -63,6 +64,7 @@ export default function RootLayout({
             <Header />
             {children}
             <Footer />
+            <TeaCompanion />
           </div>
         </LanguageProvider>
       </body>
