@@ -60,8 +60,9 @@ function askCha(message: string, visitorId: string) {
     }
 
     function receive(event: MessageEvent<unknown>) {
-      if (!["https://script.google.com", "https://script.googleusercontent.com"].includes(event.origin)) return;
       const data = event.data as { type?: string; requestId?: string; payload?: ChatResponse };
+      // Apps Script serves the bridge from changing Google subdomains. The random
+      // requestId prevents unrelated page messages from being accepted.
       if (data?.type === "chazen-cha-reply" && data.requestId === requestId && data.payload) {
         finish(data.payload);
       }
