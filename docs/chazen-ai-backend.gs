@@ -5,13 +5,17 @@ const MAX_OUTPUT_TOKENS = 220;
 const COOLDOWN_SECONDS = 30;
 const MAX_VISITOR_MESSAGES_PER_DAY = 12;
 const MAX_SITE_MESSAGES_PER_DAY = 150;
+const CHAT_PARENT_ORIGIN = "https://mingchan1348-lang.github.io";
 
 function doGet(e) {
   const data = e.parameter || {};
   const result = data.action === "chat"
     ? handleChat(data)
     : { ok: true };
-  return response(data, result);
+
+  return data.bridge === "1"
+    ? bridgeResponse(data, result)
+    : response(data, result);
 }
 
 function doPost(e) {
@@ -140,4 +144,23 @@ function response(data, payload) {
   return ContentService
     .createTextOutput(callback ? `${callback}(${text});` : text)
     .setMimeType(callback ? ContentService.MimeType.JAVASCRIPT : ContentService.MimeType.JSON);
+}
+
+
+function bridgeResponse(data, payload) {
+  const requestId = String(data.requestId || "").replace(/[^a-zA-Z0-9_-]/g, "");
+  const message = JSON.stringify({
+    type: "chazen-cha-reply",
+    requestId,
+    payload
+  }).replace(/</g, "\\u003c").replace(/\u2028/g, "\\u2028").replace(/\u2029/g, "\\u2029");
+
+  const origin = JSON.stringify(CHAT_PARENT_ORIGIN);
+  const html = `<!doctype html><html><body><script>
+    window.parent.postMessage(${message}, ${origin});
+  </script></body></html>`;
+
+  return HtmlService
+    .createHtmlOutput(html)
+    .setXFrameOptionsMode(HtmlService.XFrameOptionsMode.ALLOWALL);
 }
