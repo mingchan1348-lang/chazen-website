@@ -22,6 +22,11 @@ type ChatResponse = {
   retryAfter?: number;
 };
 
+type ChatMessage = {
+  role: "cha" | "visitor";
+  text: string;
+};
+
 function getVisitorId() {
   const key = "chazen-cha-visitor";
   const existing = window.localStorage.getItem(key);
@@ -61,8 +66,8 @@ export function TeaCompanion() {
   const [open, setOpen] = useState(false);
   const [visitorId, setVisitorId] = useState("");
   const [question, setQuestion] = useState("");
-  const [answer, setAnswer] = useState("");
-  const [status, setStatus] = useState<"idle" | "thinking" | "error">("idle");
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+  const [status, setStatus] = useState<"idle" | "thinking">("idle");
 
   useEffect(() => setVisitorId(getVisitorId()), []);
 
@@ -79,30 +84,29 @@ export function TeaCompanion() {
     const message = question.trim();
     if (!message || !visitorId || status === "thinking") return;
 
+    setQuestion("");
+    setMessages((current) => [...current, { role: "visitor", text: message }]);
     setStatus("thinking");
-    setAnswer("");
+
     try {
       const result = await askCha(message, visitorId);
-      if (result.ok && result.answer) {
-        setAnswer(result.answer);
-        setQuestion("");
-        setStatus("idle");
-        return;
-      }
+      const reply = result.ok && result.answer
+        ? result.answer
+        : result.retryAfter
+          ? t(`Please wait about ${result.retryAfter} seconds before asking again.`, `請約等 ${result.retryAfter} 秒後再提問。`)
+          : result.error === "limit"
+            ? t("Cha is resting for today. Please return tomorrow.", "茶今天已經休息，請明天再來。")
+            : t("Cha cannot reply right now. Please try again shortly.", "茶暫時未能回覆，請稍後再試。");
 
-      if (result.retryAfter) {
-        setAnswer(t(`Please wait about ${result.retryAfter} seconds before asking again.`, `請約等 ${result.retryAfter} 秒後再提問。`));
-      } else if (result.error === "limit") {
-        setAnswer(t("Cha is resting for today. Please return tomorrow.", "茶今天已經休息，請明天再來。"));
-      } else {
-        setAnswer(t("Cha is not available just now. Please try again shortly.", "茶暫時未能回覆，請稍後再試。"));
-      }
-      setStatus("error");
+      setMessages((current) => [...current, { role: "cha", text: reply }]);
     } catch {
-      setAnswer(t("Cha is not available just now. Please try again shortly.", "茶暫時未能回覆，請稍後再試。"));
-      setStatus("error");
+      setMessages((current) => [...current, { role: "cha", text: t("Cha cannot reply right now. Please try again shortly.", "茶暫時未能回覆，請稍後再試。") }]);
+    } finally {
+      setStatus("idle");
     }
   }
+
+  const conversation = messages.length ? messages : [{ role: "cha" as const, text: greeting }];
 
   return (
     <aside className="fixed bottom-5 right-5 z-[70] grid justify-items-end gap-3 max-sm:bottom-3.5 max-sm:right-3.5" aria-label={t("Chazen tea guide", "Chazen 茶導覽員")}>
@@ -113,7 +117,14 @@ export function TeaCompanion() {
             <div><strong className="block font-[var(--font-serif)] text-[1.35rem] leading-none">Cha</strong><span className="block text-xs leading-5 text-[#2a2722]/65">{t("Tea companion", "茶友導覽員")}</span></div>
             <button type="button" className="grid h-8 w-8 place-items-center rounded-full text-[#2a2722]/55 hover:bg-[#b9823a]/10 hover:text-[#6f4a32] focus-visible:bg-[#b9823a]/10 focus-visible:outline-none" onClick={() => setOpen(false)} aria-label={t("Close tea guide", "關閉茶導覽員")}><X size={16} /></button>
           </div>
-          <p className="my-3 text-sm leading-6 text-[#2a2722]/75">{answer || greeting}</p>
+          <div className="my-3 grid max-h-60 gap-2 overflow-y-auto pr-1 text-sm leading-6">
+            {conversation.map((item, index) => (
+              <p key={`${item.role}-${index}`} className={item.role === "visitor" ? "justify-self-end rounded-2xl rounded-br-md bg-[#1f4735] px-3 py-2 text-[#fbf7ef]" : "justify-self-start rounded-2xl rounded-bl-md bg-[#f3ebdf] px-3 py-2 text-[#2a2722]/80"}>
+                {item.text}
+              </p>
+            ))}
+            {status === "thinking" ? <p className="justify-self-start rounded-2xl rounded-bl-md bg-[#f3ebdf] px-3 py-2 text-[#2a2722]/60">{t("Cha is thinking…", "茶正在思考…")}</p> : null}
+          </div>
           <form onSubmit={handleSubmit} className="grid gap-2">
             <label className="sr-only" htmlFor="cha-question">{t("Ask Cha", "問茶")}</label>
             <textarea id="cha-question" value={question} maxLength={600} rows={2} placeholder={t("Ask about tea, gifts, or rituals…", "問茶葉、禮物或茶儀式…")} onChange={(event) => setQuestion(event.target.value)} className="w-full resize-none rounded-xl border border-[#5b3a24]/20 bg-white px-3 py-2 text-sm leading-5 outline-none focus:border-[#1f4735]" />
