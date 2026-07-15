@@ -632,13 +632,22 @@ function getTeaRecommendation(result: ReturnType<typeof calculateResult>) {
       release: ["Pure rose infusion", "純玫瑰花飲", "Pure osmanthus infusion", "純桂花飲"],
       settle: ["Pure rose infusion", "純玫瑰花飲", "Pure chrysanthemum infusion", "純菊花飲"]
     };
+    const flowerFitReasons: Record<ResultKey, [string, string]> = {
+      harmony: ["These pure flower infusions keep the cup light and aromatic while giving you a caffeine-free way to explore flavour.", "這兩款純花飲清香輕盈，讓你可以在無咖啡因的情況下探索自己喜歡的味道。"],
+      restore: ["These pure flower infusions create a gentle, aromatic pause without using caffeine to push through tiredness.", "這兩款純花飲以柔和香氣帶來停頓，不需要用咖啡因硬撐疲倦。"],
+      warm: ["Osmanthus and rose offer a soft, rounded floral experience without adding caffeine.", "桂花與玫瑰帶來柔和圓潤的花香，同時不會加入咖啡因。"],
+      cool: ["Chrysanthemum and rose give you a clean, floral direction without a caffeinated tea base.", "菊花與玫瑰提供清爽花香方向，而且不使用含咖啡因茶底。"],
+      replenish: ["These pure flower infusions keep the ritual soft, fragrant, and free from caffeine.", "這兩款純花飲令整個飲用體驗保持柔和清香，而且不含咖啡因。"],
+      light: ["These pure flower infusions offer a lighter aromatic cup without relying on a caffeinated tea base.", "這兩款純花飲提供較輕盈的香氣體驗，不需要使用含咖啡因茶底。"],
+      release: ["Rose and osmanthus use aroma as a cue to step out of busy mode, without adding caffeine.", "玫瑰與桂花以香氣提示你離開忙碌狀態，同時不會加入咖啡因。"],
+      settle: ["These pure flower infusions keep the ritual caffeine-free, so the drink itself does not add another stimulant.", "這兩款純花飲不含咖啡因，避免飲品本身再增加刺激。"]
+    };
     [primary, primaryZh, alternative, alternativeZh] = caffeineFreeFlowerChoices[profile.key];
     suitable = `${primary}, ${alternative}`;
     suitableZh = `${primaryZh}、${alternativeZh}`;
     matchLabel = "Your caffeine-free Chinese flower infusion match";
     matchLabelZh = "你的無咖啡因中式花飲配對";
-    fit = `${fit} Because you said caffeine can affect you, both recommendations are pure flower infusions with no tea leaves.`;
-    fitZh = `${fitZh} 由於你表示咖啡因會影響你，兩個建議都是不含茶葉的純花飲。`;
+    [fit, fitZh] = flowerFitReasons[profile.key];
     caution = "These recommendations are caffeine-free only when they contain pure flowers and no green, white, oolong, black, or dark tea base. Check ingredients carefully; ask a qualified health professional first if you take medicines, are pregnant, or have allergies or ongoing symptoms.";
     cautionZh = "只有在配方使用純花、不含綠茶、白茶、烏龍、紅茶或黑茶茶底時，這些建議才屬無咖啡因。請細閱成分；如正服藥、懷孕、有過敏或持續症狀，應先向合資格專業人士查詢。";
   }
