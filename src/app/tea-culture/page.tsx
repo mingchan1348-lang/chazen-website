@@ -1,17 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   ChazenContentSection,
   ChazenCtaBand,
   ChazenSubpageHero
 } from "@/components/ChazenSubpage";
+import { VideoModal } from "@/components/VideoModal";
 import { useLanguage } from "@/lib/language";
+import { videoAssets, withBasePath } from "@/lib/media";
 
 const timeline = [
   {
     title: { zh: "神農傳說", en: "The Legend of Shennong" },
+    figure: { zh: "神農", en: "Shennong · the mythic first taster" },
     copy: {
       zh: "茶從傳說與草木經驗開始，慢慢走入人的生活。",
       en: "Tea began with legend and herbal knowledge, slowly finding its way into daily life."
@@ -20,6 +23,7 @@ const timeline = [
   },
   {
     title: { zh: "唐代 — 陸羽《茶經》", en: "Tang Dynasty — Lu Yu's Classic of Tea" },
+    figure: { zh: "陸羽", en: "Lu Yu · the Sage of Tea" },
     copy: {
       zh: "茶被書寫、整理，也開始成為有系統的文化。",
       en: "Tea was written about and codified, becoming a systematic culture."
@@ -28,14 +32,17 @@ const timeline = [
   },
   {
     title: { zh: "宋代 — 點茶與文人美學", en: "Song Dynasty — Whisked Tea and Literati Aesthetics" },
+    figure: { zh: "宋徽宗", en: "Emperor Huizong · the connoisseur" },
     copy: {
       zh: "茶與器物、書畫、文人日常連在一起。",
       en: "Tea intertwined with fine objects, calligraphy, painting, and literati daily life."
     },
-    asset: "culture-song-diancha.webp"
+    asset: "culture-song-diancha.webp",
+    video: "dianCha" as const
   },
   {
     title: { zh: "明代 — 散茶與日常飲茶", en: "Ming Dynasty — Loose-Leaf Tea and Everyday Drinking" },
+    figure: { zh: "明太祖", en: "The Hongwu Emperor · the reformer" },
     copy: {
       zh: "飲茶方式更貼近日常，也更接近今天的茶桌。",
       en: "Tea drinking grew closer to everyday life, resembling the tea table we know today."
@@ -44,11 +51,13 @@ const timeline = [
   },
   {
     title: { zh: "Modern Chazen", en: "Modern Chazen" },
+    figure: { zh: "你的篇章", en: "Your chapter" },
     copy: {
       zh: "以茶測試、茶儀式與文化內容，把茶帶回現代生活。",
       en: "Bringing tea back into modern life through the Tea Test, tea ritual, and cultural content."
     },
-    asset: "culture-five-faculties-jian-zhan.webp"
+    asset: "culture-five-faculties-jian-zhan.webp",
+    video: "chazenRitualFilm" as const
   }
 ];
 
@@ -116,10 +125,15 @@ const modernChazen = [
 
 export default function TeaCulturePage() {
   const { t, language } = useLanguage();
+  const [videoModal, setVideoModal] = useState<{ title: string; src: string } | null>(null);
 
   useEffect(() => {
     document.title = language === "zh" ? "茶文化 | Chazen" : "Tea Culture | Chazen";
   }, [language]);
+
+  const openChapterVideo = (title: string, key: keyof typeof videoAssets) => {
+    setVideoModal({ title, src: withBasePath(videoAssets[key]) });
+  };
 
   return (
     <main className="chazen-subpage">
@@ -151,7 +165,19 @@ export default function TeaCulturePage() {
                 {t("Chapter", "篇章")} {String(index + 1).padStart(2, "0")}
               </span>
               {language === "zh" ? <h3 lang="zh-Hant">{item.title.zh}</h3> : <h3>{item.title.en}</h3>}
+              <p className="chazen-subpage-figure" lang={language === "zh" ? "zh-Hant" : undefined}>
+                {t(item.figure.en, item.figure.zh)}
+              </p>
               <p lang={language === "zh" ? "zh-Hant" : undefined}>{t(item.copy.en, item.copy.zh)}</p>
+              {item.video ? (
+                <button
+                  type="button"
+                  className="museum-link-button"
+                  onClick={() => openChapterVideo(t(item.title.en, item.title.zh), item.video!)}
+                >
+                  {t("Watch this chapter", "觀看此篇章")}
+                </button>
+              ) : null}
             </article>
           ))}
         </div>
@@ -222,6 +248,13 @@ export default function TeaCulturePage() {
         primary={{ href: "/tea-ritual", label: "Explore Tea Ritual", labelZh: "探索茶儀式" }}
         secondary={{ href: "/tea-test", label: "Start Tea Test", labelZh: "開始茶測試" }}
         next={{ href: "/five-cups", label: "Five Cups", labelZh: "五盞" }}
+      />
+
+      <VideoModal
+        open={videoModal !== null}
+        title={videoModal?.title ?? "Film Coming Soon"}
+        src={videoModal?.src ?? ""}
+        onClose={() => setVideoModal(null)}
       />
     </main>
   );
