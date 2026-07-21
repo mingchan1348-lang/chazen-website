@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   ChazenContentSection,
   ChazenCtaBand,
@@ -36,6 +36,7 @@ const boxCards = [
   {
     title: { en: "First Pack", zh: "初次體驗包" },
     price: "A$25",
+    productId: "first-pack",
     asset: "first-pack-mockup.webp",
     visual: "Future visual: A$25 First Pack",
     items: [
@@ -48,6 +49,7 @@ const boxCards = [
   {
     title: { en: "Starter Tea Box", zh: "入門茶盒" },
     price: "A$68",
+    productId: "starter-tea-box",
     asset: "starter-tea-box-mockup.webp",
     visual: "Future visual: Starter Tea Box mockup",
     items: [
@@ -60,6 +62,7 @@ const boxCards = [
   {
     title: { en: "Lifetime Tea Box", zh: "一世茶盒" },
     price: "A$78",
+    productId: "lifetime-tea-box",
     asset: "lifetime-tea-box-mockup.webp",
     visual: "Future visual: Lifetime cultural tea box",
     items: [
@@ -129,10 +132,30 @@ const comparisonHeadings = [
 
 export default function TeaBoxesPage() {
   const { t, language } = useLanguage();
+  const [loadingProductId, setLoadingProductId] = useState<string | null>(null);
 
   useEffect(() => {
     document.title = language === "zh" ? "茶盒 | Chazen" : "Tea Boxes | Chazen";
   }, [language]);
+
+  async function handleBuyNow(productId: string) {
+    setLoadingProductId(productId);
+    try {
+      const response = await fetch("/api/checkout/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ productId })
+      });
+      const data = await response.json();
+      if (data.url) {
+        window.location.href = data.url;
+      } else {
+        setLoadingProductId(null);
+      }
+    } catch {
+      setLoadingProductId(null);
+    }
+  }
 
   return (
     <main className="chazen-subpage">
@@ -184,6 +207,22 @@ export default function TeaBoxesPage() {
                   <li key={item.en}>{t(item.en, item.zh)}</li>
                 ))}
               </ul>
+              {box.productId ? (
+                <button
+                  type="button"
+                  className="button-primary"
+                  disabled={loadingProductId === box.productId}
+                  onClick={() => handleBuyNow(box.productId)}
+                >
+                  {loadingProductId === box.productId
+                    ? t("Redirecting…", "跳轉中…")
+                    : t("Buy Now", "立即購買")}
+                </button>
+              ) : (
+                <a href="/b2b" className="button-secondary">
+                  {t("Enquire", "查詢")}
+                </a>
+              )}
             </article>
           ))}
         </div>
