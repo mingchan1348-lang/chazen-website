@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import type Stripe from "stripe";
 import { getProduct } from "@/lib/products";
 import { getStripe } from "@/lib/stripe";
 
@@ -52,18 +53,52 @@ export async function POST(request: NextRequest) {
     return json(request, { error: "Origin not allowed" }, 403);
   }
 
-  let productId: unknown;
+  let body: unknown;
 
   try {
-    ({ productId } = await request.json());
+    body = await request.json();
   } catch {
     return json(request, { error: "Invalid request body" }, 400);
   }
 
-  const product = typeof productId === "string" ? getProduct(productId) : undefined;
+  const rawItems = isRecord(body) && Array.isArray(body.items)
+    ? body.items
+    : isRecord(body) && typeof body.productId === "string"
+      ? [{ productId: body.productId, quantity: 1 }]
+      : undefined;
 
-  if (!product) {
-    return json(request, { error: "Unknown product" }, 400);
+  if (!rawItems || rawItems.length === 0) {
+    return json(request, { error: "No items in request" }, 400);
+  }
+
+  const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
+
+  for (const rawItem of rawItems) {
+    if (!isRecord(rawItem) || typeof rawItem.productId !== "string") {
+      return json(request, { error: "Invalid item" }, 400);
+    }
+
+    const product = getProduct(rawItem.productId);
+    const quantity =
+      typeof rawItem.quantity === "number" && Number.isInteger(rawItem.quantity) && rawItem.quantity > 0
+        ? Math.min(rawItem.quantity, 20)
+        : 1;
+
+    if (!product) {
+      return json(request, { error: `Unknown product: ${rawItem.productId}` }, 400);
+    }
+
+    lineItems.push({
+      price_data: {
+        currency: product.currency,
+        unit_amount: product.amount,
+        product_data: {
+          name: product.title.en,
+          description: product.description.en
+        }
+      },
+      quantity
+    });
   }
 
   if (!process.env.STRIPE_SECRET_KEY) {
@@ -77,25 +112,10 @@ export async function POST(request: NextRequest) {
       shipping_address_collection: {
         allowed_countries: ["AU"]
       },
-      line_items: [
-        {
-          price_data: {
-            currency: product.currency,
-            unit_amount: product.amount,
-            product_data: {
-              name: product.title.en,
-              description: product.description.en
-            }
-          },
-          quantity: 1
-        }
-      ],
-      metadata: { productId: product.id },
-      payment_intent_data: {
-        metadata: { productId: product.id }
-      },
+      line_items: lineItems,
+      metadata: { productIds: lineItems.map((item) => item.price_data?.product_data?.name).join(", ") },
       success_url: `${checkoutSiteUrl}/checkout/success/?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${checkoutSiteUrl}/tea-boxes/`
+      cancel_url: `${checkoutSiteUrl}/`
     });
 
     return json(request, { url: session.url }, 200);
@@ -103,4 +123,8 @@ export async function POST(request: NextRequest) {
     console.error("Failed to create Stripe Checkout session", error);
     return json(request, { error: "Unable to start checkout" }, 502);
   }
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null;
 }
