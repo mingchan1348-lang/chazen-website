@@ -7,7 +7,7 @@ const basePath = configuredBasePath ?? (isGithubPages ? `/${githubRepoName}` : "
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  output: "export",
+  output: isGithubPages ? "export" : undefined,
   images: {
     unoptimized: true
   },
