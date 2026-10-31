@@ -222,3 +222,12 @@ Note: `gaiwan-ritual.mp4`, `dian-cha.mp4`, `chazen-ritual-film.mp4`, and `stilln
 - [ ] Resolve the "$25 profile coming soon" placeholder messaging on Tea Assessment
 - [ ] Replace the placeholder contact email (`hello@chazen.example`) with a real address
 - [ ] Reconcile `CHAZEN_PREMIUM_ASSETS_NEEDED.md` and `GAIWAN_ASSETS_NEEDED.md` against what's actually in `public/` now — both docs are stale
+
+---
+
+## Verification pass — 2026-10-31
+
+- `npm run lint`: clean (fixed the `useMemo` dependency warning in `src/lib/language.tsx`). `npm run build`: passes, 31 static pages.
+- Headless Chromium check at 390px and 1440px across `/`, `/tea-test`, `/tea-collection`, `/gift-box`, `/b2b`, `/about`, `/five-cups`: no horizontal overflow on any route. Home hero renders correctly (the earlier near-black/clipped screenshots were stale).
+- Stale audit items: media placeholders no longer print filenames (`toCaption` strips them; they read "In the Making"), and the AI Tea Guide is backed by the live `TeaCompanion` widget in `layout.tsx`.
+- Still open: orphaned `ChazenHomeExperience` module (mine or delete), homepage right-sizing, About page imagery, real photography for B2B / Tea Boxes / Tea Culture / Five Cups.
