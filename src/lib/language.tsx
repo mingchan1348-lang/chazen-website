@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 
 export type Language = "en" | "zh";
 
@@ -50,18 +50,18 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     document.documentElement.lang = language === "zh" ? "zh-Hant" : "en";
   }, [language]);
 
-  function setLanguage(next: Language) {
+  const setLanguage = useCallback((next: Language) => {
     setLanguageState(next);
     try {
       window.localStorage.setItem(STORAGE_KEY, next);
     } catch {
       // Private browsing or storage disabled: the choice still applies this session.
     }
-  }
+  }, []);
 
-  function toggleLanguage() {
+  const toggleLanguage = useCallback(() => {
     setLanguage(language === "en" ? "zh" : "en");
-  }
+  }, [language, setLanguage]);
 
   const value = useMemo<LanguageContextValue>(
     () => ({
@@ -70,7 +70,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
       toggleLanguage,
       t: (en: string, zh: string) => (language === "zh" ? zh : en)
     }),
-    [language]
+    [language, setLanguage, toggleLanguage]
   );
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
